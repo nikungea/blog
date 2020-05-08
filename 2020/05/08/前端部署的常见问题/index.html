@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="CI &#x2F; CD一些基本概念： CI，Continuous Integration，持续集成  代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.  CD，Continuous Delivery，持续交付  将构建好的程序发布到各种环境，如预发布环境，正式环境．  Pipeline  一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端部署的常见问题">
+<meta property="og:url" content="https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="CI &#x2F; CD一些基本概念： CI，Continuous Integration，持续集成  代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.  CD，Continuous Delivery，持续交付  将构建好的程序发布到各种环境，如预发布环境，正式环境．  Pipeline  一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-08T14:54:21.000Z">
+<meta property="article:modified_time" content="2020-05-08T13:49:17.171Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="工程化">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>前端部署的常见问题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/blog/2020/04/26/JSBridge%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&text=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&is_video=false&description=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前端部署的常见问题&body=Check out this article: https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&name=前端部署的常见问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&t=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-CD"><span class="toc-number">1.</span> <span class="toc-text">CI &#x2F; CD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gitlab-ci-cd流程"><span class="toc-number">2.</span> <span class="toc-text">gitlab ci&#x2F;cd流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Gitlab-runner"><span class="toc-number">2.1.</span> <span class="toc-text">Gitlab runner</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gitlab-ci-yml"><span class="toc-number">2.2.</span> <span class="toc-text">.gitlab-ci.yml</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本写法"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本写法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常用关键字"><span class="toc-number">2.2.2.</span> <span class="toc-text">常用关键字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个实用的例子"><span class="toc-number">2.3.</span> <span class="toc-text">一个实用的例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在生产环境中提高-npm-i-的速度？"><span class="toc-number">3.</span> <span class="toc-text">如何在生产环境中提高 npm i 的速度？</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        前端部署的常见问题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-05-08T14:54:21.000Z" itemprop="datePublished">2020-05-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/" rel="tag">工程化</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI / CD"></a>CI / CD</h3><p>一些基本概念：</p>
+<p>CI，Continuous Integration，持续集成</p>
+<ul>
+<li>代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.</li>
+</ul>
+<p>CD，Continuous Delivery，持续交付</p>
+<ul>
+<li>将构建好的程序发布到各种环境，如预发布环境，正式环境．</li>
+</ul>
+<p>Pipeline</p>
+<ul>
+<li>一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。 任何提交或者 Merge Request 的合并都可以触发 Pipeline.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+------------------+           +----------------+</span><br><span class="line">|                  |  trigger  |                |</span><br><span class="line">|   Commit &#x2F; MR    +----------&gt;+    Pipeline    |</span><br><span class="line">|                  |           |                |</span><br><span class="line">+------------------+           +----------------+</span><br></pre></td></tr></table></figure>
+
+<p>Stages</p>
+<p>Stages 表示构建阶段，就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：</p>
+<ul>
+<li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
+<li>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</li>
+<li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
+</ul>
+<p>Stages 和 Pipeline 的关系:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------------------------------------+</span><br><span class="line">|                                                        |</span><br><span class="line">|  Pipeline                                              |</span><br><span class="line">|                                                        |</span><br><span class="line">|  +-----------+     +------------+      +------------+  |</span><br><span class="line">|  |  Stage 1  |----&gt;|   Stage 2  |-----&gt;|   Stage 3  |  |</span><br><span class="line">|  +-----------+     +------------+      +------------+  |</span><br><span class="line">|                                                        |</span><br><span class="line">+--------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Jobs</p>
+<p>Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+<ul>
+<li>相同 Stage 中的 Jobs 会并行执行</li>
+<li>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</li>
+<li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
+</ul>
+<p>Jobs 和 Stage 的关系图:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+------------------------------------------+</span><br><span class="line">|                                          |</span><br><span class="line">|  Stage 1                                 |</span><br><span class="line">|                                          |</span><br><span class="line">|  +---------+  +---------+  +---------+   |</span><br><span class="line">|  |  Job 1  |  |  Job 2  |  |  Job 3  |   |</span><br><span class="line">|  +---------+  +---------+  +---------+   |</span><br><span class="line">|                                          |</span><br><span class="line">+------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>CI/CD 不仅仅解放了业务项目的部署，也在交付之前提高了业务代码的质量，它可以用来 lint，test，package 安全检查，甚至多特性多环境部署。</p>
+<h3 id="gitlab-ci-cd流程"><a href="#gitlab-ci-cd流程" class="headerlink" title="gitlab ci/cd流程"></a>gitlab ci/cd流程</h3><p>gitlab通过在项目的根目录放置.gitlab-ci.yml文件来触发pipeline，文件书写遵循yml语法，因此，概括来说gitlab ci/cd只需要两步:</p>
+<ol>
+<li>写好.gitlab-ci.yml文件，并放置到项目根目录</li>
+<li>配置好gitlab runner． 完成后，提交代码时会自动根据gitlab-ci.yml的触发条件进行执行相应的stage.</li>
+</ol>
+<h4 id="Gitlab-runner"><a href="#Gitlab-runner" class="headerlink" title="Gitlab runner"></a>Gitlab runner</h4><p>负责执行构建任务</p>
+<ul>
+<li><code>为什么不是 GitLab CI 来运行构建任务？</code> 一般来说，构建任务都会占用很多的系统资源，如果由 GitLab CI 来运行构建任务的话，在执行构建任务的时候，GitLab 的性能会大幅下降。GitLab CI 最大的作用是管理各个项目的构建状态，因此，运行构建任务这种浪费资源的事情就交给 GitLab Runner 来做。 因为 GitLab Runner 可以安装到不同的机器上，所以在构建任务运行期间并不会影响到 GitLab 的性能。</li>
+</ul>
+<p>安装: </p>
+<p><a href="https://gitlab.com/gitlab-org/gitlab-runner" target="_blank" rel="noopener">参见官方文档</a></p>
+<p>注册:</p>
+<ul>
+<li>打开 GitLab 中的项目页面，在项目设置中找到 runners</li>
+<li>运行 sudo gitlab-ci-multi-runner register</li>
+<li>输入 CI URL</li>
+<li>输入 Token</li>
+<li>输入 Runner 的名字</li>
+<li>选择 Runner 的类型，简单起见选 Shell</li>
+<li>完成</li>
+</ul>
+<p>当注册好 Runner 之后，可以用 sudo gitlab-ci-multi-runner list 命令来查看各个 Runner 的状态</p>
+<h4 id="gitlab-ci-yml"><a href="#gitlab-ci-yml" class="headerlink" title=".gitlab-ci.yml"></a>.gitlab-ci.yml</h4><p>配置好 Runner 之后，在项目根目录中添加 .gitlab-ci.yml 文件了，每次提交代码或者合并就会自动运行构建任务。Pipeline 也是通过提交代码或者合并 MR 来触发的，其实 .gitlab-ci.yml 就是在定义 Pipeline。</p>
+<h5 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义 stages</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"></span><br><span class="line">  <span class="string">+</span> <span class="string">build</span></span><br><span class="line">  <span class="string">+</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义 job</span></span><br><span class="line"><span class="attr">job1:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am job1"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am in test stage"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义 job</span></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am job2"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am in build stage"</span></span><br></pre></td></tr></table></figure>
+
+<p>用 stages 关键字来定义 Pipeline 中的各个构建阶段，然后用一些非关键字来定义 jobs。 每个 job 中可以可以再用 stage 关键字来指定该 job 对应哪个 stage。 job 里面的 script 关键字是最关键的地方了，也是每个 job 中必须要包含的，它表示每个 job 要执行的命令。</p>
+<h5 id="常用关键字"><a href="#常用关键字" class="headerlink" title="常用关键字"></a>常用关键字</h5><p><code>stages</code> </p>
+<ul>
+<li>定义 Stages，默认有三个 Stages，分别是 build, test, deploy。</li>
+</ul>
+<p><code>types</code> </p>
+<ul>
+<li>stages 的别名。</li>
+</ul>
+<p><code>before_script</code> </p>
+<ul>
+<li>定义任何 Jobs 运行前都会执行的命令。</li>
+</ul>
+<p><code>after_script</code> </p>
+<ul>
+<li>定义任何 Jobs 运行完后都会执行的命令。</li>
+</ul>
+<p><code>variables &amp;&amp; Job.variables</code> </p>
+<ul>
+<li>定义环境变量。 如果定义了 Job 级别的环境变量的话，该 Job 会优先使用 Job 级别的环境变量。</li>
+</ul>
+<p><code>cache &amp;&amp; Job.cache</code> </p>
+<ul>
+<li>定义需要缓存的文件。 每个 Job 开始的时候，Runner 都会删掉 .gitignore 里面的文件。 如果有些文件 (如 node_modules/) 需要多个 Jobs 共用的话，我们只能让每个 Job 都先执行一遍 npm install。 这样很不方便，因此我们需要对这些文件进行缓存。缓存了的文件除了可以跨 Jobs 使用外，还可以跨 Pipeline 使用。</li>
+</ul>
+<p><code>Job.script</code> </p>
+<ul>
+<li>定义 Job 要运行的命令，必填项。</li>
+</ul>
+<p><code>Job.stage</code> </p>
+<ul>
+<li>定义 Job 的 stage，默认为 test。</li>
+</ul>
+<p><code>Job.artifacts</code> </p>
+<ul>
+<li>定义 Job 中生成的附件。 当该 Job 运行成功后，生成的文件可以作为附件 (如生成的二进制文件) 保留下来，打包发送到 GitLab，之后我们可以在 GitLab 的项目页面下下载该附件。 注意，不要把 artifacts 和 cache 混淆了。</li>
+</ul>
+<h4 id="一个实用的例子"><a href="#一个实用的例子" class="headerlink" title="一个实用的例子"></a>一个实用的例子</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"></span><br><span class="line">  <span class="string">+</span> <span class="string">install_deps</span></span><br><span class="line">  <span class="string">+</span> <span class="string">test</span></span><br><span class="line">  <span class="string">+</span> <span class="string">build</span></span><br><span class="line">  <span class="string">+</span> <span class="string">deploy_test</span></span><br><span class="line">  <span class="string">+</span> <span class="string">deploy_production</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">key:</span> <span class="string">$&#123;CI_BUILD_REF_NAME&#125;</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dist/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="attr">install_deps:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install_deps</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行测试用例</span></span><br><span class="line"><span class="attr">test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">clean</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:client</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署测试服务器</span></span><br><span class="line"><span class="attr">deploy_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy_test</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">pm2</span> <span class="string">delete</span> <span class="string">app</span> <span class="string">||</span> <span class="literal">true</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">pm2</span> <span class="string">start</span> <span class="string">app.js</span> <span class="string">--name</span> <span class="string">app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署生产服务器</span></span><br><span class="line"><span class="attr">deploy_production:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy_production</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">bash</span> <span class="string">scripts/deploy/deploy.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的配置把一次 Pipeline 分成五个阶段：</p>
+<ul>
+<li>安装依赖(install_deps)</li>
+<li>运行测试(test)</li>
+<li>编译(build)</li>
+<li>部署测试服务器(deploy_test)</li>
+<li>部署生产服务器(deploy_production)</li>
+</ul>
+<p>设置 Job.only 后，只有当 develop 分支和 master 分支有提交的时候才会触发相关的 Jobs。 注意，我这里用 GitLab Runner 所在的服务器作为测试服务器。</p>
+<h3 id="如何在生产环境中提高-npm-i-的速度？"><a href="#如何在生产环境中提高-npm-i-的速度？" class="headerlink" title="如何在生产环境中提高 npm i 的速度？"></a>如何在生产环境中提高 <code>npm i</code> 的速度？</h3><ol>
+<li>选择时延低的 registry，即在集群内部搭建私有仓库，需要企业技术基础建设支持；</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> registry https: //registry-npm.test.com/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>NODE_ENV=production，只安装生产环境必要的包</li>
+<li>CI=true，npm 会在此环境变量下自动优化</li>
+<li>结合 CI 的缓存功能，充分利用 npm cache</li>
+<li>使用 npm ci 代替 npm i，既提升速度又保障应用安全性</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-CD"><span class="toc-number">1.</span> <span class="toc-text">CI &#x2F; CD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gitlab-ci-cd流程"><span class="toc-number">2.</span> <span class="toc-text">gitlab ci&#x2F;cd流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Gitlab-runner"><span class="toc-number">2.1.</span> <span class="toc-text">Gitlab runner</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gitlab-ci-yml"><span class="toc-number">2.2.</span> <span class="toc-text">.gitlab-ci.yml</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本写法"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本写法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#常用关键字"><span class="toc-number">2.2.2.</span> <span class="toc-text">常用关键字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一个实用的例子"><span class="toc-number">2.3.</span> <span class="toc-text">一个实用的例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在生产环境中提高-npm-i-的速度？"><span class="toc-number">3.</span> <span class="toc-text">如何在生产环境中提高 npm i 的速度？</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&text=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&is_video=false&description=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前端部署的常见问题&body=Check out this article: https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&title=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&name=前端部署的常见问题&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/&t=前端部署的常见问题" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
