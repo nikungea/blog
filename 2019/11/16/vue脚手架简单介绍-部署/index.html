@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="通用指南如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。 如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。 本地预览d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue脚手架简单介绍-部署">
+<meta property="og:url" content="https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="通用指南如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。 如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。 本地预览d">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-16T14:33:45.000Z">
+<meta property="article:modified_time" content="2020-05-08T13:38:16.833Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>vue脚手架简单介绍-部署</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2020/03/15/%E6%89%93%E5%8C%85%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/11/13/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-Preset/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&text=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&is_video=false&description=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue脚手架简单介绍-部署&body=Check out this article: https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&name=vue脚手架简单介绍-部署&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&t=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用指南"><span class="toc-number">1.</span> <span class="toc-text">通用指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地预览"><span class="toc-number">2.</span> <span class="toc-text">本地预览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-history-pushState-的路由"><span class="toc-number">3.</span> <span class="toc-text">使用 history.pushState 的路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CORS"><span class="toc-number">4.</span> <span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWA"><span class="toc-number">5.</span> <span class="toc-text">PWA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平台指南"><span class="toc-number">6.</span> <span class="toc-text">平台指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#以GitHub-Pages为例"><span class="toc-number">6.1.</span> <span class="toc-text">以GitHub Pages为例</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vue脚手架简单介绍-部署
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-16T14:33:45.000Z" itemprop="datePublished">2019-11-16</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/Vue/" rel="tag">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="通用指南"><a href="#通用指南" class="headerlink" title="通用指南"></a>通用指南</h2><p>如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。</p>
+<p>如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。</p>
+<h2 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h2><p>dist 目录需要启动一个 HTTP 服务器来访问。<br>在本地预览生产环境构建最简单的方式就是使用一个 Node.js 静态文件服务器，例如 serve:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g serve</span><br><span class="line">serve -s dist</span><br></pre></td></tr></table></figure>
+
+<p> -s 参数的意思是将其架设在 Single-Page Application 模式下，这个模式会处理即将提到的路由问题</p>
+<h2 id="使用-history-pushState-的路由"><a href="#使用-history-pushState-的路由" class="headerlink" title="使用 history.pushState 的路由"></a>使用 history.pushState 的路由</h2><p>需要配置生产环境服务器，将任何没有匹配到静态文件的请求回退到 index.html。参考Vue Router 的文档，提供了常用服务器配置指引。</p>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>如果前端静态内容是部署在与后端 API 不同的域名上，你需要适当地配置 CORS</p>
+<h2 id="PWA"><a href="#PWA" class="headerlink" title="PWA"></a>PWA</h2><p>如果你使用了 PWA 插件，那么应用必须架设在 HTTPS 上，这样 Service Worker 才能被正确注册。</p>
+<h2 id="平台指南"><a href="#平台指南" class="headerlink" title="平台指南"></a>平台指南</h2><h3 id="以GitHub-Pages为例"><a href="#以GitHub-Pages为例" class="headerlink" title="以GitHub Pages为例"></a>以GitHub Pages为例</h3><p>需要在 vue.config.js 中设置正确的 publicPath。<br>如果打算将项目部署到 https://<USERNAME>.github.io/ 上, publicPath 将默认被设为 “/“，你可以忽略这个参数。<br>如果打算将项目部署到 https://<USERNAME>.github.io/<REPO>/ 上 (即仓库地址为 <a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a><USERNAME>/<REPO>)，可将 publicPath 设为 “/<REPO>/“。举个例子，如果仓库名字为“my-project”，那么 vue.config.js 的内容应如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  publicPath: process.env. NODE_ENV === <span class="string">'production'</span></span><br><span class="line"></span><br><span class="line">    ? <span class="string">'/my-project/'</span></span><br><span class="line">    : <span class="string">'/'</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用指南"><span class="toc-number">1.</span> <span class="toc-text">通用指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地预览"><span class="toc-number">2.</span> <span class="toc-text">本地预览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-history-pushState-的路由"><span class="toc-number">3.</span> <span class="toc-text">使用 history.pushState 的路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CORS"><span class="toc-number">4.</span> <span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWA"><span class="toc-number">5.</span> <span class="toc-text">PWA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平台指南"><span class="toc-number">6.</span> <span class="toc-text">平台指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#以GitHub-Pages为例"><span class="toc-number">6.1.</span> <span class="toc-text">以GitHub Pages为例</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&text=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&is_video=false&description=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue脚手架简单介绍-部署&body=Check out this article: https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&title=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&name=vue脚手架简单介绍-部署&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/&t=vue脚手架简单介绍-部署" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="脚手架的意义 是开发现代web应用的必备 充分利用webpack，babel，eslint等工具辅助项目开发 开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。 提供了配套的图形管理界面，用于创建，开发和管理你的项目  版本记录 vue cli 4.0系列 正式版发布时间，2019-10-16 vue cli 3.0系列 正式版发布时间，2018-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue脚手架介绍(基础)">
+<meta property="og:url" content="https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="脚手架的意义 是开发现代web应用的必备 充分利用webpack，babel，eslint等工具辅助项目开发 开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。 提供了配套的图形管理界面，用于创建，开发和管理你的项目  版本记录 vue cli 4.0系列 正式版发布时间，2019-10-16 vue cli 3.0系列 正式版发布时间，2018-">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-05T13:07:29.000Z">
+<meta property="article:modified_time" content="2020-05-08T13:25:13.297Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>vue脚手架介绍(基础)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/11/13/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-Preset/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/02/23/JSON/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&text=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&is_video=false&description=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue脚手架介绍(基础)&body=Check out this article: https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&name=vue脚手架介绍(基础)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&t=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#脚手架的意义"><span class="toc-number">1.</span> <span class="toc-text">脚手架的意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#版本记录"><span class="toc-number">2.</span> <span class="toc-text">版本记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单文件组件（-vue）"><span class="toc-number">3.</span> <span class="toc-text">单文件组件（.vue）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统组件"><span class="toc-number">4.</span> <span class="toc-text">系统组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础配置"><span class="toc-number">5.</span> <span class="toc-text">基础配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">5.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速原型开发"><span class="toc-number">5.2.</span> <span class="toc-text">快速原型开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个项目"><span class="toc-number">5.3.</span> <span class="toc-text">创建一个项目</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        vue脚手架介绍(基础)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-05T13:07:29.000Z" itemprop="datePublished">2019-11-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/Vue/" rel="tag">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="脚手架的意义"><a href="#脚手架的意义" class="headerlink" title="脚手架的意义"></a>脚手架的意义</h2><ul>
+<li>是开发现代web应用的必备</li>
+<li>充分利用webpack，babel，eslint等工具辅助项目开发</li>
+<li>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</li>
+<li>提供了配套的图形管理界面，用于创建，开发和管理你的项目</li>
+</ul>
+<h2 id="版本记录"><a href="#版本记录" class="headerlink" title="版本记录"></a>版本记录</h2><ul>
+<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
+<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
+<li>之前是2.0版本</li>
+</ul>
+<h2 id="单文件组件（-vue）"><a href="#单文件组件（-vue）" class="headerlink" title="单文件组件（.vue）"></a>单文件组件（.vue）</h2><ul>
+<li>优点<ul>
+<li>完整语法高亮</li>
+<li>CommonJS 模块</li>
+<li>组件作用域的 CSS</li>
+</ul>
+</li>
+<li>template<ul>
+<li>就是配置组件里的template模板</li>
+</ul>
+</li>
+<li>script<ul>
+<li>导出的就是组件对象</li>
+</ul>
+</li>
+<li>style<ul>
+<li>style lang=”less” scoped</li>
+<li>lang，指定语言，less, sass…</li>
+<li>scoped，使css只作用于当前组件</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统组件"><a href="#系统组件" class="headerlink" title="系统组件"></a>系统组件</h2><p>CLI</p>
+<ul>
+<li>一个全局安装的 npm 包，提供了终端里的 vue 命令。它可以通过 vue create 快速创建一个新项目的脚手架，或者直接通过 vue serve 构建新想法的原型。也可以通过 vue ui 通过一套图形化界面管理所有项目。</li>
+</ul>
+<p>CLI 服务</p>
+<ul>
+<li>CLI 服务 (@vue/cli-service) 是一个开发环境依赖。它是一个 npm 包，局部安装在每个 @vue/cli 创建的项目中。</li>
+<li>CLI 服务构建于 webpack 和 webpack-dev-server 之上。包含了：<ul>
+<li>加载其它 CLI 插件的核心服务；</li>
+<li>一个针对绝大部分应用优化过的内部的 webpack 配置；</li>
+<li>项目内部的 vue-cli-service 命令，提供 serve、build 和 inspect 命令。</li>
+</ul>
+</li>
+</ul>
+<p>CLI 插件</p>
+<ul>
+<li>CLI 插件是向Vue项目提供可选功能的 npm 包，例如 Babel/TypeScript 转译、ESLint 集成、单元测试和 end-to-end 测试等。Vue CLI 插件的名字以 @vue/cli-plugin- (内建插件) 或 vue-cli-plugin- (社区插件) 开头，非常容易使用。当在项目内部运行 vue-cli-service 命令时，它会自动解析并加载 package.json 中列出的所有 CLI 插件。</li>
+<li>插件可以作为项目创建过程的一部分，或在后期加入到项目中。它们也可以被归成一组可复用的 preset。</li>
+</ul>
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>npm i -g @vue/cli</li>
+<li>Mac全局安装需要：sudo…</li>
+<li>检查是否安装正确<ul>
+<li>vue –version</li>
+</ul>
+</li>
+</ul>
+<h3 id="快速原型开发"><a href="#快速原型开发" class="headerlink" title="快速原型开发"></a>快速原型开发</h3><p>可以使用 vue serve 和 vue build 命令对单个 *.vue 文件进行快速原型开发，不过这需要先额外安装一个全局的扩展：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install - g @vue / cli - service - global</span><br></pre></td></tr></table></figure>
+
+<p>vue serve 的缺点就是它需要安装全局依赖，这使得它在不同机器上的一致性不能得到保证。因此这只适用于快速原型开发。</p>
+<h3 id="创建一个项目"><a href="#创建一个项目" class="headerlink" title="创建一个项目"></a>创建一个项目</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create 项目名</span><br></pre></td></tr></table></figure>
+
+<p>一般在命令行中配置项目preset, 可以选择默认的，也可以手动配置，可以用vue ui在可视化窗口中完成babel，router，eslint，vuex等的配置。</p>
+<ul>
+<li><p>被保存的 preset 将会存在用户的 home 目录下一个名为 .vuerc 的 JSON 文件里。如果想要修改被保存的 preset / 选项，可以编辑这个文件。</p>
+</li>
+<li><p><code>vue create --help</code> 可以查看常用指令</p>
+</li>
+</ul>
+<p>切换到项目根目录 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &lt; yourproject &gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动项目</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn serve</span><br><span class="line"># or</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+
+<p>webpack配置，在vue.config.js</p>
+<ul>
+<li>调整端口，设置自动打开浏览器</li>
+</ul>
+<p>eslint</p>
+<ul>
+<li>配合vs code插件</li>
+<li>保存时自动修复</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#脚手架的意义"><span class="toc-number">1.</span> <span class="toc-text">脚手架的意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#版本记录"><span class="toc-number">2.</span> <span class="toc-text">版本记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单文件组件（-vue）"><span class="toc-number">3.</span> <span class="toc-text">单文件组件（.vue）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统组件"><span class="toc-number">4.</span> <span class="toc-text">系统组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础配置"><span class="toc-number">5.</span> <span class="toc-text">基础配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">5.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速原型开发"><span class="toc-number">5.2.</span> <span class="toc-text">快速原型开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个项目"><span class="toc-number">5.3.</span> <span class="toc-text">创建一个项目</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&text=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&is_video=false&description=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=vue脚手架介绍(基础)&body=Check out this article: https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&title=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&name=vue脚手架介绍(基础)&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/&t=vue脚手架介绍(基础)" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

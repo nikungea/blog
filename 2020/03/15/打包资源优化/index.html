@@ -14,8 +14,9 @@
 <meta property="og:description" content="一些常见问题：  lodash 和 react gzip 后的体积是多少 (定性，可以给出范围) 打包 moment 时会有什么问题 你们线上前端项目首屏静态资源 gzip 后的体积是多少  为什么要压缩代码？  更小的体积对于用户体验来说意味着更快的加载速度以及更好的用户体验，利于企业利润。 更小的体积对于服务器来说也意味更小的带宽以及更少的服务器费用。  原则 减小打包的整体体积 Code S">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-15T15:36:39.000Z">
-<meta property="article:modified_time" content="2020-05-08T09:48:17.934Z">
+<meta property="article:modified_time" content="2020-05-08T12:59:39.612Z">
 <meta property="article:author" content="Le">
+<meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
     
     
@@ -74,10 +75,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/blog/2020/05/10/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/blog/2020/04/10/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" href="/blog/2019/06/17/JSON/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" href="/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -138,6 +139,11 @@
       
 
       
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/webpack/" rel="tag">webpack</a>
+    </div>
+
 
     </div>
   </header>
@@ -157,8 +163,8 @@
 </ol>
 <h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><ol>
 <li>减小打包的整体体积</li>
-<li><code>Code Splitting</code> : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
-<li><code>Bundle Splitting</code> ：分包，根据模块更改频率分层次打包，充分利用缓存。</li>
+<li>Code Splitting : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
+<li>Bundle Splitting ：分包，根据模块更改频率分层次打包，充分利用缓存。</li>
 </ol>
 <h3 id="如何查看文件体积"><a href="#如何查看文件体积" class="headerlink" title="如何查看文件体积"></a>如何查看文件体积</h3><p>终端中执行</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stat index.js</span><br><span class="line">    ......文件详细信息</span><br></pre></td></tr></table></figure>
@@ -180,7 +186,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 压缩前</span></span><br><span class="line">!b &amp;&amp; !c &amp;&amp; !d &amp;&amp; !e</span><br><span class="line"><span class="comment">// 压缩后</span></span><br><span class="line">b || c || d || e</span><br></pre></td></tr></table></figure>
 
 <h4 id="移除不必要的模块"><a href="#移除不必要的模块" class="headerlink" title="移除不必要的模块"></a>移除不必要的模块</h4><p>仅仅引入而未在代码中使用，该模块仍然会被打包，配合eslint使用，把引入而未使用的模块给优化掉。</p>
-<h4 id="选择可替代的体积较小的模块"><a href="#选择可替代的体积较小的模块" class="headerlink" title="选择可替代的体积较小的模块"></a>选择可替代的体积较小的模块</h4><p>典型的例子是以体积过大而臭名昭著的 moment.js 模块，它仅仅用于 DateTime 的格式化及各种计算。但你 import 之后它的体积竟然达到了 200kb+，gzip 后仍然有 69kb。<br><code>此时可以选择一个可替代它功能，但体积更小的模块。与 moment.js API 兼容的 day.js，它 gzip 后体积仅仅只有 2kb。</code> </p>
+<h4 id="选择可替代的体积较小的模块"><a href="#选择可替代的体积较小的模块" class="headerlink" title="选择可替代的体积较小的模块"></a>选择可替代的体积较小的模块</h4><p>典型的例子是 moment.js 模块，它仅仅用于 DateTime 的格式化及各种计算。但 import 之后体积竟然达到了 200kb+，gzip 后仍然有 69kb。<br>此时可以选择一个可替代它功能，但体积更小的模块。与 moment.js API 兼容的 day.js，它 gzip 后体积仅仅只有 2kb。 </p>
 <h4 id="按需引入模块"><a href="#按需引入模块" class="headerlink" title="按需引入模块"></a>按需引入模块</h4><p>当面对一个大型模块时，可能并不会使用到它的所有的功能，只需按照需求引入模块就可以了。比如 <code>lodash</code> , <code>antd</code> , <code>echarts</code> …</p>
 <h3 id="Code-Splitting"><a href="#Code-Splitting" class="headerlink" title="Code Splitting"></a>Code Splitting</h3><p>即按需加载，优化页面首次加载体积，可以理解为懒加载。</p>
 <p>通过 Code Splitting 可以只加载当前所需要的核心资源：</p>
@@ -195,7 +201,7 @@
 <li>使用 React.lazy() 动态加载组件</li>
 <li>使用 lodable-component 动态加载路由，组件或者模块</li>
 </ul>
-<h3 id="Bundle-Splitting"><a href="#Bundle-Splitting" class="headerlink" title="Bundle Splitting"></a>Bundle Splitting</h3><p><code>分包，根据模块更改频率分层次打包，充分利用缓存。</code><br>除了资源体积上的优化，另一个大的优化就是缓存。</p>
+<h3 id="Bundle-Splitting"><a href="#Bundle-Splitting" class="headerlink" title="Bundle Splitting"></a>Bundle Splitting</h3><p>分包，根据模块更改频率分层次打包，充分利用缓存。<br>除了资源体积上的优化，另一个大的优化就是缓存。</p>
 <h4 id="网站的缓存控制策略最佳实践及注意事项"><a href="#网站的缓存控制策略最佳实践及注意事项" class="headerlink" title="网站的缓存控制策略最佳实践及注意事项"></a>网站的缓存控制策略最佳实践及注意事项</h4><p>缓存控制策略就是 http caching 的策略，对 http cache 只需要了解一个 Cache-Control 的头部。<br>一个较好的缓存策略只需要两部分，而它们只需要通过 Cache-Control 控制：</p>
 <h5 id="带指纹资源-永久缓存"><a href="#带指纹资源-永久缓存" class="headerlink" title="带指纹资源: 永久缓存"></a>带指纹资源: 永久缓存</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache - Control: max - age = <span class="number">31536000</span></span><br></pre></td></tr></table></figure>
 
@@ -216,7 +222,7 @@
 <li>如果校验为最新资源，则从浏览器的缓存中加载资源</li>
 </ol>
 <p>即使每次校验新鲜度，也不需要每次都从服务器下载资源: 如果浏览器/CDN上缓存经校验没有过期。这被称为协商缓存，此时 http 状态码返回 304，指 Not Modified，即没有变更。nginx 或者一些 OSS 都会自动配置协商缓存。</p>
-<p><code>如果不添加 Cache-Control 响应头会怎样？</code> </p>
+<p>如果不添加 Cache-Control 响应头会怎样？ </p>
 <p>是不是每次都会自动去服务器校验新鲜度，不是。此时会对资源进行强制缓存，而对不带有指纹信息的资源很有可能获取到过期资源。 如果过期资源存在于浏览器上，还可以通过强制刷新浏览器来获取最新资源。但是如果过期资源存在于 CDN 的边缘节点上，CDN 的刷新就会复杂很多，而且有可能需要多人协作解决。</p>
 <p>首先要明确两个响应头代表的含义：</p>
 <ul>
@@ -305,7 +311,7 @@
     Copyright &copy;
     
     
-    2018-2020
+    2019-2020
     Le
   </div>
   <div class="footer-right">
