@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="vue的过滤器是什么，怎么用？ 用于一些常见的文本格式化，可以在创建实例之前全局定义，也可以在组件中本地定义。当全局过滤器和局部过滤器重名时，会采用局部过滤器。 可以用在两个地方：双花括号插值和 v-bind 表达式，添加在表达式的尾部，由|符号指示，比如:1&amp;#123;&amp;#123; msg | msgCap &amp;#125;&amp;#125; 过滤器可以串联，第一个处理之后再传给第二个去处理。  导航守卫">
+    <meta name="description" content="vue中的MVVM模式是什么 即 Model-View-ViewModel。 Model 代表数据模型，也可以在 model 中定义数据修改和操作业务逻辑    View 代表UI组件，它负责将数据模型转化成UI展现出来。 ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。 在 MVVM 架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试总结(Vue)">
 <meta property="og:url" content="https://nikungea.github.io/blog/2020/02/06/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93-1/index.html">
 <meta property="og:site_name" content="LeBlog">
-<meta property="og:description" content="vue的过滤器是什么，怎么用？ 用于一些常见的文本格式化，可以在创建实例之前全局定义，也可以在组件中本地定义。当全局过滤器和局部过滤器重名时，会采用局部过滤器。 可以用在两个地方：双花括号插值和 v-bind 表达式，添加在表达式的尾部，由|符号指示，比如:1&amp;#123;&amp;#123; msg | msgCap &amp;#125;&amp;#125; 过滤器可以串联，第一个处理之后再传给第二个去处理。  导航守卫">
+<meta property="og:description" content="vue中的MVVM模式是什么 即 Model-View-ViewModel。 Model 代表数据模型，也可以在 model 中定义数据修改和操作业务逻辑    View 代表UI组件，它负责将数据模型转化成UI展现出来。 ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。 在 MVVM 架构">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-06T14:15:22.000Z">
-<meta property="article:modified_time" content="2020-05-08T16:00:56.105Z">
+<meta property="article:modified_time" content="2020-05-09T00:23:30.121Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的过滤器是什么，怎么用？"><span class="toc-number">1.</span> <span class="toc-text">vue的过滤器是什么，怎么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导航守卫周期总结"><span class="toc-number">2.</span> <span class="toc-text">导航守卫周期总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中rem布局？"><span class="toc-number">3.</span> <span class="toc-text">vue中rem布局？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><span class="toc-number">4.</span> <span class="toc-text">如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中的MVVM模式是什么"><span class="toc-number">1.</span> <span class="toc-text">vue中的MVVM模式是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue生命周期"><span class="toc-number">2.</span> <span class="toc-text">vue生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue3的新特性"><span class="toc-number">3.</span> <span class="toc-text">vue3的新特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue如果给数组添加参数会有什么问题-怎么解决"><span class="toc-number">4.</span> <span class="toc-text">vue如果给数组添加参数会有什么问题, 怎么解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的过滤器是什么，怎么用？"><span class="toc-number">5.</span> <span class="toc-text">vue的过滤器是什么，怎么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-router的导航守卫有哪些？比较常用的？"><span class="toc-number">6.</span> <span class="toc-text">vue-router的导航守卫有哪些？比较常用的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导航守卫周期总结"><span class="toc-number">7.</span> <span class="toc-text">导航守卫周期总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中rem布局？"><span class="toc-number">8.</span> <span class="toc-text">vue中rem布局？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><span class="toc-number">9.</span> <span class="toc-text">如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简述vue函数组件和类组件的区别"><span class="toc-number">10.</span> <span class="toc-text">简述vue函数组件和类组件的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的服务端渲染"><span class="toc-number">11.</span> <span class="toc-text">vue的服务端渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？"><span class="toc-number">12.</span> <span class="toc-text">你刚开始用的vue-cli什么版本，现在用的哪个版本？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vuex中mutation与action的区别？"><span class="toc-number">13.</span> <span class="toc-text">vuex中mutation与action的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue引入组件时import与require区别？"><span class="toc-number">14.</span> <span class="toc-text">vue引入组件时import与require区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue管理系统权限分配如何实现的？"><span class="toc-number">15.</span> <span class="toc-text">vue管理系统权限分配如何实现的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在vue中使用echarts"><span class="toc-number">16.</span> <span class="toc-text">在vue中使用echarts</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -150,10 +150,86 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="vue的过滤器是什么，怎么用？"><a href="#vue的过滤器是什么，怎么用？" class="headerlink" title="vue的过滤器是什么，怎么用？"></a>vue的过滤器是什么，怎么用？</h2><ul>
-<li>用于一些常见的文本格式化，可以在创建实例之前全局定义，也可以在组件中本地定义。当全局过滤器和局部过滤器重名时，会采用局部过滤器。</li>
-<li>可以用在两个地方：双花括号插值和 v-bind 表达式，添加在表达式的尾部，由|符号指示，比如:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; msg | msgCap &#125;&#125;</span><br></pre></td></tr></table></figure></li>
-<li>过滤器可以串联，第一个处理之后再传给第二个去处理。</li>
+    <h2 id="vue中的MVVM模式是什么"><a href="#vue中的MVVM模式是什么" class="headerlink" title="vue中的MVVM模式是什么"></a>vue中的MVVM模式是什么</h2><ul>
+<li>即 Model-View-ViewModel。</li>
+<li>Model 代表数据模型，也可以在 model 中定义数据修改和操作业务逻辑    View 代表UI组件，它负责将数据模型转化成UI展现出来。</li>
+<li>ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。</li>
+<li>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此View 数据的变化会同步到Model中，而 Model 数据的变化也会立 即反应到View 上。</li>
+<li>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</li>
+</ul>
+<h2 id="vue生命周期"><a href="#vue生命周期" class="headerlink" title="vue生命周期"></a>vue生命周期</h2><p>vue生命周期的作用是什么？</p>
+<p>答：它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的过程时更容易形成好的逻辑。</p>
+<p>第一次页面加载会触发哪几个钩子？</p>
+<p>答：第一次页面加载时会触发 beforeCreate, created, beforeMount, mounted 这几个钩子</p>
+<p>生命周期，总共分为 8 个阶段创建前/后，载入前/后，更新前/后，销毁前/后。</p>
+<ul>
+<li>创建前/后： 在 beforeCreate 阶段，vue 实例的挂载元素 el 还没有。</li>
+<li>载入前/后：在 beforeMount 阶段，vue 实例的$el 和 data 都初始化了，但还是挂载之前为虚拟的 dom 节点，data.message 还未替换。在 mounted 阶段，vue 实例挂载完成，data.message 成功渲染。</li>
+<li>更新前/后：当 data 变化时，会触发 beforeUpdate 和 updated 方法。</li>
+<li>销毁前/后：在执行 destroy 方法后，对 data 的改变不会再触发周期函数，说明此时 vue 实例已经解除了事件监听以及和 dom 的绑定，但是 dom 结构依然存在</li>
+</ul>
+<p>简单描述每个周期具体适合哪些场景？</p>
+<ul>
+<li>答：生命周期钩子的一些使用方法： beforecreate : 可以在这加个loading事件，在加载实例时触发 created : 初始化完成时的事件写在这里，如在这结束loading事件，异步请求也适宜在这里调用 mounted : 挂载元素，获取到DOM节点 updated : 如果对数据统一处理，在这里写上相应函数 beforeDestroy : 可以做一个确认停止事件的确认框 nextTick : 更新数据后立即操作dom</li>
+</ul>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/api/index.html#%E9%80%89%E9%A1%B9-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90" target="_blank" rel="noopener">官网</a></li>
+<li><a href="https://segmentfault.com/a/1190000011381906" target="_blank" rel="noopener">博客-1</a></li>
+<li><a href="https://juejin.im/entry/5aee8fbb518825671952308c" target="_blank" rel="noopener">博客-2</a></li>
+</ul>
+<h2 id="vue3的新特性"><a href="#vue3的新特性" class="headerlink" title="vue3的新特性"></a>vue3的新特性</h2><ul>
+<li>重写虚拟DOM，使Vue更快。</li>
+<li>基于es6的proxy替换了Object.defineProperty的getters和setter，节省了很大的内存开销，加快速度，缺点是兼容性问题。</li>
+<li>压缩包体积更小。</li>
+<li>优化插槽生成，可以单独重新渲染父组件和子组件。</li>
+<li>静态树提升以及静态属性提升等。</li>
+</ul>
+<h2 id="vue如果给数组添加参数会有什么问题-怎么解决"><a href="#vue如果给数组添加参数会有什么问题-怎么解决" class="headerlink" title="vue如果给数组添加参数会有什么问题, 怎么解决"></a>vue如果给数组添加参数会有什么问题, 怎么解决</h2><p>由于 JavaScript 的限制，Vue 不能检测以下数组的变动：</p>
+<ul>
+<li>当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue</li>
+<li>当你修改数组的长度时，例如：vm.items.length = newLength</li>
+</ul>
+<p>为了解决第一类问题，以下两种方式都可以实现和 vm.items[indexOfItem] = newValue 相同的效果，同时也将在响应式系统内触发状态更新：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Vue.set</span></span><br><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Array.prototype.splice</span></span><br><span class="line">vm.items.splice(indexOfItem, <span class="number">1</span>, newValue)</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 vm.$set 实例方法，该方法是全局方法 Vue.set 的一个别名：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.$<span class="keyword">set</span>(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+
+<p>为了解决第二类问题，你可以使用 splice：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.items.splice(newLength)</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue的过滤器是什么，怎么用？"><a href="#vue的过滤器是什么，怎么用？" class="headerlink" title="vue的过滤器是什么，怎么用？"></a>vue的过滤器是什么，怎么用？</h2><p>用于一些常见的文本格式化，可以在创建实例之前全局定义，也可以在组件中本地定义。当全局过滤器和局部过滤器重名时，会采用局部过滤器。</p>
+<p>可以用在两个地方：双花括号插值和 v-bind 表达式，添加在表达式的尾部，由|符号指示，比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; msg | msgCap &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>过滤器可以串联，第一个处理之后再传给第二个去处理。</p>
+<h2 id="vue-router的导航守卫有哪些？比较常用的？"><a href="#vue-router的导航守卫有哪些？比较常用的？" class="headerlink" title="vue-router的导航守卫有哪些？比较常用的？"></a>vue-router的导航守卫有哪些？比较常用的？</h2><p>一套用来触发路由在不同阶段触发的钩子函数，包括全局守卫，路由独享守卫，组件内守卫</p>
+<ul>
+<li>‘全局守卫’ 顾名思义所有路由在进入跳转的时候都会触发，整个’全局路由’分为三个阶段依次是’beforeEach’、’beforeResolve’、’afterEach’<ul>
+<li>全局守卫因为可以监听到所有路由，在触发的时候可以用来做判断用户是否登录这种全局配置。beforeEach 即全局前置守卫，在路由刚开始触发，但还没有任何件一类的加载，适合做登陆判断逻辑。</li>
+</ul>
+</li>
+<li>‘路由独享守卫’ 顾名思义只在定义路由和路由组件中的对象中使用它有一个阶段’beforeEnter’<ul>
+<li>当前组件路由进入的时候触发的阶段</li>
+</ul>
+</li>
+<li>‘组件内守卫’顾名思义只在组件中触发的路由内容它有三个阶段依次是’beforeRouteEnter’、’beforeRouteUpdate’、’beforeRouteLeave’<ul>
+<li>‘beforeRouteEnter’ 在还没有进入该组件之前触发，一般用获取异步请求，可以替代vue生命周期中获取数据请求</li>
+<li>‘beforeRouteLeave’ 离开组件的时候触发，可以对表单一些校验未提交的时候触发询问用户是否到下一个页面官方的说法这个离开守卫通常用来禁止用户在还未存修改前突然离开。可以通过 next(false) 来取消。</li>
+</ul>
+</li>
+<li>导航守卫中三个参数讲解：<ul>
+<li>to: Route: 即将要进入的目标 路由对象</li>
+<li>from: Route: 当前导航正要离开的路由</li>
+<li>next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。<ul>
+<li>next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。</li>
+<li>next(false): 中断当前的导航。</li>
+<li>next(‘/‘) 或者 next({ path: ‘/‘ }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="导航守卫周期总结"><a href="#导航守卫周期总结" class="headerlink" title="导航守卫周期总结"></a>导航守卫周期总结</h2><ol>
 <li>导航被触发。</li>
@@ -169,39 +245,121 @@
 <li>触发 DOM 更新。</li>
 <li>用创建好的实例调用 beforeRouteEnter 守卫中传给next 的回调函数。</li>
 </ol>
-<h2 id="vue中rem布局？"><a href="#vue中rem布局？" class="headerlink" title="vue中rem布局？"></a>vue中rem布局？</h2><ul>
-<li>安装插件 lib-flexible  postcss-px2rem, </li>
-<li>删除index.html中的meta标签(控制视口的那个)</li>
-<li>main.js 中导入插件包, 自动计算根HTML的font-size</li>
-<li>配置vue.config.js, remUnit: 37.5, 适配 375 屏幕, 设计图750中量出来的尺寸要 / 2<ul>
-<li>配置成 37.5 是为了兼容没有适配 rem 布局的第三方 ui 库</li>
+<h2 id="vue中rem布局？"><a href="#vue中rem布局？" class="headerlink" title="vue中rem布局？"></a>vue中rem布局？</h2><p>安装插件 lib-flexible  postcss-px2rem,<br>删除index.html中的meta标签(控制视口的那个)<br>main.js 中导入插件包, 自动计算根HTML的font-size<br>配置vue.config.js, remUnit: 37.5, 适配 375 屏幕, 设计图750中量出来的尺寸要 / 2</p>
+<ul>
+<li>配置成 37.5 是为了兼容没有适配 rem 布局的第三方 ui 库<br>还是按照px写，会自动转rem</li>
 </ul>
-</li>
-<li>还是按照px写，会自动转rem</li>
-</ul>
-<h2 id="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><a href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？" class="headerlink" title="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"></a>如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</h2><ul>
-<li>在原生js中，一般是通过获取到事件对象, 然后在方法里面通过event.stopPropagation阻止冒泡。（e.preventDefault()，取消默认事件）</li>
-<li>为了方便我们的使用，vue内部用js封装了一些常用的方法，比如阻止默认事件，阻止冒泡等</li>
-<li>事件修饰符<ul>
+<h2 id="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><a href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？" class="headerlink" title="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"></a>如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</h2><p>在原生js中，一般是通过获取到事件对象, 然后在方法里面通过event.stopPropagation阻止冒泡（e.preventDefault()，取消默认事件）。为了方便我们的使用，vue内部用js封装了一些常用的方法，比如阻止默认事件，阻止冒泡等；</p>
+<p>事件修饰符</p>
+<ul>
 <li>.stop:阻止冒泡，.prevent:阻止默认事件，.capture:在事件捕获时触发，.self:只当在 event.target是当前元素自身时触发</li>
 </ul>
-</li>
-<li>按键修饰符<ul>
+<p>按键修饰符</p>
+<ul>
 <li>用来监听键盘事件时，检查详细的按键。<ul>
-<li>keyup.enter, keyup.tab, .delete, .esc, </li>
+<li>keyup.enter, keyup.tab, .delete, .esc</li>
 </ul>
 </li>
 </ul>
-</li>
-<li>系统修饰键<ul>
+<p>系统修饰键</p>
+<ul>
 <li>实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。<ul>
 <li>.crtl, .alt, .shift, .meta</li>
 </ul>
 </li>
 </ul>
+<h2 id="简述vue函数组件和类组件的区别"><a href="#简述vue函数组件和类组件的区别" class="headerlink" title="简述vue函数组件和类组件的区别"></a>简述vue函数组件和类组件的区别</h2><p>函数式组件：</p>
+<ul>
+<li>是一个纯函数</li>
+<li>没有自身状态，只接收外部数据</li>
+<li>产出 VNode 的方式：单纯的函数调用</li>
+</ul>
+<p>类组件：</p>
+<ul>
+<li>是一个类，可实例化</li>
+<li>可以有自身状态</li>
+<li>产出 VNode 的方式：需要实例化，然后调用其 render 函数</li>
+</ul>
+<h2 id="vue的服务端渲染"><a href="#vue的服务端渲染" class="headerlink" title="vue的服务端渲染"></a>vue的服务端渲染</h2><p>什么是服务器端渲染 (SSR)？</p>
+<ul>
+<li>默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务器端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记”激活”为客户端上完全可交互的应用程序。</li>
+</ul>
+<p>为什么使用服务器端渲染 (SSR)？</p>
+<ul>
+<li>更好的 SEO，搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。</li>
+<li>更快的内容到达时间 (time-to-content)，特别是对于缓慢的网络情况或运行缓慢的设备。无需等待所有的 JavaScript 都完成下载并执行，才显示服务器渲染的标记，用户将会更快速地看到完整渲染的页面，通常可以产生更好的用户体验。</li>
+</ul>
+<p>一些需要考虑的点</p>
+<ul>
+<li>开发条件所限。浏览器特定的代码，只能在某些生命周期钩子函数 (lifecycle hook) 中使用；一些外部扩展库 (external library) 可能需要特殊处理，才能在服务器渲染应用程序中运行。</li>
+<li>涉及构建设置和部署的更多要求。服务器渲染应用程序，需要处于 Node.js server 运行环境。</li>
+<li>更多的服务器端负载。在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)</li>
+</ul>
+<p>大致流程</p>
+<ol>
+<li>创建一个 vue 实例</li>
+<li>配置路由，以及相应的视图组件</li>
+<li>使用 vuex 管理数据</li>
+<li>创建服务端入口文件</li>
+<li>创建客户端入口文件</li>
+<li>配置 webpack，分服务端打包配置和客户端打包配置</li>
+<li>创建服务器端的渲染器，将vue实例渲染成html</li>
+</ol>
+<ul>
+<li><a href="https://ssr.vuejs.org/zh/guide/" target="_blank" rel="noopener">官网</a></li>
+<li><a href="https://juejin.im/post/5b72d3d7518825613c02abd6" target="_blank" rel="noopener">博客</a></li>
+</ul>
+<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
+<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
+<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
+<li>vue cli 2.0系列 再往前是2.0版本</li>
+</ul>
+<h2 id="vuex中mutation与action的区别？"><a href="#vuex中mutation与action的区别？" class="headerlink" title="vuex中mutation与action的区别？"></a>vuex中mutation与action的区别？</h2><ul>
+<li><p>首先，更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。</p>
+<ul>
+<li><p>每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    increment (state) &#123;</span><br><span class="line">      <span class="comment">// 变更状态</span></span><br><span class="line">      state.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不能直接调用一个 mutation handler。要唤醒一个 mutation handler，需要以相应的 type 调用 store.commit 方法： <code>store.commit(&#39;increment&#39;)</code> 。</p>
+</li>
+<li><p>可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）</p>
 </li>
 </ul>
+</li>
+<li><p>Mutation 必须是同步函数，在 Vuex 中，mutation 都是同步事务。</p>
+</li>
+<li><p>Action类似于mutation，区别在于：</p>
+<ul>
+<li>Action 提交的是 mutation，而不是直接变更状态。</li>
+<li>Action 可以包含任意异步操作。</li>
+</ul>
+</li>
+<li><p>Action需要用context.commit()提交一个mutation。</p>
+</li>
+<li><p>Action 通过 store.dispatch 方法分发。</p>
+</li>
+</ul>
+<h2 id="vue引入组件时import与require区别？"><a href="#vue引入组件时import与require区别？" class="headerlink" title="vue引入组件时import与require区别？"></a>vue引入组件时import与require区别？</h2><ul>
+<li>require是运行时加载，import是编译时加载；</li>
+<li>require可以写在代码的任意位置，import只能写在文件的最顶端且不可在条件语句或函数作用域中使用；</li>
+<li>require通过module.exports导出的值就不能再变化，import可以改变；</li>
+<li>require运行时才引入模块的属性所以性能相对较低，import编译时引入模块的属性所所以性能稍高。</li>
+</ul>
+<h2 id="vue管理系统权限分配如何实现的？"><a href="#vue管理系统权限分配如何实现的？" class="headerlink" title="vue管理系统权限分配如何实现的？"></a>vue管理系统权限分配如何实现的？</h2><p>本质是通过增删权限id，发送给后台，这里是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 显示分配权限对话框</span></span><br><span class="line">  <span class="keyword">async</span> showAssignRights (row) &#123;</span><br><span class="line">    <span class="comment">// 存roleId，显示对话框</span></span><br><span class="line">    <span class="keyword">this</span>.roleId = row.id</span><br><span class="line">    <span class="keyword">this</span>.assignRightsVisible = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">const</span> &#123; meta, data &#125; = <span class="keyword">await</span> <span class="keyword">this</span>.$axios.get(<span class="string">'rights/tree'</span>)</span><br><span class="line">    <span class="keyword">if</span> (meta.status === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="comment">// console.log(data)</span></span><br><span class="line">      <span class="keyword">this</span>.data = data</span><br><span class="line">      <span class="comment">// 设置选中权限的回显</span></span><br><span class="line">      <span class="keyword">const</span> selectedIds = []</span><br><span class="line">      row.children.forEach(<span class="function"><span class="params">c1</span> =&gt;</span> &#123;</span><br><span class="line">        c1.children.forEach(<span class="function"><span class="params">c2</span> =&gt;</span> &#123;</span><br><span class="line">          c2.children.forEach(<span class="function"><span class="params">c3</span> =&gt;</span> &#123;</span><br><span class="line">            selectedIds.push(c3.id)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// 通过 keys 设置目前勾选的节点，使用此方法必须设置 node-key 属性</span></span><br><span class="line">      <span class="keyword">this</span>.$refs.tree.setCheckedKeys(selectedIds)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.error(meta.msg)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 分配权限</span></span><br><span class="line">  <span class="keyword">async</span> assignRights () &#123;</span><br><span class="line">    <span class="comment">// 若节点可被选择（即 show-checkbox 为 true），则返回目前被选中的节点的 key 所组成的数组</span></span><br><span class="line">    <span class="keyword">const</span> allSelected = <span class="keyword">this</span>.$refs.tree.getCheckedKeys()</span><br><span class="line">    <span class="comment">// 返回目前半选中的节点的 key 所组成的数组</span></span><br><span class="line">    <span class="keyword">const</span> halfSelected = <span class="keyword">this</span>.$refs.tree.getHalfCheckedKeys()</span><br><span class="line">    <span class="comment">// 后台需要以','分割的权限 ID 列表，展开，拼接</span></span><br><span class="line">    <span class="keyword">const</span> allIds = [...allSelected, ...halfSelected].join(<span class="string">','</span>)</span><br><span class="line">    <span class="comment">// ！！！发送参数时后台要求参数名为rids</span></span><br><span class="line">    <span class="keyword">const</span> &#123; meta &#125; = <span class="keyword">await</span> <span class="keyword">this</span>.$axios.post( <span class="string">`roles/<span class="subst">$&#123;<span class="keyword">this</span>.roleId&#125;</span>/rights`</span> , &#123; <span class="attr">rids</span>: allIds &#125;)</span><br><span class="line">    <span class="keyword">if</span> (meta.status === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.success(meta.msg)</span><br><span class="line">      <span class="comment">// 重新渲染并隐藏对话框</span></span><br><span class="line">      <span class="keyword">this</span>.getRoleList()</span><br><span class="line">      <span class="keyword">this</span>.assignRightsVisible = <span class="literal">false</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.error(meta.msg)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="在vue中使用echarts"><a href="#在vue中使用echarts" class="headerlink" title="在vue中使用echarts"></a>在vue中使用echarts</h2><ol>
+<li>安装echarts依赖 yarn add echarts 或 npm i echarts -S</li>
+<li>在main.js全局引入</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> echarts <span class="keyword">from</span> <span class="string">'echarts'</span></span><br><span class="line">Vue.prototype.$echarts = echarts</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在所需组件中创建图表，一般在mounted生命周期函数中实例化echarts对象，因为此时DOM已经挂载到页面。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myChart"</span> <span class="attr">:style</span>=<span class="string">"&#123;width: '300px', height: '300px'&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">'hello'</span>,</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            msg: <span class="string">'Welcome to Your Vue.js App'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted() &#123;</span><br><span class="line">        <span class="keyword">this</span>.drawLine();</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        drawLine() &#123;</span><br><span class="line">            <span class="comment">// 基于准备好的dom，初始化echarts实例</span></span><br><span class="line">            <span class="keyword">let</span> myChart = <span class="keyword">this</span>.$echarts.init(<span class="built_in">document</span>.getElementById(<span class="string">'myChart'</span>))</span><br><span class="line">             <span class="comment">// 绘制图表</span></span><br><span class="line">             myChart.setOption(&#123;</span><br><span class="line">                 ......</span><br><span class="line">             &#125;);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
   </div>
 </article>
 
@@ -224,7 +382,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的过滤器是什么，怎么用？"><span class="toc-number">1.</span> <span class="toc-text">vue的过滤器是什么，怎么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导航守卫周期总结"><span class="toc-number">2.</span> <span class="toc-text">导航守卫周期总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中rem布局？"><span class="toc-number">3.</span> <span class="toc-text">vue中rem布局？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><span class="toc-number">4.</span> <span class="toc-text">如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中的MVVM模式是什么"><span class="toc-number">1.</span> <span class="toc-text">vue中的MVVM模式是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue生命周期"><span class="toc-number">2.</span> <span class="toc-text">vue生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue3的新特性"><span class="toc-number">3.</span> <span class="toc-text">vue3的新特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue如果给数组添加参数会有什么问题-怎么解决"><span class="toc-number">4.</span> <span class="toc-text">vue如果给数组添加参数会有什么问题, 怎么解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的过滤器是什么，怎么用？"><span class="toc-number">5.</span> <span class="toc-text">vue的过滤器是什么，怎么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-router的导航守卫有哪些？比较常用的？"><span class="toc-number">6.</span> <span class="toc-text">vue-router的导航守卫有哪些？比较常用的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导航守卫周期总结"><span class="toc-number">7.</span> <span class="toc-text">导航守卫周期总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue中rem布局？"><span class="toc-number">8.</span> <span class="toc-text">vue中rem布局？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><span class="toc-number">9.</span> <span class="toc-text">如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简述vue函数组件和类组件的区别"><span class="toc-number">10.</span> <span class="toc-text">简述vue函数组件和类组件的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue的服务端渲染"><span class="toc-number">11.</span> <span class="toc-text">vue的服务端渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？"><span class="toc-number">12.</span> <span class="toc-text">你刚开始用的vue-cli什么版本，现在用的哪个版本？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vuex中mutation与action的区别？"><span class="toc-number">13.</span> <span class="toc-text">vuex中mutation与action的区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue引入组件时import与require区别？"><span class="toc-number">14.</span> <span class="toc-text">vue引入组件时import与require区别？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue管理系统权限分配如何实现的？"><span class="toc-number">15.</span> <span class="toc-text">vue管理系统权限分配如何实现的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在vue中使用echarts"><span class="toc-number">16.</span> <span class="toc-text">在vue中使用echarts</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
