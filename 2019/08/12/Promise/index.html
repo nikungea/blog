@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="背景介绍目前，绝大多数 JavaScript&#x2F;DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。 什么是 Pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise">
+<meta property="og:url" content="https://nikungea.github.io/blog/2019/08/12/Promise/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="背景介绍目前，绝大多数 JavaScript&#x2F;DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。 什么是 Pro">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-12T14:51:27.000Z">
+<meta property="article:modified_time" content="2020-05-10T15:30:21.954Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Promise</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/02/23/JSON/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/08/12/Promise/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/08/12/Promise/&text=Promise" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/08/12/Promise/&is_video=false&description=Promise" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Promise&body=Check out this article: https://nikungea.github.io/blog/2019/08/12/Promise/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/08/12/Promise/&name=Promise&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/08/12/Promise/&t=Promise" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景介绍"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是-Promise"><span class="toc-number">2.</span> <span class="toc-text">什么是 Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-resolve"><span class="toc-number">2.1.</span> <span class="toc-text">Promise.resolve()</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Promise
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-08-12T14:51:27.000Z" itemprop="datePublished">2019-08-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
+<h2 id="什么是-Promise"><a href="#什么是-Promise" class="headerlink" title="什么是 Promise"></a>什么是 Promise</h2><p>简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。 Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。</p>
+<p>对一个 Promise 调用 then(..) 的时候，即使这个 Promise 已经决议，提供给 then(..) 的回调也总会被异步调用。 </p>
+<p>没有任何东西(甚至 JavaScript 错误)能阻止 Promise 向你通知它的决议(如果它决议了的话)。如果你对一个 Promise 注册了一个完成回调和一个拒绝回调，那么 Promise 在决议时总是会调用其中的一个。</p>
+<p>Promise  对象有以下两个特点。</p>
+<p>（1）对象的状态不受外界影响。 Promise 对象代表一个异步操作，有三种状态： pending （进行中）、 fulfilled （已成功）和 rejected （已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是 Promise 这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。</p>
+<p>（2）一旦状态改变，就不会再变，任何时候都可以得到这个结果。 Promise 对象的状态改变，只有两种可能：从 pending 变为 fulfilled 和从 pending 变为 rejected 。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。如果改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。</p>
+<p>有了 Promise 对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外， Promise 对象提供统一的接口，使得控制异步操作更加容易。</p>
+<ul>
+<li>每次你对 Promise 调用 then(..)，它都会创建并返回一个新的 Promise，我们可以将其链接起来;</li>
+<li>不管从 then(..) 调用的完成回调(第一个参数)返回的值是什么，它都会被自动设置为被链接 Promise(第一点中的)的完成。</li>
+</ul>
+<p>Promise 这种模式通过可信任的语义<code>把回调作为参数</code>传递，使得这种行为更可靠更合理。 通过把回调的控制反转反转回来，我们把控制权放在了一个可信任的系统(Promise)中，这种系统的设计目的就是为了使异步编码更清晰。</p>
+<p>Promise 也有一些缺点。首先，无法取消 Promise ，一旦新建它就会立即执行无法中途取消。其次，如果不设置回调函数， Promise 内部抛出的错误，不会反应到外部。第三，当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。</p>
+<p>如果使用多个参数调用 resovle(..) 或者 reject(..)，第一个参数之后的所有参数都会被默默忽略。如果要传递多个值，必须要把它们封装在单个值中传递，比如通过一个数组或对象。</p>
+<p>简单总结一下使链式流程控制可行的 Promise 固有特性。<br>• 调用 Promise 的 then(..) 会自动创建一个新的 Promise 从调用返回。<br>• 在完成或拒绝处理函数内部，如果返回一个值或抛出一个异常，新返回的(可链接的)<br>Promise 就相应地决议。<br>• 如果完成或拒绝处理函数返回一个 Promise，它将会被展开，这样一来，不管它的决议<br>值是什么，都会成为当前 then(..) 返回的链接 Promise 的决议值。</p>
+<h3 id="Promise-resolve"><a href="#Promise-resolve" class="headerlink" title="Promise.resolve()"></a>Promise.resolve()</h3><ol>
+<li><p>如果向 Promise.resolve(..) 传递一个真正的 Promise，就只会返回同一个 promise</p>
+</li>
+<li><p>如果向 Promise.resolve(..) 传递一个非 Promise、非 thenable 的立即值，就会得到一个用 这个值填充的 promise。</p>
+</li>
+<li><p>如果向 Promise.resolve(..) 传递了一个非 Promise 的 thenable 值，前者就会试图展开这个值，而且展开过程会持续到提取出一个具体的非类 Promise 的最终值。</p>
+<ul>
+<li>Promise.resolve(..) 可以接受任何 thenable，将其解封为它的非 thenable 值。从 Promise.resolve(..) 得到的是一个真正的 Promise，是一个可以信任的值。如果传入的已经是真正的 Promise，那么你得到的就是它本身，所以通过 Promise.resolve(..) 过滤来获得可信任性完全没有坏处。</li>
+</ul>
+</li>
+</ol>
+<p>最好是用 Promise.resolve(..) 为所有函数的返回值(不管是不是 thenable) 都封装一层，好处是这样做很容易把函数调用规范为定义良好的异步任务。</p>
+<p>一个典型的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">delay</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(resolve, time);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">delay(<span class="number">1000</span>)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 2, after 1000ms"</span>);</span><br><span class="line">  <span class="keyword">return</span> delay(<span class="number">2000</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 3, after another 2000ms"</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 4, just after step 3"</span>);</span><br><span class="line">  <span class="keyword">return</span> delay(<span class="number">500</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 5, after another 500ms"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// $ node demo.js</span></span><br><span class="line"><span class="comment">// step 2, after 1000ms</span></span><br><span class="line"><span class="comment">// step 3, after another 2000ms</span></span><br><span class="line"><span class="comment">// step 4, just after step 3</span></span><br><span class="line"><span class="comment">// step 5, after another 500ms</span></span><br></pre></td></tr></table></figure>
+<p>用Promise封装一个简单的Ajax：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myAjax</span>(<span class="params">method, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(method, url);</span><br><span class="line">        xhr.onload = <span class="function"><span class="params">()</span> =&gt;</span> resolve(xhr.responseText);</span><br><span class="line">        xhr.onerror = <span class="function"><span class="params">()</span> =&gt;</span> reject(xhr.statusText);</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景介绍"><span class="toc-number">1.</span> <span class="toc-text">背景介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是-Promise"><span class="toc-number">2.</span> <span class="toc-text">什么是 Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-resolve"><span class="toc-number">2.1.</span> <span class="toc-text">Promise.resolve()</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/08/12/Promise/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/08/12/Promise/&text=Promise" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/08/12/Promise/&is_video=false&description=Promise" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Promise&body=Check out this article: https://nikungea.github.io/blog/2019/08/12/Promise/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/08/12/Promise/&title=Promise" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/08/12/Promise/&name=Promise&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/08/12/Promise/&t=Promise" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
