@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>JS监听触摸事件的简单实现</title>
+    <url>/blog/2020/05/19/JS%E7%9B%91%E5%90%AC%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>工作中遇到一个场景，在混合开发过程中，需要在APP某个页面进行一个版本切换，条件很简单，双指放大时，切换到老年版页面，双指缩小时，切换到正常版页面。虽然原生性能比较好，但用原生去写比较耗时，为了快速上线，决定由前端实现一个简单的版本，后续再进行优化。</p>
+<a id="more"></a>
+<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>工作中遇到一个场景，在混合开发过程中，需要在APP某个页面进行一个版本切换，条件很简单，双指放大时，切换到老年版页面，双指缩小时，切换到正常版页面。虽然原生性能比较好，但用原生去写比较耗时，为了快速上线，决定由前端实现一个简单的版本，后续再进行优化。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>十二点半了，先写下思路，明天再实现</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取到当前页面元素，document</span></span><br><span class="line"><span class="comment"> * 监听touch事件</span></span><br><span class="line"><span class="comment"> * 判断为双指放大时，触发事件，然后切换为老年版，停止响应放大事件</span></span><br><span class="line"><span class="comment"> * 在老年版双指缩小时，触发事件，切换为正常版，继续监听touch事件</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 如何让判断为放大？</span></span><br><span class="line"><span class="comment"> * 监听touchstart，只需要获取到两个点初始位置，计算此时距离</span></span><br><span class="line"><span class="comment"> * 监听touchend，计算此时距离与初始位置之比，&gt;1为放大，&lt;1为缩小，分别处发不同的事件</span></span><br><span class="line"><span class="comment"> * 当然在这些过程中要做一些判断与校验</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <tags>
+        <tag>移动端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JSON的两个常用方法</title>
+    <url>/blog/2019/02/23/JSON/</url>
+    <content><![CDATA[<p>JSON对象包含两个方法: 用于解析 JavaScript Object Notation  (JSON) 的 parse() 方法，以及将对象/值转换为 JSON字符串的 stringify() 方法。除了这两个方法, JSON这个对象本身并没有其他作用，也不能被调用或者作为构造函数调用。</p>
+<h4 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h4><p>JSON 是一种语法，用来序列化对象、数组、数值、字符串、布尔值和 null 。它基于 JavaScript 语法，但与之不同：JavaScript不是JSON，JSON也不是JavaScript。</p>
+<table>
+<thead>
+<tr>
+<th>JS类型</th>
+<th>JSON</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对象和数组</td>
+<td>属性名称必须是双引号括起来的字符串；最后一个属性后不能有逗号。</td>
+</tr>
+<tr>
+<td>数值</td>
+<td>禁止出现前导零（ <code>JSON.stringify</code> 方法自动忽略前导零，而在 <code>JSON.parse</code> 方法中将会抛出 SyntaxError）；如果有小数点, 则后面至少跟着一位数字。</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>字符串必须用双引号括起来。</td>
+</tr>
+</tbody></table>
+<h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify()"></a>JSON.stringify()</h3><p>将一个 JavaScript 值（对象或者数组）转换为一个 JSON 字符串，如果指定了 replacer 是一个函数，则可以选择性地替换值，或者如果指定了 replacer 是一个数组，则可选择性地仅包含数组指定的属性。</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(value[, replacer[, space]])</span><br></pre></td></tr></table></figure>
+
+<h5 id="参数"><a href="#参数" class="headerlink" title="参数 :"></a>参数 :</h5><ul>
+<li>value<ul>
+<li>要序列化成 一个 JSON 字符串的值。</li>
+</ul>
+</li>
+<li>replacer(可选)<ul>
+<li>如果该参数是一个函数，则在序列化过程中，被序列化的值的每个属性都会经过该函数的转换和处理，如若返回 undefined 或者一个函数，将会被 null 取代。</li>
+<li>如果该参数是一个数组，则只有包含在这个数组中的属性名才会被序列化到最终的 JSON 字符串中；</li>
+<li>如果该参数为 null 或者未提供，则对象所有的属性都会被序列化；</li>
+</ul>
+</li>
+<li>space <ul>
+<li>指定缩进用的空白字符串，用于美化输出(pretty-print); </li>
+<li>如果参数是个数字，它代表有多少的空格；上限为10。该值若小于1，则意味着没有空格；</li>
+<li>如果该参数为字符串（当字符串长度超过10个字母，取其前10个字母），该字符串将被作为空格；</li>
+<li>如果该参数没有提供（或者为 null），将没有空格。</li>
+</ul>
+</li>
+</ul>
+<p><code>返回值</code> ：一个表示给定值的JSON字符串。</p>
+<h4 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h4><ul>
+<li>转换值如果有 toJSON() 方法，该方法定义什么值将被序列化。</li>
+<li>非数组对象的属性不能保证以特定的顺序出现在序列化后的字符串中。</li>
+<li>布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。</li>
+<li>undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略（出现在非数组对象的属性值中时）或者被转换成 null（出现在数组中时）。函数、undefined 被单独转换时，会返回 undefined，如JSON. stringify(function(){}) or JSON. stringify(undefined). </li>
+<li>对包含循环引用的对象（对象之间相互引用，形成无限循环）执行此方法，会抛出错误。</li>
+<li>所有以 symbol 为属性键的属性都会被完全忽略掉，即便 replacer 参数中强制指定包含了它们。</li>
+<li>Date 日期调用了 toJSON() 将其转换为了 string 字符串（同Date. toISOString()），因此会被当做字符串处理。</li>
+<li>NaN 和 Infinity 格式的数值及 null 都会被当做 null。</li>
+<li>其他类型的对象，包括 Map/Set/WeakMap/WeakSet，仅会序列化可枚举的属性。</li>
+</ul>
+<p>replacer参数 </p>
+<p>replacer 参数可以是一个函数或者一个数组。<br>如果 replacer 是一个数组，数组的值代表将被序列化成 JSON 字符串的属性名。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(foo, [<span class="string">'week'</span>, <span class="string">'month'</span>]);</span><br><span class="line"><span class="comment">// '&#123;"week":45,"month":7&#125;', 只保留 “week” 和 “month” 属性值。</span></span><br></pre></td></tr></table></figure>
+
+<p>作为函数，它有两个参数，键（key）和值（value），它们都会被序列化。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">"string"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">    foundation: <span class="string">"Mozilla"</span>,</span><br><span class="line">    model: <span class="string">"box"</span>,</span><br><span class="line">    week: <span class="number">45</span>,</span><br><span class="line">    transport: <span class="string">"car"</span>,</span><br><span class="line">    month: <span class="number">7</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> jsonString = <span class="built_in">JSON</span>.stringify(foo, replacer);</span><br><span class="line"><span class="comment">// &#123;"week":45,"month":7&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="toJSON方法"><a href="#toJSON方法" class="headerlink" title="toJSON方法"></a>toJSON方法</h3><p>如果一个被序列化的对象拥有 toJSON 方法，那么该 toJSON 方法就会覆盖该对象默认的序列化行为：不是该对象被序列化，而是调用 toJSON 方法后的返回值会被序列化。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    title: <span class="string">'lhq'</span>,</span><br><span class="line">    author: [</span><br><span class="line">        <span class="string">'arthur Y'</span></span><br><span class="line">    ],</span><br><span class="line">    edi: <span class="number">3</span>,</span><br><span class="line">    year: <span class="number">2019</span>,</span><br><span class="line">    child: &#123;</span><br><span class="line">        a: <span class="string">'Joke'</span>,</span><br><span class="line">        b: <span class="string">'Luther'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    toJSON: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'bar'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> jsonObj = <span class="built_in">JSON</span>.stringify(obj, (key, value) =&gt; &#123;</span><br><span class="line">    <span class="keyword">switch</span> (key) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'author'</span>:</span><br><span class="line">            <span class="keyword">return</span> value.join(<span class="string">','</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'year'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">5000</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'edi'</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(jsonObj); <span class="comment">// 写了一堆，最后只会输出"bar"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="JSON-parse"><a href="#JSON-parse" class="headerlink" title="JSON.parse()"></a>JSON.parse()</h3><p>用来解析JSON字符串，构造由字符串描述的JavaScript值或对象。提供可选的 reviver 函数用以在返回之前对所得到的对象执行变换(操作)。</p>
+<h4 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(text[, reviver])</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h4><p>text: 要被解析成 JavaScript 值的字符串。</p>
+<p>reviver(可选): 转换器, 如果传入该参数(函数)，可以用来修改解析生成的原始值，调用时机在 parse 函数返回之前。</p>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>Object 类型, 对应给定 JSON 文本的对象/值。</p>
+<h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>若传入的字符串不符合 JSON 规范，则会抛出 SyntaxError 异常。</p>
+<h4 id="使用-reviver-函数"><a href="#使用-reviver-函数" class="headerlink" title="使用 reviver 函数"></a>使用 reviver 函数</h4><p>如果指定了 reviver 函数，则解析出的 JavaScript 值（解析值）会经过一次转换后才将被最终返回（返回值）。</p>
+]]></content>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JSBridge原理简介</title>
+    <url>/blog/2020/04/26/JSBridge%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>主要是给 JavaScript 提供调用 Native 功能的接口，让混合开发中的『前端部分』可以方便地使用地址位置、摄像头甚至支付等 Native 功能。<br>核心是 构建 Native 和非 Native 间消息通信的通道，而且是 双向通信的通道。</p>
+<ul>
+<li>JS 向 Native 发送消息 : 调用相关功能、通知 Native 当前 JS 的相关状态等。</li>
+<li>Native 向 JS 发送消息 : 回溯调用结果、消息推送、通知 JS 当前 Native 的状态等。<a id="more"></a>
+<h2 id="为什么是-JSBridge-？"><a href="#为什么是-JSBridge-？" class="headerlink" title="为什么是 JSBridge ？"></a>为什么是 JSBridge ？</h2></li>
+</ul>
+<p>JavaScript 主要载体 Web 是当前世界上的 最易编写 、 最易维护 、最易部署 的 UI 构建方式。工程师可以用很简单的 HTML 标签和 CSS 样式快速的构建出一个页面，并且在服务端部署后，用户不需要主动更新，就能看到最新的 UI 展现。<br>简而言之，开发维护成本和更新成本较低。</p>
+<h2 id="主要技术方案"><a href="#主要技术方案" class="headerlink" title="主要技术方案"></a>主要技术方案</h2><p>基于 Web 的 Hybrid 解决方案：例如微信浏览器、各公司的 Hybrid 方案。<br>非基于 Web UI 但业务逻辑基于 JavaScript 的解决方案：例如 React-Native。</p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>主要是给 JavaScript 提供调用 Native 功能的接口，让混合开发中的『前端部分』可以方便地使用地址位置、摄像头甚至支付等 Native 功能。<br>核心是 构建 Native 和非 Native 间消息通信的通道，而且是 双向通信的通道。</p>
+<ul>
+<li>JS 向 Native 发送消息 : 调用相关功能、通知 Native 当前 JS 的相关状态等。</li>
+<li>Native 向 JS 发送消息 : 回溯调用结果、消息推送、通知 JS 当前 Native 的状态等。</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>JavaScript 是运行在一个单独的 JS Context 中(例如，WebView 的 Webkit 引擎、JSCore).<br>JSBridge要实现的主要逻辑：通信调用（Native 与 JS 通信）和 句柄解析调用。</p>
+<h3 id="通信原理"><a href="#通信原理" class="headerlink" title="通信原理"></a>通信原理</h3><h4 id="JavaScript-调用-Native"><a href="#JavaScript-调用-Native" class="headerlink" title="JavaScript 调用 Native"></a>JavaScript 调用 Native</h4><ol>
+<li>注入 API </li>
+</ol>
+<ul>
+<li>通过 WebView 提供的接口，向 JavaScript 的 Context（window）中注入对象或者方法，让 JavaScript 调用时，直接执行相应的 Native 代码逻辑，达到 JavaScript 调用 Native 的目的。<br>前端调用方式<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.webkit.messageHandlers.nativeBridge.postMessage(message); <span class="comment">//ios</span></span><br><span class="line"><span class="built_in">window</span>.nativeBridge.postMessage(message); <span class="comment">//andorid</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li>拦截URL SCHEME</li>
+</ol>
+<ul>
+<li><p>URL SCHEME是一种类似于url的链接，是为了方便app直接互相调用设计的，形式和普通的 url 近似，主要区别是 protocol 和 host 一般是自定义的，例如: qunarhy://hy/url?url=ymfe.tech，protocol 是 qunarhy，host 则是 hy。</p>
+</li>
+<li><p>拦截 URL SCHEME 的主要流程是：Web 端通过某种方式（例如 iframe.src）发送 URL Scheme 请求，之后 Native 拦截到请求并根据 URL SCHEME（包括所带的参数）进行相关操作。</p>
+</li>
+<li><p>缺陷：</p>
+<ul>
+<li>使用 iframe.src 发送 URL SCHEME 会有 url 长度的隐患。</li>
+<li>创建请求，需要一定的耗时，比注入 API 的方式调用同样的功能，耗时会较长。</li>
+</ul>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>支持 iOS6<br>选择 iframe.src的原因：如果通过 location.href 连续调用 Native，很容易丢失一些调用。<br>有些方案为了规避 url 长度隐患的缺陷，在 iOS 上采用了使用 Ajax 发送同域请求的方式，并将参数放到 head 或 body 里。这样，虽然规避了 url 长度的隐患，但是 WKWebView 并不支持这样的方式。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Native-调用-JavaScript"><a href="#Native-调用-JavaScript" class="headerlink" title="Native 调用 JavaScript"></a>Native 调用 JavaScript</h4><p>Native 调用 JavaScript 较为简单，毕竟不管是 iOS 的 UIWebView 还是 WKWebView，还是 Android 的 WebView 组件，都以子组件的形式存在于 View/Activity 中，直接调用相应的 API 即可。<br>Native 调用 JavaScript，其实就是执行拼接 JavaScript 字符串，从外部调用 JavaScript 中的方法，因此 <code>JavaScript 的方法必须在全局的 window 上</code> 。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>通信原理是 JSBridge 实现的核心。推荐使用如下实现方式：</p>
+<ul>
+<li>JavaScript 调用 Native 推荐使用 注入 API 的方式（iOS6 忽略，Android 4.2以下使用 WebViewClient 的 onJsPrompt 方式）。</li>
+<li>Native 调用 JavaScript 则直接执行拼接好的 JavaScript 代码即可。</li>
+</ul>
+<h2 id="接口实现"><a href="#接口实现" class="headerlink" title="接口实现"></a>接口实现</h2><p>JSBridge接口主要功能有两个： <code>调用 Native（给 Native 发消息）</code> 和 <code>被 Native 调用（接收 Native 消息）</code> 。<br>实现示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.JSBridge = &#123;</span><br><span class="line">    <span class="comment">// 调用 Native</span></span><br><span class="line">    invoke: <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 判断环境，获取不同的 nativeBridge</span></span><br><span class="line">        nativeBridge.postMessage(msg);</span><br><span class="line">    &#125;,</span><br><span class="line">    receiveMessage: <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 处理 msg</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>句柄与功能对应：我们将句柄抽象为 桥名（BridgeName），最终演化为 一个 BridgeName 对应一个 Native 功能或者一类 Native 消息。 </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.JSBridge = &#123;</span><br><span class="line">    <span class="comment">// 调用 Native</span></span><br><span class="line">    invoke: <span class="function"><span class="keyword">function</span>(<span class="params">bridgeName, data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 判断环境，获取不同的 nativeBridge</span></span><br><span class="line">        nativeBridge.postMessage(&#123;</span><br><span class="line">            bridgeName: bridgeName,</span><br><span class="line">            data: data || &#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    receiveMessage: <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> bridgeName = msg.bridgeName,</span><br><span class="line">            data = msg.data || &#123;&#125;;</span><br><span class="line">        <span class="comment">// 具体逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用原生时如何实现callback"><a href="#调用原生时如何实现callback" class="headerlink" title="调用原生时如何实现callback"></a>调用原生时如何实现callback</h3><p>JSBridge 的 Callback ，其实就是 RPC 框架的回调机制。JSONP 机制解释：</p>
+<ul>
+<li>当发送 JSONP 请求时，url 参数里会有 callback 参数，其值是 当前页面唯一 的，而同时以此参数值为 key 将回调函数存到 window 上，随后，服务器返回 script 中，也会以此参数值作为句柄，调用相应的回调函数。<br>可见， <code>callback 参数这个 唯一标识 是这个回调逻辑的关键。</code><br>实现逻辑：</li>
+<li>用一个自增的唯一 id，来标识并存储回调函数，并把此 id 以参数形式传递给 Native，而 Native 也以此 id 作为回溯的标识。这样，即可实现 Callback 回调逻辑。<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> id = <span class="number">0</span>,</span><br><span class="line">        callbacks = &#123;&#125;,</span><br><span class="line">        registerFuncs = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">window</span>.JSBridge = &#123;</span><br><span class="line">        <span class="comment">// 调用 Native</span></span><br><span class="line">        invoke: <span class="function"><span class="keyword">function</span>(<span class="params">bridgeName, callback, data</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 判断环境，获取不同的 nativeBridge</span></span><br><span class="line">            <span class="keyword">var</span> thisId = id++; <span class="comment">// 获取唯一 id</span></span><br><span class="line">            callbacks[thisId] = callback; <span class="comment">// 存储 Callback</span></span><br><span class="line">            nativeBridge.postMessage(&#123;</span><br><span class="line">                bridgeName: bridgeName,</span><br><span class="line">                data: data || &#123;&#125;,</span><br><span class="line">                callbackId: thisId <span class="comment">// 传到 Native 端</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;,</span><br><span class="line">        receiveMessage: <span class="function"><span class="keyword">function</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> bridgeName = msg.bridgeName,</span><br><span class="line">                data = msg.data || &#123;&#125;,</span><br><span class="line">                callbackId = msg.callbackId, <span class="comment">// Native 将 callbackId 原封不动传回</span></span><br><span class="line">                resID = msg.resID;</span><br><span class="line">            <span class="comment">// 具体逻辑</span></span><br><span class="line">            <span class="comment">// bridgeName 和 callbackId 不会同时存在</span></span><br><span class="line">            <span class="keyword">if</span> (callbackId) &#123;</span><br><span class="line">                <span class="keyword">if</span> (callbacks[callbackId]) &#123; <span class="comment">// 找到相应句柄</span></span><br><span class="line">                    callbacks[callbackId](msg.data); <span class="comment">// 执行调用</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            elseif(bridgeName) &#123;</span><br><span class="line">                <span class="keyword">if</span> (registerFuncs[bridgeName]) &#123; <span class="comment">// 通过 bridgeName 找到句柄</span></span><br><span class="line">                    <span class="keyword">var</span> ret = &#123;&#125;,</span><br><span class="line">                        flag = <span class="literal">false</span>;</span><br><span class="line">                    registerFuncs[bridgeName].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) =&gt; </span>&#123;</span><br><span class="line">                        callback(data, <span class="function"><span class="keyword">function</span>(<span class="params">r</span>) </span>&#123;</span><br><span class="line">                            flag = <span class="literal">true</span>;</span><br><span class="line">                            ret = <span class="built_in">Object</span>.assign(ret, r);</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;);</span><br><span class="line">                    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">                        nativeBridge.postMessage(&#123; <span class="comment">// 回调 Native</span></span><br><span class="line">                            resID: resID,</span><br><span class="line">                            ret: ret</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        register: <span class="function"><span class="keyword">function</span>(<span class="params">bridgeName, callback</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!registerFuncs[bridgeName]) &#123;</span><br><span class="line">                registerFuncs[bridgeName] = [];</span><br><span class="line">            &#125;</span><br><span class="line">            registerFuncs[bridgeName].push(callback); <span class="comment">// 存储回调</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+在 Native 端配合实现 JSBridge 的 JavaScript 调用 Native 逻辑：</li>
+<li>接收到 JavaScript 消息 =&gt; 解析参数，拿到 bridgeName、data 和 callbackId =&gt; 根据 bridgeName 找到功能方法，以 data 为参数执行 =&gt; 执行返回值和 callbackId 一起回传前端。 Native 调用 JavaScript 也同样简单，直接自动生成一个唯一的 ResponseId，并存储句柄，然后和 data 一起发送给前端即可。</li>
+</ul>
+<h2 id="JSBridge-如何引用"><a href="#JSBridge-如何引用" class="headerlink" title="JSBridge 如何引用"></a>JSBridge 如何引用</h2><h3 id="由-Native-端进行注入"><a href="#由-Native-端进行注入" class="headerlink" title="由 Native 端进行注入"></a>由 Native 端进行注入</h3><p>注入方式和 Native 调用 JavaScript 类似，直接执行桥的全部代码。</p>
+<ul>
+<li>优点在于：桥的版本很容易与 Native 保持一致，Native 端不用对不同版本的 JSBridge 进行兼容；</li>
+<li>缺点是：注入时机不确定，需要实现注入失败后重试的机制，保证注入的成功率，同时 JavaScript 端在调用接口时，需要优先判断 JSBridge 是否已经注入成功。</li>
+</ul>
+<h3 id="由-JavaScript-端引用"><a href="#由-JavaScript-端引用" class="headerlink" title="由 JavaScript 端引用"></a>由 JavaScript 端引用</h3><p>与由 Native 端注入正好相反，直接与 JavaScript 一起执行。</p>
+<ul>
+<li>优点在于：JavaScript 端可以确定 JSBridge 的存在，直接调用即可；</li>
+<li>缺点是：如果桥的实现方式有更改，JSBridge 需要兼容多版本的 Native Bridge 或者 Native Bridge 兼容多版本的 JSBridge。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>混合开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacBook查看ip的几个方法</title>
+    <url>/blog/2019/03/02/MacBook%E6%9F%A5%E7%9C%8Bip%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h2><p>打开终端</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>会得到一长串的信息，肉眼寻找即可，大致在en0这个位置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">en0: flags=8863&lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&gt; mtu 1500</span><br><span class="line">	options=400&lt;CHANNEL_IO&gt;</span><br><span class="line">	ether </span><br><span class="line">	inet6 %en0 prefixlen 64 secured scopeid 0x6 </span><br><span class="line">	inet 192.168.x.x netmask 0xffffff00 broadcast 192.168.x.xxx</span><br><span class="line">	nd6 options=201&lt;PERFORMNUD,DAD&gt;</span><br><span class="line">	media: autoselect</span><br><span class="line">	status: active</span><br></pre></td></tr></table></figure>
+
+<h2 id="option快捷键"><a href="#option快捷键" class="headerlink" title="option快捷键"></a>option快捷键</h2><p>如果只是想单纯的获取到ip地址，更推荐使用快捷键方式。</p>
+<p>按住option键，鼠标左键点击wifi标志，弹出的窗口不再是之前选择一系列WiFi的简单列表，而是列出了当前连接网络的详细信息，比如，ip地址 ，频段，速率，噪音等等。</p>
+]]></content>
+      <tags>
+        <tag>Common Sense</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Polyfill</title>
+    <url>/blog/2019/05/18/Polyfill/</url>
+    <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Polyfill 是一块代码（通常是 Web 上的 JavaScript），用来为旧浏览器提供它没有原生支持的较新的功能。</p>
+<p>一句话版本：用于实现浏览器并不支持的原生API的代码。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>例如，querySelectorAll是很多现代浏览器都支持的原生Web API，但是有些古老的浏览器并不支持，假设有人写了库，只要用了这个库， 就可以在古老的浏览器里面使用document.querySelectorAll，使用方法跟现代浏览器原生API无异。那么这个库就可以称为Polyfill或者Polyfiller。</p>
+<h2 id="两个示例"><a href="#两个示例" class="headerlink" title="两个示例"></a>两个示例</h2><p>摘抄自MDN</p>
+<h3 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create()"></a>Object.create()</h3><p>Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的<strong>proto</strong>。 </p>
+<h4 id="Polyfill"><a href="#Polyfill" class="headerlink" title="Polyfill"></a>Polyfill</h4><p>这个 polyfill 涵盖了主要的应用场景，它创建一个已经选择了原型的新对象，但没有把第二个参数考虑在内。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Object</span>.create !== <span class="string">"function"</span>) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">proto, propertiesObject</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> proto !== <span class="string">'object'</span> &amp;&amp; <span class="keyword">typeof</span> proto !== <span class="string">'function'</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Object prototype may only be an Object: '</span> + proto);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (proto === <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument."</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> propertiesObject != <span class="string">'undefined'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"This browser's implementation of Object.create is a shim and doesn't support a second argument."</span>);</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">        F.prototype = proto;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h3><p>Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
+<h4 id="Polyfill-1"><a href="#Polyfill-1" class="headerlink" title="Polyfill"></a>Polyfill</h4><p>此polyfill不支持 symbol 属性，因为ES5 中根本没有 symbol ：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Object</span>.assign != <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="comment">// Must be writable: true, enumerable: false, configurable: true</span></span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>, <span class="string">"assign"</span>, &#123;</span><br><span class="line">        value: <span class="function"><span class="keyword">function</span> <span class="title">assign</span>(<span class="params">target, varArgs</span>) </span>&#123; <span class="comment">// .length of function is 2</span></span><br><span class="line"><span class="meta">            'use strict'</span>;</span><br><span class="line">            <span class="keyword">if</span> (target == <span class="literal">null</span>) &#123; <span class="comment">// TypeError if undefined or null</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Cannot convert undefined or null to object'</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">let</span> to = <span class="built_in">Object</span>(target);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> index = <span class="number">1</span>; index &lt; <span class="built_in">arguments</span>.length; index++) &#123;</span><br><span class="line">                <span class="keyword">var</span> nextSource = <span class="built_in">arguments</span>[index];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (nextSource != <span class="literal">null</span>) &#123; <span class="comment">// Skip over if undefined or null</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">let</span> nextKey <span class="keyword">in</span> nextSource) &#123;</span><br><span class="line">                        <span class="comment">// Avoid bugs when hasOwnProperty is shadowed</span></span><br><span class="line">                        <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.hasOwnProperty.call(nextSource, nextKey)) &#123;</span><br><span class="line">                            to[nextKey] = nextSource[nextKey];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> to;</span><br><span class="line">        &#125;,</span><br><span class="line">        writable: <span class="literal">true</span>,</span><br><span class="line">        configurable: <span class="literal">true</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue脚手架介绍（基础）</title>
+    <url>/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="脚手架的意义"><a href="#脚手架的意义" class="headerlink" title="脚手架的意义"></a>脚手架的意义</h2><ul>
+<li><p>是开发现代web应用的必备</p>
+</li>
+<li><p>充分利用webpack，babel，eslint等工具辅助项目开发</p>
+</li>
+<li><p>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</p>
+</li>
+<li><p>提供了配套的图形管理界面，用于创建，开发和管理你的项目</p>
+<a id="more"></a>
+<h2 id="脚手架的意义-1"><a href="#脚手架的意义-1" class="headerlink" title="脚手架的意义"></a>脚手架的意义</h2></li>
+<li><p>是开发现代web应用的必备</p>
+</li>
+<li><p>充分利用webpack，babel，eslint等工具辅助项目开发</p>
+</li>
+<li><p>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</p>
+</li>
+<li><p>提供了配套的图形管理界面，用于创建，开发和管理你的项目</p>
+</li>
+</ul>
+<h2 id="版本记录"><a href="#版本记录" class="headerlink" title="版本记录"></a>版本记录</h2><ul>
+<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
+<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
+<li>之前是2.0版本</li>
+</ul>
+<h2 id="单文件组件（-vue）"><a href="#单文件组件（-vue）" class="headerlink" title="单文件组件（.vue）"></a>单文件组件（.vue）</h2><ul>
+<li>优点<ul>
+<li>完整语法高亮</li>
+<li>CommonJS 模块</li>
+<li>组件作用域的 CSS</li>
+</ul>
+</li>
+<li>template<ul>
+<li>就是配置组件里的template模板</li>
+</ul>
+</li>
+<li>script<ul>
+<li>导出的就是组件对象</li>
+</ul>
+</li>
+<li>style<ul>
+<li>style lang=”less” scoped</li>
+<li>lang，指定语言，less, sass…</li>
+<li>scoped，使css只作用于当前组件</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统组件"><a href="#系统组件" class="headerlink" title="系统组件"></a>系统组件</h2><p>CLI</p>
+<ul>
+<li>一个全局安装的 npm 包，提供了终端里的 vue 命令。它可以通过 vue create 快速创建一个新项目的脚手架，或者直接通过 vue serve 构建新想法的原型。也可以通过 vue ui 通过一套图形化界面管理所有项目。</li>
+</ul>
+<p>CLI 服务</p>
+<ul>
+<li>CLI 服务 (@vue/cli-service) 是一个开发环境依赖。它是一个 npm 包，局部安装在每个 @vue/cli 创建的项目中。</li>
+<li>CLI 服务构建于 webpack 和 webpack-dev-server 之上。包含了：<ul>
+<li>加载其它 CLI 插件的核心服务；</li>
+<li>一个针对绝大部分应用优化过的内部的 webpack 配置；</li>
+<li>项目内部的 vue-cli-service 命令，提供 serve、build 和 inspect 命令。</li>
+</ul>
+</li>
+</ul>
+<p>CLI 插件</p>
+<ul>
+<li>CLI 插件是向Vue项目提供可选功能的 npm 包，例如 Babel/TypeScript 转译、ESLint 集成、单元测试和 end-to-end 测试等。Vue CLI 插件的名字以 @vue/cli-plugin- (内建插件) 或 vue-cli-plugin- (社区插件) 开头，非常容易使用。当在项目内部运行 vue-cli-service 命令时，它会自动解析并加载 package.json 中列出的所有 CLI 插件。</li>
+<li>插件可以作为项目创建过程的一部分，或在后期加入到项目中。它们也可以被归成一组可复用的 preset。</li>
+</ul>
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>npm i -g @vue/cli</li>
+<li>Mac全局安装需要：sudo…</li>
+<li>检查是否安装正确<ul>
+<li>vue –version</li>
+</ul>
+</li>
+</ul>
+<h3 id="快速原型开发"><a href="#快速原型开发" class="headerlink" title="快速原型开发"></a>快速原型开发</h3><p>可以使用 vue serve 和 vue build 命令对单个 *.vue 文件进行快速原型开发，不过这需要先额外安装一个全局的扩展：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install - g @vue / cli - service - global</span><br></pre></td></tr></table></figure>
+
+<p>vue serve 的缺点就是它需要安装全局依赖，这使得它在不同机器上的一致性不能得到保证。因此这只适用于快速原型开发。</p>
+<h3 id="创建一个项目"><a href="#创建一个项目" class="headerlink" title="创建一个项目"></a>创建一个项目</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue create 项目名</span><br></pre></td></tr></table></figure>
+
+<p>一般在命令行中配置项目preset, 可以选择默认的，也可以手动配置，可以用vue ui在可视化窗口中完成babel，router，eslint，vuex等的配置。</p>
+<ul>
+<li><p>被保存的 preset 将会存在用户的 home 目录下一个名为 .vuerc 的 JSON 文件里。如果想要修改被保存的 preset / 选项，可以编辑这个文件。</p>
+</li>
+<li><p><code>vue create --help</code> 可以查看常用指令</p>
+</li>
+</ul>
+<p>切换到项目根目录 </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cd &lt; yourproject &gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动项目</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">yarn serve</span><br><span class="line"># or</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+
+<p>webpack配置，在vue.config.js</p>
+<ul>
+<li>调整端口，设置自动打开浏览器</li>
+</ul>
+<p>eslint</p>
+<ul>
+<li>配合vs code插件</li>
+<li>保存时自动修复</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Promise</title>
+    <url>/blog/2019/08/12/Promise/</url>
+    <content><![CDATA[<p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
+<a id="more"></a>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
+<h2 id="什么是-Promise"><a href="#什么是-Promise" class="headerlink" title="什么是 Promise"></a>什么是 Promise</h2><p>简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。 Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。</p>
+<p>对一个 Promise 调用 then(..) 的时候，即使这个 Promise 已经决议，提供给 then(..) 的回调也总会被异步调用。 </p>
+<p>没有任何东西(甚至 JavaScript 错误)能阻止 Promise 向你通知它的决议(如果它决议了的话)。如果你对一个 Promise 注册了一个完成回调和一个拒绝回调，那么 Promise 在决议时总是会调用其中的一个。</p>
+<p>Promise  对象有以下两个特点。</p>
+<p>（1）对象的状态不受外界影响。 Promise 对象代表一个异步操作，有三种状态： pending （进行中）、 fulfilled （已成功）和 rejected （已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。这也是 Promise 这个名字的由来，它的英语意思就是“承诺”，表示其他手段无法改变。</p>
+<p>（2）一旦状态改变，就不会再变，任何时候都可以得到这个结果。 Promise 对象的状态改变，只有两种可能：从 pending 变为 fulfilled 和从 pending 变为 rejected 。只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果，这时就称为 resolved（已定型）。如果改变已经发生了，你再对 Promise 对象添加回调函数，也会立即得到这个结果。</p>
+<p>有了 Promise 对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。此外， Promise 对象提供统一的接口，使得控制异步操作更加容易。</p>
+<ul>
+<li>每次你对 Promise 调用 then(..)，它都会创建并返回一个新的 Promise，我们可以将其链接起来;</li>
+<li>不管从 then(..) 调用的完成回调(第一个参数)返回的值是什么，它都会被自动设置为被链接 Promise(第一点中的)的完成。</li>
+</ul>
+<p>Promise 这种模式通过可信任的语义<code>把回调作为参数</code>传递，使得这种行为更可靠更合理。 通过把回调的控制反转反转回来，我们把控制权放在了一个可信任的系统(Promise)中，这种系统的设计目的就是为了使异步编码更清晰。</p>
+<p>Promise 也有一些缺点。首先，无法取消 Promise ，一旦新建它就会立即执行无法中途取消。其次，如果不设置回调函数， Promise 内部抛出的错误，不会反应到外部。第三，当处于 pending 状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。</p>
+<p>如果使用多个参数调用 resovle(..) 或者 reject(..)，第一个参数之后的所有参数都会被默默忽略。如果要传递多个值，必须要把它们封装在单个值中传递，比如通过一个数组或对象。</p>
+<p>简单总结一下使链式流程控制可行的 Promise 固有特性。<br>• 调用 Promise 的 then(..) 会自动创建一个新的 Promise 从调用返回。<br>• 在完成或拒绝处理函数内部，如果返回一个值或抛出一个异常，新返回的(可链接的)<br>Promise 就相应地决议。<br>• 如果完成或拒绝处理函数返回一个 Promise，它将会被展开，这样一来，不管它的决议<br>值是什么，都会成为当前 then(..) 返回的链接 Promise 的决议值。</p>
+<h3 id="Promise-resolve"><a href="#Promise-resolve" class="headerlink" title="Promise.resolve()"></a>Promise.resolve()</h3><ol>
+<li><p>如果向 Promise.resolve(..) 传递一个真正的 Promise，就只会返回同一个 promise</p>
+</li>
+<li><p>如果向 Promise.resolve(..) 传递一个非 Promise、非 thenable 的立即值，就会得到一个用 这个值填充的 promise。</p>
+</li>
+<li><p>如果向 Promise.resolve(..) 传递了一个非 Promise 的 thenable 值，前者就会试图展开这个值，而且展开过程会持续到提取出一个具体的非类 Promise 的最终值。</p>
+<ul>
+<li>Promise.resolve(..) 可以接受任何 thenable，将其解封为它的非 thenable 值。从 Promise.resolve(..) 得到的是一个真正的 Promise，是一个可以信任的值。如果传入的已经是真正的 Promise，那么你得到的就是它本身，所以通过 Promise.resolve(..) 过滤来获得可信任性完全没有坏处。</li>
+</ul>
+</li>
+</ol>
+<p>最好是用 Promise.resolve(..) 为所有函数的返回值(不管是不是 thenable) 都封装一层，好处是这样做很容易把函数调用规范为定义良好的异步任务。</p>
+<p>一个典型的示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">delay</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(resolve, time);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">delay(<span class="number">1000</span>)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 2, after 1000ms"</span>);</span><br><span class="line">  <span class="keyword">return</span> delay(<span class="number">2000</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 3, after another 2000ms"</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 4, just after step 3"</span>);</span><br><span class="line">  <span class="keyword">return</span> delay(<span class="number">500</span>);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"step 5, after another 500ms"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// $ node demo.js</span></span><br><span class="line"><span class="comment">// step 2, after 1000ms</span></span><br><span class="line"><span class="comment">// step 3, after another 2000ms</span></span><br><span class="line"><span class="comment">// step 4, just after step 3</span></span><br><span class="line"><span class="comment">// step 5, after another 500ms</span></span><br></pre></td></tr></table></figure>
+<p>用Promise封装一个简单的Ajax：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myAjax</span>(<span class="params">method, url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        xhr.open(method, url);</span><br><span class="line">        xhr.onload = <span class="function"><span class="params">()</span> =&gt;</span> resolve(xhr.responseText);</span><br><span class="line">        xhr.onerror = <span class="function"><span class="params">()</span> =&gt;</span> reject(xhr.statusText);</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race()"></a>Promise.race()</h3><p>Promise.race(iterable) 方法返回一个 promise，一旦迭代器中的某个promise解决或拒绝，返回的 promise就会解决或拒绝。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  setTimeout(resolve, <span class="number">200</span>, <span class="string">'one'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  setTimeout(reject, <span class="number">100</span>, <span class="string">'two'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([p1, p2]).then( <span class="function"><span class="params">v</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'then: '</span> + v);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'catch: '</span> + err);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// catch: two</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue脚手架介绍（插件和Preset）</title>
+    <url>/blog/2019/11/13/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-Preset/</url>
+    <content><![CDATA[<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>Vue CLI 使用了一套基于插件的架构。如果你查阅一个新创建项目的 package.json，就会发现依赖都是以 @vue/cli-plugin- 开头的。插件可以修改 webpack 的内部配置，也可以向 vue-cli-service 注入命令。在项目创建的过程中，绝大部分列出的特性都是通过插件来实现的。</p>
+<a id="more"></a>
+<h3 id="插件和preset"><a href="#插件和preset" class="headerlink" title="插件和preset"></a>插件和preset</h3><h4 id="插件-1"><a href="#插件-1" class="headerlink" title="插件"></a>插件</h4><p>Vue CLI 使用了一套基于插件的架构。如果你查阅一个新创建项目的 package.json，就会发现依赖都是以 @vue/cli-plugin- 开头的。插件可以修改 webpack 的内部配置，也可以向 vue-cli-service 注入命令。在项目创建的过程中，绝大部分列出的特性都是通过插件来实现的。</p>
+<h5 id="在现有的项目中安装插件"><a href="#在现有的项目中安装插件" class="headerlink" title="在现有的项目中安装插件"></a>在现有的项目中安装插件</h5><p>每个 CLI 插件都会包含一个 (用来创建文件的) 生成器和一个 (用来调整 webpack 核心配置和注入命令的) 运行时插件。<br>如果你想在一个已经被创建好的项目中安装一个插件，可以使用 vue add 命令，比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue add eslint</span><br></pre></td></tr></table></figure>
+
+<p>这个命令将 @vue/eslint 解析为完整的包名 @vue/cli-plugin-eslint，然后从 npm 安装它，调用它的生成器。等价于：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue add cli-plugin-eslint</span><br></pre></td></tr></table></figure>
+
+<p>! 提示</p>
+<p>vue add 的设计意图是为了安装和调用 Vue CLI 插件。这不意味着替换掉普通的 npm 包。对于这些普通的 npm 包，你仍然需要选用包管理器。</p>
+<p>如果出于一些原因你的插件列在了该项目之外的其它 package.json 文件里，你可以在自己项目的 package.json 里设置 vuePlugins.resolveFrom 选项指向包含其它 package.json 的文件夹。</p>
+<p>! 警告</p>
+<p>推荐在运行 vue add 之前将项目的最新状态提交，因为该命令可能调用插件的文件生成器并很有可能更改你现有的文件。</p>
+<h5 id="项目本地的插件"><a href="#项目本地的插件" class="headerlink" title="项目本地的插件"></a>项目本地的插件</h5><p>如果需要在项目里直接访问插件 API 而不需要创建一个完整的插件，可以在 package.json 文件中使用 vuePlugins.service 选项：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;vuePlugins&quot;: &#123;</span><br><span class="line">    &quot;service&quot;: [&quot;my-commands.js&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每个文件都需要暴露一个函数，接受插件 API 作为第一个参数。<br>也可以通过 vuePlugins.ui 选项添加像 UI 插件一样工作的文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;vuePlugins&quot;: &#123;</span><br><span class="line">    &quot;ui&quot;: [&quot;my-ui.js&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Preset"><a href="#Preset" class="headerlink" title="Preset"></a>Preset</h4><p>一个 Vue CLI preset 是一个包含创建新项目所需预定义选项和插件的 JSON 对象，让用户无需在命令提示中选择它们。在 vue create 过程中保存的 preset 会被放在你的 home 目录下的一个配置文件中 (~/.vuerc)。你可以通过直接编辑这个文件来调整、添加、删除保存好的 preset。<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;useConfigFiles&quot;: true,</span><br><span class="line">  &quot;cssPreprocessor&quot;: &quot;sass&quot;,</span><br><span class="line">  &quot;plugins&quot;: &#123;</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-babel&quot;: &#123;&#125;,</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-eslint&quot;: &#123;</span><br><span class="line">      &quot;config&quot;: &quot;airbnb&quot;,</span><br><span class="line">      &quot;lintOn&quot;: [&quot;save&quot;, &quot;commit&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-router&quot;: &#123;&#125;,</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-vuex&quot;: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Preset 的数据会被插件生成器用来生成相应的项目文件。也可以为集成工具添加配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;useConfigFiles&quot;: true,</span><br><span class="line">  &quot;plugins&quot;: &#123;...&#125;,</span><br><span class="line">  &quot;configs&quot;: &#123;</span><br><span class="line">    &quot;vue&quot;: &#123;...&#125;,</span><br><span class="line">    &quot;postcss&quot;: &#123;...&#125;,</span><br><span class="line">    &quot;eslintConfig&quot;: &#123;...&#125;,</span><br><span class="line">    &quot;jest&quot;: &#123;...&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这些额外的配置将会根据 useConfigFiles 的值被合并到 package.json 或相应的配置文件中。例如，当 “useConfigFiles”: true 的时候，configs 的值将会被合并到 vue.config.js 中。</p>
+<h5 id="Preset-插件的版本管理"><a href="#Preset-插件的版本管理" class="headerlink" title="Preset 插件的版本管理"></a>Preset 插件的版本管理</h5><p>可以显式地指定用到的插件的版本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;plugins&quot;: &#123;</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-eslint&quot;: &#123;</span><br><span class="line">      &quot;version&quot;: &quot;^3.0.0&quot;,</span><br><span class="line">      &#x2F;&#x2F; ... 该插件的其它选项</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于官方插件来说这不是必须的——当被忽略时，CLI 会自动使用 registry 中最新的版本。推荐为 preset 列出的所有第三方插件提供显式的版本范围。</p>
+<h5 id="允许插件的命令提示"><a href="#允许插件的命令提示" class="headerlink" title="允许插件的命令提示"></a>允许插件的命令提示</h5><p>Vue CLI 假设所有的插件选项都已经在 preset 中声明过了，有些情况下你可能希望 preset 只声明需要的插件，同时让用户通过插件注入的命令提示来保留一些灵活性。对于这种场景你可以在插件选项中指定 “prompts”: true 来允许注入命令提示：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;plugins&quot;: &#123;</span><br><span class="line">    &quot;@vue&#x2F;cli-plugin-eslint&quot;: &#123;</span><br><span class="line">      &#x2F;&#x2F; 让用户选取他们自己的 ESLint config</span><br><span class="line">      &quot;prompts&quot;: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="远程-Preset"><a href="#远程-Preset" class="headerlink" title="远程 Preset"></a>远程 Preset</h5><p>可以通过发布 git repo 将一个 preset 分享给其他开发者。发布 repo 后，你就可以在创建项目的时候通过 –preset 选项使用这个远程的 preset 了：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 从 GitHub repo 使用 preset</span><br><span class="line">vue create --preset username&#x2F;repo my-project</span><br></pre></td></tr></table></figure>
+
+<p>如果要从私有 repo 获取，请确保使用 –clone 选项</p>
+<h5 id="加载文件系统中的-Preset"><a href="#加载文件系统中的-Preset" class="headerlink" title="加载文件系统中的 Preset"></a>加载文件系统中的 Preset</h5><p>当开发一个远程 preset 的时候，你必须向远程 repo 发出 push 进行反复测试。为了简化流程，你也可以直接在本地测试 preset。如果 –preset 选项的值是一个相对或绝对文件路径，或是以 .json 结尾，则 Vue CLI 会加载本地的 preset:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># .&#x2F;my-preset 应当是一个包含 preset.json 的文件夹</span><br><span class="line">vue create --preset .&#x2F;my-preset my-project</span><br><span class="line"></span><br><span class="line"># 或者，直接使用当前工作目录下的 json 文件：</span><br><span class="line">vue create --preset my-preset.json my-project</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue脚手架介绍（部署）</title>
+    <url>/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h2 id="通用指南"><a href="#通用指南" class="headerlink" title="通用指南"></a>通用指南</h2><p>如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。</p>
+<p>如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。</p>
+<a id="more"></a>
+<h2 id="通用指南-1"><a href="#通用指南-1" class="headerlink" title="通用指南"></a>通用指南</h2><p>如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。</p>
+<p>如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。</p>
+<h2 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h2><p>dist 目录需要启动一个 HTTP 服务器来访问。<br>在本地预览生产环境构建最简单的方式就是使用一个 Node.js 静态文件服务器，例如 serve:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g serve</span><br><span class="line">serve -s dist</span><br></pre></td></tr></table></figure>
+
+<p> -s 参数的意思是将其架设在 Single-Page Application 模式下，这个模式会处理即将提到的路由问题</p>
+<h2 id="使用-history-pushState-的路由"><a href="#使用-history-pushState-的路由" class="headerlink" title="使用 history.pushState 的路由"></a>使用 history.pushState 的路由</h2><p>需要配置生产环境服务器，将任何没有匹配到静态文件的请求回退到 index.html。参考Vue Router 的文档，提供了常用服务器配置指引。</p>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>如果前端静态内容是部署在与后端 API 不同的域名上，你需要适当地配置 CORS</p>
+<h2 id="PWA"><a href="#PWA" class="headerlink" title="PWA"></a>PWA</h2><p>如果你使用了 PWA 插件，那么应用必须架设在 HTTPS 上，这样 Service Worker 才能被正确注册。</p>
+<h2 id="平台指南"><a href="#平台指南" class="headerlink" title="平台指南"></a>平台指南</h2><h3 id="以GitHub-Pages为例"><a href="#以GitHub-Pages为例" class="headerlink" title="以GitHub Pages为例"></a>以GitHub Pages为例</h3><p>需要在 vue.config.js 中设置正确的 publicPath。<br>如果打算将项目部署到 https://<USERNAME>.github.io/ 上, publicPath 将默认被设为 “/“，你可以忽略这个参数。<br>如果打算将项目部署到 https://<USERNAME>.github.io/<REPO>/ 上 (即仓库地址为 <a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a><USERNAME>/<REPO>)，可将 publicPath 设为 “/<REPO>/“。举个例子，如果仓库名字为“my-project”，那么 vue.config.js 的内容应如下所示：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  publicPath: process.env. NODE_ENV === <span class="string">'production'</span></span><br><span class="line"></span><br><span class="line">    ? <span class="string">'/my-project/'</span></span><br><span class="line">    : <span class="string">'/'</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webpack入门配置</title>
+    <url>/blog/2020/01/07/webpack/</url>
+    <content><![CDATA[<p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
+<p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
+<a id="more"></a>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
+<p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
+<p>这篇文章基本是官网的一个摘抄整理，众所周知，webpack文档写的有点乱，而且有不少过时或不准确的地方，这里修正了错误，理顺了逻辑。</p>
+<h2 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口(entry)"></a>入口(entry)</h2><p>入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。</p>
+<p>默认值是 ./src/index.js，可以通过在 webpack configuration 中配置 entry 属性，来指定一个（或多个）不同的入口起点。</p>
+<h3 id="单个入口（简写）语法"><a href="#单个入口（简写）语法" class="headerlink" title="单个入口（简写）语法"></a>单个入口（简写）语法</h3><p>用法：<code>entry: string|Array&lt;string&gt;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>entry 属性的单个入口语法，是下面的简写：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>向 entry 属性传入文件路径数组，将创建出一个 多主入口(multi-main entry)。在想要一次注入多个依赖文件，并且将它们的依赖导向(graph)到一个 chunk 时，这种方式就很有用。</li>
+</ul>
+<h3 id="对象语法"><a href="#对象语法" class="headerlink" title="对象语法"></a>对象语法</h3><p>用法：<code>entry: {[entryChunkName: string]: string|Array&lt;string&gt;}</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./src/app.js'</span>,</span><br><span class="line">    adminApp: <span class="string">'./src/adminApp.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对象语法会比较繁琐。然而，这是应用程序中定义入口的最可扩展的方式。</p>
+<h3 id="分离-app-应用程序-和-vendor-第三方库-入口"><a href="#分离-app-应用程序-和-vendor-第三方库-入口" class="headerlink" title="分离 app(应用程序) 和 vendor(第三方库) 入口"></a>分离 app(应用程序) 和 vendor(第三方库) 入口</h3><p>在 webpack &lt; 4 的版本中，通常将 vendor 作为单独的入口起点添加到 entry 选项中，以将其编译为单独的文件（与 CommonsChunkPlugin 结合使用）。而在 webpack 4 中不鼓励这样做。而是使用 optimization.splitChunks 选项，将 vendor 和 app(应用程序) 模块分开，并为其创建一个单独的文件。不要 为 vendor 或其他不是执行起点创建 entry。</p>
+<h3 id="多页面应用程序"><a href="#多页面应用程序" class="headerlink" title="多页面应用程序"></a>多页面应用程序</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    pageOne: <span class="string">'./src/pageOne/index.js'</span>,</span><br><span class="line">    pageTwo: <span class="string">'./src/pageTwo/index.js'</span>,</span><br><span class="line">    pageThree: <span class="string">'./src/pageThree/index.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在多页面应用程序中，服务器会传输一个新的 HTML 文档给你的客户端。页面重新加载此新文档，并且资源被重新下载。然而，这给了我们特殊的机会去做很多事：</p>
+<ul>
+<li>使用 optimization.splitChunks 为页面间共享的应用程序代码创建 bundle。由于入口起点增多，多页应用能够复用入口起点之间的大量代码/模块，从而可以极大地从这些技术中受益。</li>
+<li>根据经验：每个 HTML 文档只使用一个入口起点。</li>
+</ul>
+<h2 id="输出-output"><a href="#输出-output" class="headerlink" title="输出(output)"></a>输出(output)</h2><p>output 属性告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件。主要输出文件的默认值是 ./dist/main.js，其他生成文件默认放置在 ./dist 文件夹中。即使可以存在多个 entry 起点，但只指定一个 output 配置。</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>在 webpack 中配置 output 属性的最低要求是，将它的值设置为一个对象，包括以下属性：</p>
+<ul>
+<li>filename 用于输出文件的文件名。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 此配置将一个单独的 bundle.js 文件输出到 dist 目录中。</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多个入口起点"><a href="#多个入口起点" class="headerlink" title="多个入口起点"></a>多个入口起点</h3><p>如果配置创建了多个单独的 “chunk”（例如，使用多个入口起点或使用像 CommonsChunkPlugin 这样的插件），则应该使用 占位符(substitutions) 来确保每个文件具有唯一的名称。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./src/app.js'</span>,</span><br><span class="line">    search: <span class="string">'./src/search.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].js'</span>,</span><br><span class="line">    path: __dirname + <span class="string">'/dist'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 写入到硬盘：./dist/app.js, ./dist/search.js</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>对资源使用 CDN 和 hash </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: <span class="string">'/home/proj/cdn/assets/[hash]'</span>,</span><br><span class="line">    publicPath: <span class="string">'http://cdn.example.com/assets/[hash]/'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果在编译时，不知道最终输出文件的 publicPath 是什么地址，则可以将其留空，并且在运行时通过入口起点文件中的 <strong>webpack_public_path</strong> 动态设置。</p>
+<h2 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h2><p>webpack 只能理解 JavaScript 和 JSON 文件。loader 让 webpack 能够去处理其他类型的文件，并将它们转换为有效 模块，以供应用程序使用，以及被添加到依赖图中。</p>
+<p>loader 能够 import 导入任何类型的模块（例如 .css 文件），loader 类似于其他构建工具中“任务(task)”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript 或将内联图像转换为 data URL。</p>
+<p>在 webpack 的配置中 loader 有两个必须属性：</p>
+<ul>
+<li>test 属性，用于标识出应该被对应的 loader 进行转换的某个或某些文件。</li>
+<li>use 属性，表示进行转换时，应该使用哪个 loader。</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>可以使用 loader 告诉 webpack 加载 CSS 文件，或者将 TypeScript 转为 JavaScript。为此，首先安装相对应的 loader：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install --save-dev css-loader</span><br><span class="line">npm install --save-dev ts-loader</span><br></pre></td></tr></table></figure>
+<p>然后指示 webpack 对每个 .css 使用 css-loader，以及对所有 .ts 文件使用 ts-loader:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, <span class="attr">use</span>: <span class="string">'css-loader'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.ts$/</span>, <span class="attr">use</span>: <span class="string">'ts-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="如何使用loader"><a href="#如何使用loader" class="headerlink" title="如何使用loader"></a>如何使用loader</h3><p>三种方式：</p>
+<h4 id="配置（推荐）：在-webpack-config-js-文件中指定-loader。"><a href="#配置（推荐）：在-webpack-config-js-文件中指定-loader。" class="headerlink" title="配置（推荐）：在 webpack.config.js 文件中指定 loader。"></a>配置（推荐）：在 webpack.config.js 文件中指定 loader。</h4><p>来自官网的意见：<code>尽可能使用 module.rules，因为这样可以减少源码中样板文件的代码量，并且可以在出错时，更快地调试和定位 loader 中的问题。</code><br>module.rules 可在 webpack 配置中指定多个 loader。 这种方式是展示 loader 的一种简明方式，并且有助于使代码变得简洁和易于维护。同时对各个 loader 有个全局概览；loader 从右到左地取值(evaluate)/执行(execute)。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 示例中，从 sass-loader 开始执行，然后继续执行 css-loader，最后以 style-loader 为结束。</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123; <span class="attr">loader</span>: <span class="string">'style-loader'</span> &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">'css-loader'</span>,</span><br><span class="line">            options: &#123;</span><br><span class="line">              modules: <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123; <span class="attr">loader</span>: <span class="string">'sass-loader'</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 webpack 配置中定义 rules 时，要定义在 module.rules 而不是 rules 中。使用正则表达式匹配文件时，不用为它添加引号。</p>
+<h4 id="内联：在每个-import-语句中显式指定-loader。"><a href="#内联：在每个-import-语句中显式指定-loader。" class="headerlink" title="内联：在每个 import 语句中显式指定 loader。"></a>内联：在每个 import 语句中显式指定 loader。</h4><p>可以在 import 语句或任何 等同于 “import” 的方法 中指定 loader。使用 ! 将资源中的 loader 分开。每个部分都会相对于当前目录解析。</p>
+<h4 id="CLI：在-shell-命令中指定它们。"><a href="#CLI：在-shell-命令中指定它们。" class="headerlink" title="CLI：在 shell 命令中指定它们。"></a>CLI：在 shell 命令中指定它们。</h4><p>参见官网。</p>
+<h3 id="loader-特性"><a href="#loader-特性" class="headerlink" title="loader 特性"></a>loader 特性</h3><p>通过（loader）预处理函数，loader 为 JavaScript 生态系统提供了更多能力。 用户现在可以更加灵活地引入细粒度逻辑，例如：压缩、打包、语言翻译和 更多其他特性。</p>
+<ul>
+<li>loader 支持链式传递。链中的每个 loader 会将转换应用在已处理过的资源上。一组链式的 loader 将按照相反的顺序执行。链中的第一个 loader 将其结果（也就是应用过转换后的资源）传递给下一个 loader，依此类推。最后，链中的最后一个 loader，返回 webpack 期望 JavaScript。</li>
+<li>loader 可以是同步的，也可以是异步的。</li>
+<li>loader 运行在 Node.js 中，并且能够执行任何 Node.js 能做到的操作。</li>
+<li>loader 可以通过 options 对象配置（仍然支持使用 query 参数来设置选项，但是这种方式已被废弃）。</li>
+<li>除了常见的通过 package.json 的 main 来将一个 npm 模块导出为 loader，还可以在 module.rules 中使用 loader 字段直接引用一个模块。</li>
+<li>插件(plugin)可以为 loader 带来更多特性。</li>
+<li>loader 能够产生额外的任意文件。</li>
+</ul>
+<h3 id="解析-loader"><a href="#解析-loader" class="headerlink" title="解析 loader"></a>解析 loader</h3><p>loader 遵循 模块解析 标准。多数情况下，loader 将从 模块路径 加载（通常是从 npm install, node_modules 进行加载）。</p>
+<p>通常使用 npm 进行管理，但是也可以将自定义 loader 作为应用程序中的文件。按照约定，loader 通常被命名为 xxx-loader（例如 json-loader）。</p>
+<h2 id="插件-plugin"><a href="#插件-plugin" class="headerlink" title="插件(plugin)"></a>插件(plugin)</h2><p>插件是 webpack 的 支柱 功能。webpack 自身也是构建于，你在 webpack 配置中用到的相同的插件系统之上。插件的目的在于解决 loader 无法实现的其他任务。</p>
+<p>loader 用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。包括：打包优化，资源管理，注入环境变量。</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>webpack 插件是一个具有 apply 方法的 JavaScript 对象。apply 方法会被 webpack compiler 调用，并且 compiler 对象可在整个编译生命周期访问。</p>
+<h3 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h3><p>想要使用一个插件，只需要 require() 它，然后把它添加到 plugins 数组中。多数插件可以通过选项(option)自定义。也可以在一个配置文件中因为不同目的而多次使用同一个插件，这时需要通过使用 new 操作符来创建它的一个实例。</p>
+<h4 id="一个简单配置"><a href="#一个简单配置" class="headerlink" title="一个简单配置"></a>一个简单配置</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">//通过 npm 安装</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">//访问内置的插件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(js|jsx)$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.ProgressPlugin(),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模式-mode"><a href="#模式-mode" class="headerlink" title="模式(mode)"></a>模式(mode)</h2><p>通过选择 development, production 或 none 之中的一个，来设置 mode 参数，可以启用 webpack 内置在相应环境下的优化。默认为 production。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可能的值有：none, development 或 production（默认）。</span><br></pre></td></tr></table></figure>
+<p>可以在配置对象中提供 mode 选项：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mode: <span class="string">'production'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者从 CLI 参数中传递：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">webpack --mode=production</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">development</td>
+<td>会将 DefinePlugin 中 process.env.NODE_ENV 的值设置为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin。</td>
+</tr>
+<tr>
+<td align="center">production</td>
+<td>会将 DefinePlugin 中 process.env.NODE_ENV 的值设置为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 TerserPlugin。</td>
+</tr>
+<tr>
+<td align="center">none</td>
+<td>退出任何默认优化选项</td>
+</tr>
+</tbody></table>
+<p>如果要根据 webpack.config.js 中的 mode 变量更改打包行为，则必须将配置导出为一个函数，而不是导出为一个对象：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> config = &#123;</span><br><span class="line">  entry: <span class="string">'./app.js'</span></span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">env, argv</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argv.mode === <span class="string">'development'</span>) &#123;</span><br><span class="line">    config.devtool = <span class="string">'source-map'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argv.mode === <span class="string">'production'</span>) &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器兼容性-browser-compatibility"><a href="#浏览器兼容性-browser-compatibility" class="headerlink" title="浏览器兼容性(browser compatibility)"></a>浏览器兼容性(browser compatibility)</h2><p>webpack 支持所有符合 ES5 标准 的浏览器（不支持 IE8 及以下版本）。webpack 的 import() 和 require.ensure() 需要 Promise。如果要支持旧版本浏览器，在使用这些表达式之前，需要提前加载 polyfill。</p>
+<h2 id="一个简单的配置示例"><a href="#一个简单的配置示例" class="headerlink" title="一个简单的配置示例"></a>一个简单的配置示例</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 项目根目录下创建webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; CleanWebpackPlugin &#125; = <span class="built_in">require</span>(<span class="string">'clean-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 配置开发环境</span></span><br><span class="line">  mode: <span class="string">'development'</span>,</span><br><span class="line">  <span class="comment">// 入口</span></span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./src/index.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 用于追踪错误</span></span><br><span class="line">  devtool: <span class="string">'inline-source-map'</span>,</span><br><span class="line">  <span class="comment">// 自动重新加载</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    hot: <span class="literal">true</span>,</span><br><span class="line">    contentBase: <span class="string">'./dist'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 插件</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> CleanWebpackPlugin(),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">      title: <span class="string">'热替换'</span></span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">// 输出</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'[name].bundle.js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">    publicPath: <span class="string">'/'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">'style-loader'</span>,</span><br><span class="line">          <span class="string">'css-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(png|svg|jpg|gif)$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">'file-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(csv|tsv)$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">'csv-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.xml$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">'xml-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>生产问题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对象的一些常用方法</title>
+    <url>/blog/2019/04/23/%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="Object-is"><a href="#Object-is" class="headerlink" title="Object.is()"></a>Object.is()</h2><p>判断两个值是否是相同的值。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is(value1, value2);</span><br></pre></td></tr></table></figure>
+
+<p>返回一个布尔值。</p>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>如果下列任何一项成立，则两个值相同：</p>
+<ul>
+<li>两个值都是 undefined</li>
+<li>两个值都是 null</li>
+<li>两个值都是 true 或者都是 false</li>
+<li>两个值是由相同个数的字符按照相同的顺序组成的字符串</li>
+<li>两个值指向同一个对象</li>
+<li>两个值都是数字并且<ul>
+<li>都是正零 +0</li>
+<li>都是负零 -0</li>
+<li>都是 NaN</li>
+<li>都是除零和 NaN 外的其它同一个数字</li>
+</ul>
+</li>
+</ul>
+<p>和传统的 == 运算不同，== 运算符会对它两边的操作数做隐式类型转换（如果它们类型不同），然后才进行相等性比较，但 Object.is 不会做这种类型转换。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is(<span class="string">'foo'</span>, <span class="string">'foo'</span>);     <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="built_in">window</span>, <span class="built_in">window</span>);   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="string">'foo'</span>, <span class="string">'bar'</span>);     <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is([], []);           <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> bar = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="built_in">Object</span>.is(foo, foo);         <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(foo, bar);         <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">null</span>, <span class="literal">null</span>);       <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 特例</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, <span class="number">-0</span>);            <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, +<span class="number">0</span>);            <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">-0</span>, <span class="number">-0</span>);           <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="number">0</span>/<span class="number">0</span>);         <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="Object-freeze"><a href="#Object-freeze" class="headerlink" title="Object.freeze()"></a>Object.freeze()</h2><p>冻结一个对象。一个被冻结的对象再也不能被修改；冻结了一个对象则不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型也不能被修改。freeze() 返回和传入的参数相同的对象。</p>
+<h3 id="描述-1"><a href="#描述-1" class="headerlink" title="描述"></a>描述</h3><p>被冻结对象自身的所有属性都不可能以任何方式被修改。任何修改尝试都会失败，无论是静默地还是通过抛出TypeError异常（最常见但不仅限于strict mode）。</p>
+<ul>
+<li>数据属性的值不可更改，访问器属性（有getter和setter）也同样。</li>
+<li>如果一个属性的值是个对象，则这个对象中的属性是可以修改的，除非它也是个冻结对象。</li>
+<li>数组作为一种对象，被冻结，其元素不能被修改。没有数组元素可以被添加或移除。</li>
+</ul>
+<p>此方法返回传递的对象，而不是创建一个被冻结的副本。</p>
+<p>对于一个常量对象，整个引用图（直接和间接引用其他对象）只能引用不可变的冻结对象。</p>
+<p>要使对象不可变，需要递归冻结每个类型为对象的属性（深冻结）。当知道对象在引用图中不包含任何循环引用时，将根据你的设计逐个使用该模式，否则将触发无限循环。仍然有冻结不应冻结的对象的风险，例如[window]。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 深冻结函数.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepFreeze</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 取回定义在obj上的属性名</span></span><br><span class="line">  <span class="keyword">let</span> propNames = <span class="built_in">Object</span>.getOwnPropertyNames(obj);</span><br><span class="line">  <span class="comment">// 在冻结自身之前冻结属性</span></span><br><span class="line">  propNames.forEach(<span class="function"><span class="params">name</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> prop = obj[name];</span><br><span class="line">    <span class="comment">// 如果prop是个对象，冻结它</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> prop == <span class="string">'object'</span> &amp;&amp; prop !== <span class="literal">null</span>)</span><br><span class="line">      deepFreeze(prop);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 冻结自身(no-op if already frozen)</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.freeze(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create()"></a>Object.create()</h2><p>创建一个新对象，使用现有的对象来提供新创建的对象的<strong>proto</strong>。 </p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.create(proto) <span class="comment">// 新创建对象的原型对象。</span></span><br></pre></td></tr></table></figure>
+
+<p>返回值：一个新对象，带着指定的原型对象和属性。</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  isHuman: <span class="literal">false</span>,</span><br><span class="line">  printIntroduction: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`My name is <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>. Am I human? <span class="subst">$&#123;<span class="keyword">this</span>.isHuman&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> me = <span class="built_in">Object</span>.create(person);</span><br><span class="line"></span><br><span class="line">me.name = <span class="string">'Matthew'</span>; <span class="comment">// "name" is a property set on "me", but not on "person"</span></span><br><span class="line">me.isHuman = <span class="literal">true</span>; <span class="comment">// inherited properties can be overwritten</span></span><br><span class="line"></span><br><span class="line">me.printIntroduction();</span><br><span class="line"><span class="comment">// expected output: "My name is Matthew. Am I human? true"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p>Object.assign 方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>Object.assign 方法的第一个参数是目标对象，后面的参数都是源对象。</p>
+<ul>
+<li>如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。</li>
+<li>如果只有一个参数，Object.assign 会直接返回该参数。</li>
+<li>如果该参数不是对象，则会先转成对象，然后返回。<ul>
+<li>由于undefined和null无法转成对象，所以如果它们作为参数，就会报错。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(<span class="literal">undefined</span>) <span class="comment">// TypeError: can't convert undefined to object</span></span><br><span class="line"><span class="built_in">Object</span>.assign(<span class="literal">null</span>) <span class="comment">// TypeError: can't convert null to object</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>如果非对象参数出现在源对象的位置（即非首参数），处理规则有所不同。<ul>
+<li>首先，这些参数都会转成对象，如果无法转成对象，就会跳过。这意味着，如果undefined和null不在首参数，就不会报错。</li>
+<li>其他类型的值（即数值、字符串和布尔值）不在首参数，也不会报错。但是，除了字符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> v1 = <span class="string">'abc'</span>;</span><br><span class="line"><span class="keyword">const</span> v2 = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">const</span> v3 = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = <span class="built_in">Object</span>.assign(&#123;&#125;, v1, v2, v3);</span><br><span class="line"><span class="built_in">console</span>.log(obj); <span class="comment">// Object &#123; 0: "a", 1: "b", 2: "c" &#125;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p>Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。属性名为 Symbol 值的属性，也会被Object.assign拷贝。</p>
+]]></content>
+      <tags>
+        <tag>基础知识</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端部署的常见问题</title>
+    <url>/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>CI，Continuous Integration，持续集成</p>
+<ul>
+<li>代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.</li>
+</ul>
+<p>CD，Continuous Delivery，持续交付</p>
+<ul>
+<li>将构建好的程序发布到各种环境，如预发布环境，正式环境．<a id="more"></a>
+<h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI / CD"></a>CI / CD</h3></li>
+</ul>
+<p>一些基本概念：</p>
+<p>CI，Continuous Integration，持续集成</p>
+<ul>
+<li>代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.</li>
+</ul>
+<p>CD，Continuous Delivery，持续交付</p>
+<ul>
+<li>将构建好的程序发布到各种环境，如预发布环境，正式环境．</li>
+</ul>
+<p>Pipeline</p>
+<ul>
+<li>一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。 任何提交或者 Merge Request 的合并都可以触发 Pipeline.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+------------------+           +----------------+</span><br><span class="line">|                  |  trigger  |                |</span><br><span class="line">|   Commit &#x2F; MR    +----------&gt;+    Pipeline    |</span><br><span class="line">|                  |           |                |</span><br><span class="line">+------------------+           +----------------+</span><br></pre></td></tr></table></figure>
+
+<p>Stages</p>
+<p>Stages 表示构建阶段，就是上面提到的流程。 我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：</p>
+<ul>
+<li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
+<li>只有当所有 Stages 完成后，该构建任务 (Pipeline) 才会成功</li>
+<li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
+</ul>
+<p>Stages 和 Pipeline 的关系:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+--------------------------------------------------------+</span><br><span class="line">|                                                        |</span><br><span class="line">|  Pipeline                                              |</span><br><span class="line">|                                                        |</span><br><span class="line">|  +-----------+     +------------+      +------------+  |</span><br><span class="line">|  |  Stage 1  |----&gt;|   Stage 2  |-----&gt;|   Stage 3  |  |</span><br><span class="line">|  +-----------+     +------------+      +------------+  |</span><br><span class="line">|                                                        |</span><br><span class="line">+--------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Jobs</p>
+<p>Jobs 表示构建工作，表示某个 Stage 里面执行的工作。 我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
+<ul>
+<li>相同 Stage 中的 Jobs 会并行执行</li>
+<li>相同 Stage 中的 Jobs 都执行成功时，该 Stage 才会成功</li>
+<li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
+</ul>
+<p>Jobs 和 Stage 的关系图:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+------------------------------------------+</span><br><span class="line">|                                          |</span><br><span class="line">|  Stage 1                                 |</span><br><span class="line">|                                          |</span><br><span class="line">|  +---------+  +---------+  +---------+   |</span><br><span class="line">|  |  Job 1  |  |  Job 2  |  |  Job 3  |   |</span><br><span class="line">|  +---------+  +---------+  +---------+   |</span><br><span class="line">|                                          |</span><br><span class="line">+------------------------------------------+</span><br></pre></td></tr></table></figure>
+
+<p>CI/CD 不仅仅解放了业务项目的部署，也在交付之前提高了业务代码的质量，它可以用来 lint，test，package 安全检查，甚至多特性多环境部署。</p>
+<h3 id="gitlab-ci-cd流程"><a href="#gitlab-ci-cd流程" class="headerlink" title="gitlab ci/cd流程"></a>gitlab ci/cd流程</h3><p>gitlab通过在项目的根目录放置.gitlab-ci.yml文件来触发pipeline，文件书写遵循yml语法，因此，概括来说gitlab ci/cd只需要两步:</p>
+<ol>
+<li>写好.gitlab-ci.yml文件，并放置到项目根目录</li>
+<li>配置好gitlab runner． 完成后，提交代码时会自动根据gitlab-ci.yml的触发条件进行执行相应的stage.</li>
+</ol>
+<h4 id="Gitlab-runner"><a href="#Gitlab-runner" class="headerlink" title="Gitlab runner"></a>Gitlab runner</h4><p>负责执行构建任务</p>
+<ul>
+<li><code>为什么不是 GitLab CI 来运行构建任务？</code> 一般来说，构建任务都会占用很多的系统资源，如果由 GitLab CI 来运行构建任务的话，在执行构建任务的时候，GitLab 的性能会大幅下降。GitLab CI 最大的作用是管理各个项目的构建状态，因此，运行构建任务这种浪费资源的事情就交给 GitLab Runner 来做。 因为 GitLab Runner 可以安装到不同的机器上，所以在构建任务运行期间并不会影响到 GitLab 的性能。</li>
+</ul>
+<p>安装: </p>
+<p><a href="https://gitlab.com/gitlab-org/gitlab-runner" target="_blank" rel="noopener">参见官方文档</a></p>
+<p>注册:</p>
+<ul>
+<li>打开 GitLab 中的项目页面，在项目设置中找到 runners</li>
+<li>运行 sudo gitlab-ci-multi-runner register</li>
+<li>输入 CI URL</li>
+<li>输入 Token</li>
+<li>输入 Runner 的名字</li>
+<li>选择 Runner 的类型，简单起见选 Shell</li>
+<li>完成</li>
+</ul>
+<p>当注册好 Runner 之后，可以用 sudo gitlab-ci-multi-runner list 命令来查看各个 Runner 的状态</p>
+<h4 id="gitlab-ci-yml"><a href="#gitlab-ci-yml" class="headerlink" title=".gitlab-ci.yml"></a>.gitlab-ci.yml</h4><p>配置好 Runner 之后，在项目根目录中添加 .gitlab-ci.yml 文件了，每次提交代码或者合并就会自动运行构建任务。Pipeline 也是通过提交代码或者合并 MR 来触发的，其实 .gitlab-ci.yml 就是在定义 Pipeline。</p>
+<h5 id="基本写法"><a href="#基本写法" class="headerlink" title="基本写法"></a>基本写法</h5><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义 stages</span></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"></span><br><span class="line">  <span class="string">+</span> <span class="string">build</span></span><br><span class="line">  <span class="string">+</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义 job</span></span><br><span class="line"><span class="attr">job1:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am job1"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am in test stage"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义 job</span></span><br><span class="line"><span class="attr">job2:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am job2"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">"I am in build stage"</span></span><br></pre></td></tr></table></figure>
+
+<p>用 stages 关键字来定义 Pipeline 中的各个构建阶段，然后用一些非关键字来定义 jobs。 每个 job 中可以可以再用 stage 关键字来指定该 job 对应哪个 stage。 job 里面的 script 关键字是最关键的地方了，也是每个 job 中必须要包含的，它表示每个 job 要执行的命令。</p>
+<h5 id="常用关键字"><a href="#常用关键字" class="headerlink" title="常用关键字"></a>常用关键字</h5><p><code>stages</code> </p>
+<ul>
+<li>定义 Stages，默认有三个 Stages，分别是 build, test, deploy。</li>
+</ul>
+<p><code>types</code> </p>
+<ul>
+<li>stages 的别名。</li>
+</ul>
+<p><code>before_script</code> </p>
+<ul>
+<li>定义任何 Jobs 运行前都会执行的命令。</li>
+</ul>
+<p><code>after_script</code> </p>
+<ul>
+<li>定义任何 Jobs 运行完后都会执行的命令。</li>
+</ul>
+<p><code>variables &amp;&amp; Job.variables</code> </p>
+<ul>
+<li>定义环境变量。 如果定义了 Job 级别的环境变量的话，该 Job 会优先使用 Job 级别的环境变量。</li>
+</ul>
+<p><code>cache &amp;&amp; Job.cache</code> </p>
+<ul>
+<li>定义需要缓存的文件。 每个 Job 开始的时候，Runner 都会删掉 .gitignore 里面的文件。 如果有些文件 (如 node_modules/) 需要多个 Jobs 共用的话，我们只能让每个 Job 都先执行一遍 npm install。 这样很不方便，因此我们需要对这些文件进行缓存。缓存了的文件除了可以跨 Jobs 使用外，还可以跨 Pipeline 使用。</li>
+</ul>
+<p><code>Job.script</code> </p>
+<ul>
+<li>定义 Job 要运行的命令，必填项。</li>
+</ul>
+<p><code>Job.stage</code> </p>
+<ul>
+<li>定义 Job 的 stage，默认为 test。</li>
+</ul>
+<p><code>Job.artifacts</code> </p>
+<ul>
+<li>定义 Job 中生成的附件。 当该 Job 运行成功后，生成的文件可以作为附件 (如生成的二进制文件) 保留下来，打包发送到 GitLab，之后我们可以在 GitLab 的项目页面下下载该附件。 注意，不要把 artifacts 和 cache 混淆了。</li>
+</ul>
+<h4 id="一个实用的例子"><a href="#一个实用的例子" class="headerlink" title="一个实用的例子"></a>一个实用的例子</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line"></span><br><span class="line">  <span class="string">+</span> <span class="string">install_deps</span></span><br><span class="line">  <span class="string">+</span> <span class="string">test</span></span><br><span class="line">  <span class="string">+</span> <span class="string">build</span></span><br><span class="line">  <span class="string">+</span> <span class="string">deploy_test</span></span><br><span class="line">  <span class="string">+</span> <span class="string">deploy_production</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">key:</span> <span class="string">$&#123;CI_BUILD_REF_NAME&#125;</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dist/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="attr">install_deps:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">install_deps</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行测试用例</span></span><br><span class="line"><span class="attr">test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译</span></span><br><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">clean</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:client</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build:server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署测试服务器</span></span><br><span class="line"><span class="attr">deploy_test:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy_test</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">develop</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">pm2</span> <span class="string">delete</span> <span class="string">app</span> <span class="string">||</span> <span class="literal">true</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">pm2</span> <span class="string">start</span> <span class="string">app.js</span> <span class="string">--name</span> <span class="string">app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署生产服务器</span></span><br><span class="line"><span class="attr">deploy_production:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">deploy_production</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="string">bash</span> <span class="string">scripts/deploy/deploy.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的配置把一次 Pipeline 分成五个阶段：</p>
+<ul>
+<li>安装依赖(install_deps)</li>
+<li>运行测试(test)</li>
+<li>编译(build)</li>
+<li>部署测试服务器(deploy_test)</li>
+<li>部署生产服务器(deploy_production)</li>
+</ul>
+<p>设置 Job.only 后，只有当 develop 分支和 master 分支有提交的时候才会触发相关的 Jobs。 注意，我这里用 GitLab Runner 所在的服务器作为测试服务器。</p>
+<h3 id="如何在生产环境中提高-npm-i-的速度？"><a href="#如何在生产环境中提高-npm-i-的速度？" class="headerlink" title="如何在生产环境中提高 npm i 的速度？"></a>如何在生产环境中提高 <code>npm i</code> 的速度？</h3><ol>
+<li>选择时延低的 registry，即在集群内部搭建私有仓库，需要企业技术基础建设支持；</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> registry https: //registry-npm.test.com/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>NODE_ENV=production，只安装生产环境必要的包</li>
+<li>CI=true，npm 会在此环境变量下自动优化</li>
+<li>结合 CI 的缓存功能，充分利用 npm cache</li>
+<li>使用 npm ci 代替 npm i，既提升速度又保障应用安全性</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>生产问题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>打包资源优化</title>
+    <url>/blog/2020/03/15/%E6%89%93%E5%8C%85%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><ol>
+<li>减小打包的整体体积</li>
+<li>Code Splitting : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
+<li>Bundle Splitting ：分包，根据模块更改频率分层次打包，充分利用缓存。<a id="more"></a>
+一些常见问题：</li>
+</ol>
+<ul>
+<li>lodash 和 react gzip 后的体积是多少 (定性，可以给出范围)</li>
+<li>打包 moment 时会有什么问题</li>
+<li>你们线上前端项目首屏静态资源 gzip 后的体积是多少</li>
+</ul>
+<p>为什么要压缩代码？</p>
+<ol>
+<li>更小的体积对于用户体验来说意味着更快的加载速度以及更好的用户体验，利于企业利润。</li>
+<li>更小的体积对于服务器来说也意味更小的带宽以及更少的服务器费用。</li>
+</ol>
+<h3 id="原则-1"><a href="#原则-1" class="headerlink" title="原则"></a>原则</h3><ol>
+<li>减小打包的整体体积</li>
+<li>Code Splitting : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
+<li>Bundle Splitting ：分包，根据模块更改频率分层次打包，充分利用缓存。</li>
+</ol>
+<h3 id="如何查看文件体积"><a href="#如何查看文件体积" class="headerlink" title="如何查看文件体积"></a>如何查看文件体积</h3><p>终端中执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">stat index.js</span><br><span class="line">    ......文件详细信息</span><br></pre></td></tr></table></figure>
+
+<p>只是查看体积</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">wc - c index.js</span><br><span class="line"><span class="number">1888</span> index.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="减小打包体积"><a href="#减小打包体积" class="headerlink" title="减小打包体积"></a>减小打包体积</h3><h4 id="代码压缩"><a href="#代码压缩" class="headerlink" title="代码压缩"></a>代码压缩</h4><p>代码压缩可以非常可观地减小资源打包体积，但可操作性空间较小，一般webpack就会自动完成。<br>主要两种：</p>
+<h5 id="去除多余字符-空格，换行及注释"><a href="#去除多余字符-空格，换行及注释" class="headerlink" title="去除多余字符: 空格，换行及注释"></a>去除多余字符: 空格，换行及注释</h5><p>多余的空白字符会占用大量的体积，如空格，换行符，另外注释也会占用文件体积。当我们把所有的空白符合注释都去掉之后，代码体积会得到减少。<br>注意事项：多行代码压缩到一行时要注意行尾分号。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 对两个数求和，正常写法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 去除多余字符</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="压缩变量名：变量名，函数名及属性名"><a href="#压缩变量名：变量名，函数名及属性名" class="headerlink" title="压缩变量名：变量名，函数名及属性名"></a>压缩变量名：变量名，函数名及属性名</h5><p>此时缩短变量的命名也需要 AST 支持，不至于在作用域中造成命名冲突。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> first + second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 压缩: 缩短变量名</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 再压缩: 去除空余字符</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更简单的表达：合并声明以及布尔值简化</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 压缩前</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="number">4</span>;</span><br><span class="line"><span class="comment">// 压缩后</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">3</span>,</span><br><span class="line">    b = <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<p>布尔值简化：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 压缩前</span></span><br><span class="line">!b &amp;&amp; !c &amp;&amp; !d &amp;&amp; !e</span><br><span class="line"><span class="comment">// 压缩后</span></span><br><span class="line">b || c || d || e</span><br></pre></td></tr></table></figure>
+
+<h4 id="移除不必要的模块"><a href="#移除不必要的模块" class="headerlink" title="移除不必要的模块"></a>移除不必要的模块</h4><p>仅仅引入而未在代码中使用，该模块仍然会被打包，配合eslint使用，把引入而未使用的模块给优化掉。</p>
+<h4 id="选择可替代的体积较小的模块"><a href="#选择可替代的体积较小的模块" class="headerlink" title="选择可替代的体积较小的模块"></a>选择可替代的体积较小的模块</h4><p>典型的例子是 moment.js 模块，它仅仅用于 DateTime 的格式化及各种计算。但 import 之后体积竟然达到了 200kb+，gzip 后仍然有 69kb。<br>此时可以选择一个可替代它功能，但体积更小的模块。与 moment.js API 兼容的 day.js，它 gzip 后体积仅仅只有 2kb。 </p>
+<h4 id="按需引入模块"><a href="#按需引入模块" class="headerlink" title="按需引入模块"></a>按需引入模块</h4><p>当面对一个大型模块时，可能并不会使用到它的所有的功能，只需按照需求引入模块就可以了。比如 <code>lodash</code> , <code>antd</code> , <code>echarts</code> …</p>
+<h3 id="Code-Splitting"><a href="#Code-Splitting" class="headerlink" title="Code Splitting"></a>Code Splitting</h3><p>即按需加载，优化页面首次加载体积，可以理解为懒加载。</p>
+<p>通过 Code Splitting 可以只加载当前所需要的核心资源：</p>
+<ul>
+<li>如果你处在首页，并且首页中有占用资源过重的图表，需要对图表懒加载，否则它会大幅拖垮应用的首次渲染，加大白屏时间</li>
+<li>如果你处在首页，你无需加载当前不可见屏幕下方的复杂组件</li>
+<li>如果你处在页面 A，你没有必要加载页面 B 的资源</li>
+</ul>
+<p>以上实现起来均需要额外编写代码，可操作性中等，但好在能带来极大的益处，操作起来也极为简单。</p>
+<ul>
+<li>使用 import() 动态加载模块</li>
+<li>使用 React.lazy() 动态加载组件</li>
+<li>使用 lodable-component 动态加载路由，组件或者模块</li>
+</ul>
+<h3 id="Bundle-Splitting"><a href="#Bundle-Splitting" class="headerlink" title="Bundle Splitting"></a>Bundle Splitting</h3><p>分包，根据模块更改频率分层次打包，充分利用缓存。<br>除了资源体积上的优化，另一个大的优化就是缓存。</p>
+<h4 id="网站的缓存控制策略最佳实践及注意事项"><a href="#网站的缓存控制策略最佳实践及注意事项" class="headerlink" title="网站的缓存控制策略最佳实践及注意事项"></a>网站的缓存控制策略最佳实践及注意事项</h4><p>缓存控制策略就是 http caching 的策略，对 http cache 只需要了解一个 Cache-Control 的头部。<br>一个较好的缓存策略只需要两部分，而它们只需要通过 Cache-Control 控制：</p>
+<h5 id="带指纹资源-永久缓存"><a href="#带指纹资源-永久缓存" class="headerlink" title="带指纹资源: 永久缓存"></a>带指纹资源: 永久缓存</h5><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Cache - Control: max - age = <span class="number">31536000</span></span><br></pre></td></tr></table></figure>
+
+<p>资源请求最快的方式就是不向服务器发起请求，通过以上响应头可以对资源设置永久缓存。</p>
+<ol>
+<li>静态资源带有 hash 值，即指纹<ul>
+<li>为什么带有 hash 值的资源可以永久缓存? 因为该文件的内容发生变化时，会生成一个带有新的 hash 值的 URL。 前端将会发起一个新的 URL 的请求</li>
+</ul>
+</li>
+<li>对资源设置一年过期时间，即 31536000，一般认为是永久缓存</li>
+<li>在永久缓存期间浏览器不需要向服务器发送请求</li>
+</ol>
+<h5 id="非带指纹资源-每次进行新鲜度校验"><a href="#非带指纹资源-每次进行新鲜度校验" class="headerlink" title="非带指纹资源: 每次进行新鲜度校验."></a>非带指纹资源: 每次进行新鲜度校验.</h5><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Cache - Control: no - cache</span><br></pre></td></tr></table></figure>
+
+<p>使用 Cache-Control: no-cache 时，客户端每次对服务器进行新鲜度校验。</p>
+<ol>
+<li>由于不带有指纹，每次都需要校验资源的新鲜度。(从缓存中取到资源，可能是过期资源)</li>
+<li>如果校验为最新资源，则从浏览器的缓存中加载资源</li>
+</ol>
+<p>即使每次校验新鲜度，也不需要每次都从服务器下载资源: 如果浏览器/CDN上缓存经校验没有过期。这被称为协商缓存，此时 http 状态码返回 304，指 Not Modified，即没有变更。nginx 或者一些 OSS 都会自动配置协商缓存。</p>
+<p>如果不添加 Cache-Control 响应头会怎样？ </p>
+<p>是不是每次都会自动去服务器校验新鲜度，不是。此时会对资源进行强制缓存，而对不带有指纹信息的资源很有可能获取到过期资源。 如果过期资源存在于浏览器上，还可以通过强制刷新浏览器来获取最新资源。但是如果过期资源存在于 CDN 的边缘节点上，CDN 的刷新就会复杂很多，而且有可能需要多人协作解决。</p>
+<p>首先要明确两个响应头代表的含义：</p>
+<ul>
+<li>Date: 指源服务器响应报文生成的时间，差不多与发请求的时间等价</li>
+<li>Last-Modified: 指静态资源上次修改的时间，取决于 mtime</li>
+</ul>
+<p>LM factor 算法认为当请求服务器时，如果没有设置 Cache-Control，如果距离上次的 Last-Modified 越远，则生成的强制缓存时间越长。</p>
+<p>单页应用有一个最好的方面，就是所有资源都是带有指纹信息的，这意味着所有的资源都是能够设置永久缓存的。如果你所有的 js 资源都打包成一个文件，它确实有永久缓存的优势。但是当有一行文件进行修改时，这一个大包的指纹信息发生改变，永久缓存失效。</p>
+<p>需要做到的是：当修改文件后，造成最小范围的缓存失效，这样便能够更充分的利用缓存，减小宽带，减小服务器费用。可以对资源进行分层次缓存的打包方案:</p>
+<ol>
+<li>webpack-runtime: 应用中的 webpack 的版本比较稳定，分离出来，保证长久的永久缓存。</li>
+<li>react-runtime: react 的版本更新频次也较低。</li>
+<li>vendor: 常用的第三方模块打包在一起，如 lodash，classnames 基本上每个页面都会引用到，但是它们的更新频率会更高一些。</li>
+</ol>
+<p>随着 http2 的发展，特别是多路复用，初始页面的静态资源不受资源数量的影响。因此为了更好的缓存效果以及按需加载，也有很多方案建议把所有的第三方模块进行单模块打包。</p>
+<h3 id="AST-amp-UglifyJS"><a href="#AST-amp-UglifyJS" class="headerlink" title="AST&amp;UglifyJS"></a>AST&amp;UglifyJS</h3><h4 id="AST"><a href="#AST" class="headerlink" title="AST"></a>AST</h4><p>抽象语法树，js 代码解析后的最小词法单元，而这个过程就是通过 Parser 来完成的。</p>
+<p>压缩代码的过程：code -&gt; AST -&gt; (transform)一颗更小的 AST -&gt; code</p>
+<p>AST的用处：</p>
+<ul>
+<li>eslint: 校验你的代码风格</li>
+<li>babel: 编译代码到 ES 低版本</li>
+<li>taro/mpvue: 各种可以多端运行的小程序框架</li>
+<li>GraphQL: 解析客户端查询</li>
+</ul>
+<p>babel 使用的解析器 babylon，而 uglify 在代码压缩中使用到的解析器是 UglifyJS。</p>
+<h4 id="UglifyJS"><a href="#UglifyJS" class="headerlink" title="UglifyJS"></a>UglifyJS</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原始代码</span></span><br><span class="line"><span class="keyword">const</span> code = <span class="string">`const a = 3;`</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 UglifyJS 把代码解析为 AST</span></span><br><span class="line"><span class="keyword">const</span> ast = UglifyJS.parse(code);</span><br><span class="line">ast.figure_out_scope();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 转化为一颗更小的 AST 树</span></span><br><span class="line">compressor = UglifyJS.Compressor();</span><br><span class="line">ast = ast.transform(compressor);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 再把 AST 转化为代码</span></span><br><span class="line">code = ast.print_to_string();</span><br></pre></td></tr></table></figure>
+
+<p>面向配置编程:)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        ecma: <span class="number">8</span>, <span class="comment">// 输入规范支持到ES8,保证开发时的便利</span></span><br><span class="line">    &#125;,</span><br><span class="line">    compress: &#123;</span><br><span class="line">            ecma: <span class="number">5</span>,</span><br><span class="line">            warnings: <span class="literal">false</span>,</span><br><span class="line">            comparisons: <span class="literal">false</span>,</span><br><span class="line">            inline: <span class="number">2</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        output: &#123;</span><br><span class="line">            ecma: <span class="number">5</span>, <span class="comment">// 输出ES5及以下的代码，保证兼容性</span></span><br><span class="line">            comments: <span class="literal">false</span>,</span><br><span class="line">            ascii_only: <span class="literal">true</span>,</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试总结(Vue)</title>
+    <url>/blog/2020/02/09/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93(Vue)/</url>
+    <content><![CDATA[<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
+<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
+<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
+<li>vue cli 2.0系列 再往前是2.0版本<a id="more"></a>
+<h2 id="vue中的MVVM模式是什么"><a href="#vue中的MVVM模式是什么" class="headerlink" title="vue中的MVVM模式是什么"></a>vue中的MVVM模式是什么</h2></li>
+</ul>
+<ul>
+<li>即 Model-View-ViewModel。</li>
+<li>Model 代表数据模型，也可以在 model 中定义数据修改和操作业务逻辑    View 代表UI组件，它负责将数据模型转化成UI展现出来。</li>
+<li>ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。</li>
+<li>在 MVVM 架构下，View 和 Model 之间并没有直接的联系，而是通过 ViewModel 进行交互，Model 和 ViewModel 之间的交互是双向的， 因此View 数据的变化会同步到Model中，而 Model 数据的变化也会立 即反应到View 上。</li>
+<li>ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而 View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM, 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。</li>
+</ul>
+<h2 id="vue生命周期"><a href="#vue生命周期" class="headerlink" title="vue生命周期"></a>vue生命周期</h2><p>vue生命周期的作用是什么？</p>
+<p>答：它的生命周期中有多个事件钩子，让我们在控制整个Vue实例的过程时更容易形成好的逻辑。</p>
+<p>第一次页面加载会触发哪几个钩子？</p>
+<p>答：第一次页面加载时会触发 beforeCreate, created, beforeMount, mounted 这几个钩子</p>
+<p>生命周期，总共分为 8 个阶段创建前/后，载入前/后，更新前/后，销毁前/后。</p>
+<ul>
+<li>创建前/后： 在 beforeCreate 阶段，vue 实例的挂载元素 el 还没有。</li>
+<li>载入前/后：在 beforeMount 阶段，vue 实例的$el 和 data 都初始化了，但还是挂载之前为虚拟的 dom 节点，data.message 还未替换。在 mounted 阶段，vue 实例挂载完成，data.message 成功渲染。</li>
+<li>更新前/后：当 data 变化时，会触发 beforeUpdate 和 updated 方法。</li>
+<li>销毁前/后：在执行 destroy 方法后，对 data 的改变不会再触发周期函数，说明此时 vue 实例已经解除了事件监听以及和 dom 的绑定，但是 dom 结构依然存在</li>
+</ul>
+<p>简单描述每个周期具体适合哪些场景？</p>
+<ul>
+<li>答：生命周期钩子的一些使用方法： beforecreate : 可以在这加个loading事件，在加载实例时触发 created : 初始化完成时的事件写在这里，如在这结束loading事件，异步请求也适宜在这里调用 mounted : 挂载元素，获取到DOM节点 updated : 如果对数据统一处理，在这里写上相应函数 beforeDestroy : 可以做一个确认停止事件的确认框 nextTick : 更新数据后立即操作dom</li>
+</ul>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/api/index.html#%E9%80%89%E9%A1%B9-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90" target="_blank" rel="noopener">官网</a></li>
+<li><a href="https://segmentfault.com/a/1190000011381906" target="_blank" rel="noopener">博客-1</a></li>
+<li><a href="https://juejin.im/entry/5aee8fbb518825671952308c" target="_blank" rel="noopener">博客-2</a></li>
+</ul>
+<h2 id="vue3的新特性"><a href="#vue3的新特性" class="headerlink" title="vue3的新特性"></a>vue3的新特性</h2><ul>
+<li>重写虚拟DOM，使Vue更快。</li>
+<li>基于es6的proxy替换了Object.defineProperty的getters和setter，节省了很大的内存开销，加快速度，缺点是兼容性问题。</li>
+<li>压缩包体积更小。</li>
+<li>优化插槽生成，可以单独重新渲染父组件和子组件。</li>
+<li>静态树提升以及静态属性提升等。</li>
+</ul>
+<h2 id="vue如果给数组添加参数会有什么问题-怎么解决"><a href="#vue如果给数组添加参数会有什么问题-怎么解决" class="headerlink" title="vue如果给数组添加参数会有什么问题, 怎么解决"></a>vue如果给数组添加参数会有什么问题, 怎么解决</h2><p>由于 JavaScript 的限制，Vue 不能检测以下数组的变动：</p>
+<ul>
+<li>当你利用索引直接设置一个数组项时，例如：vm.items[indexOfItem] = newValue</li>
+<li>当你修改数组的长度时，例如：vm.items.length = newLength</li>
+</ul>
+<p>为了解决第一类问题，以下两种方式都可以实现和 vm.items[indexOfItem] = newValue 相同的效果，同时也将在响应式系统内触发状态更新：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Vue.set</span></span><br><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Array.prototype.splice</span></span><br><span class="line">vm.items.splice(indexOfItem, <span class="number">1</span>, newValue)</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 vm.$set 实例方法，该方法是全局方法 Vue.set 的一个别名：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">vm.$<span class="keyword">set</span>(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+
+<p>为了解决第二类问题，你可以使用 splice：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">vm.items.splice(newLength)</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue的过滤器是什么，怎么用？"><a href="#vue的过滤器是什么，怎么用？" class="headerlink" title="vue的过滤器是什么，怎么用？"></a>vue的过滤器是什么，怎么用？</h2><p>用于一些常见的文本格式化，可以在创建实例之前全局定义，也可以在组件中本地定义。当全局过滤器和局部过滤器重名时，会采用局部过滤器。</p>
+<p>可以用在两个地方：双花括号插值和 v-bind 表达式，添加在表达式的尾部，由|符号指示，比如:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123; msg | msgCap &#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>过滤器可以串联，第一个处理之后再传给第二个去处理。</p>
+<h2 id="vue-router的导航守卫有哪些？比较常用的？"><a href="#vue-router的导航守卫有哪些？比较常用的？" class="headerlink" title="vue-router的导航守卫有哪些？比较常用的？"></a>vue-router的导航守卫有哪些？比较常用的？</h2><p>一套用来触发路由在不同阶段触发的钩子函数，包括全局守卫，路由独享守卫，组件内守卫</p>
+<ul>
+<li>‘全局守卫’ 顾名思义所有路由在进入跳转的时候都会触发，整个’全局路由’分为三个阶段依次是’beforeEach’、’beforeResolve’、’afterEach’<ul>
+<li>全局守卫因为可以监听到所有路由，在触发的时候可以用来做判断用户是否登录这种全局配置。beforeEach 即全局前置守卫，在路由刚开始触发，但还没有任何件一类的加载，适合做登陆判断逻辑。</li>
+</ul>
+</li>
+<li>‘路由独享守卫’ 顾名思义只在定义路由和路由组件中的对象中使用它有一个阶段’beforeEnter’<ul>
+<li>当前组件路由进入的时候触发的阶段</li>
+</ul>
+</li>
+<li>‘组件内守卫’顾名思义只在组件中触发的路由内容它有三个阶段依次是’beforeRouteEnter’、’beforeRouteUpdate’、’beforeRouteLeave’<ul>
+<li>‘beforeRouteEnter’ 在还没有进入该组件之前触发，一般用获取异步请求，可以替代vue生命周期中获取数据请求</li>
+<li>‘beforeRouteLeave’ 离开组件的时候触发，可以对表单一些校验未提交的时候触发询问用户是否到下一个页面官方的说法这个离开守卫通常用来禁止用户在还未存修改前突然离开。可以通过 next(false) 来取消。</li>
+</ul>
+</li>
+<li>导航守卫中三个参数讲解：<ul>
+<li>to: Route: 即将要进入的目标 路由对象</li>
+<li>from: Route: 当前导航正要离开的路由</li>
+<li>next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。<ul>
+<li>next(): 进行管道中的下一个钩子。如果全部钩子执行完了，则导航的状态就是 confirmed (确认的)。</li>
+<li>next(false): 中断当前的导航。</li>
+<li>next(‘/‘) 或者 next({ path: ‘/‘ }): 跳转到一个不同的地址。当前的导航被中断，然后进行一个新的导航。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="导航守卫周期总结"><a href="#导航守卫周期总结" class="headerlink" title="导航守卫周期总结"></a>导航守卫周期总结</h2><ol>
+<li>导航被触发。</li>
+<li>在失活的组件里调用离开守卫。</li>
+<li>调用全局的 beforeEach 守卫。</li>
+<li>在重用的组件里调用 beforeRouteUpdate 守卫。</li>
+<li>在路由配置里调用 beforeEnter。</li>
+<li>解析异步路由组件。</li>
+<li>在被激活的组件里调用 beforeRouteEnter。</li>
+<li>调用全局的 beforeResolve 守卫。</li>
+<li>导航被确认。</li>
+<li>调用全局的afterEach钩子。</li>
+<li>触发 DOM 更新。</li>
+<li>用创建好的实例调用 beforeRouteEnter 守卫中传给next 的回调函数。</li>
+</ol>
+<h2 id="vue中rem布局？"><a href="#vue中rem布局？" class="headerlink" title="vue中rem布局？"></a>vue中rem布局？</h2><p>安装插件 lib-flexible  postcss-px2rem,<br>删除index.html中的meta标签(控制视口的那个)<br>main.js 中导入插件包, 自动计算根HTML的font-size<br>配置vue.config.js, remUnit: 37.5, 适配 375 屏幕, 设计图750中量出来的尺寸要 / 2</p>
+<ul>
+<li>配置成 37.5 是为了兼容没有适配 rem 布局的第三方 ui 库<br>还是按照px写，会自动转rem</li>
+</ul>
+<h2 id="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"><a href="#如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？" class="headerlink" title="如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？"></a>如何阻止事件冒泡，vue里面如何用？vue都有哪些修饰符，分别做什么用的？</h2><p>在原生js中，一般是通过获取到事件对象, 然后在方法里面通过event.stopPropagation阻止冒泡（e.preventDefault()，取消默认事件）。为了方便我们的使用，vue内部用js封装了一些常用的方法，比如阻止默认事件，阻止冒泡等；</p>
+<p>事件修饰符</p>
+<ul>
+<li>.stop:阻止冒泡，.prevent:阻止默认事件，.capture:在事件捕获时触发，.self:只当在 event.target是当前元素自身时触发</li>
+</ul>
+<p>按键修饰符</p>
+<ul>
+<li>用来监听键盘事件时，检查详细的按键。<ul>
+<li>keyup.enter, keyup.tab, .delete, .esc</li>
+</ul>
+</li>
+</ul>
+<p>系统修饰键</p>
+<ul>
+<li>实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。<ul>
+<li>.crtl, .alt, .shift, .meta</li>
+</ul>
+</li>
+</ul>
+<h2 id="简述vue函数组件和类组件的区别"><a href="#简述vue函数组件和类组件的区别" class="headerlink" title="简述vue函数组件和类组件的区别"></a>简述vue函数组件和类组件的区别</h2><p>函数式组件：</p>
+<ul>
+<li>是一个纯函数</li>
+<li>没有自身状态，只接收外部数据</li>
+<li>产出 VNode 的方式：单纯的函数调用</li>
+</ul>
+<p>类组件：</p>
+<ul>
+<li>是一个类，可实例化</li>
+<li>可以有自身状态</li>
+<li>产出 VNode 的方式：需要实例化，然后调用其 render 函数</li>
+</ul>
+<h2 id="vue的服务端渲染"><a href="#vue的服务端渲染" class="headerlink" title="vue的服务端渲染"></a>vue的服务端渲染</h2><p>什么是服务器端渲染 (SSR)？</p>
+<ul>
+<li>默认情况下，可以在浏览器中输出 Vue 组件，进行生成 DOM 和操作 DOM。然而，也可以将同一个组件渲染为服务器端的 HTML 字符串，将它们直接发送到浏览器，最后将这些静态标记”激活”为客户端上完全可交互的应用程序。</li>
+</ul>
+<p>为什么使用服务器端渲染 (SSR)？</p>
+<ul>
+<li>更好的 SEO，搜索引擎爬虫抓取工具可以直接查看完全渲染的页面。</li>
+<li>更快的内容到达时间 (time-to-content)，特别是对于缓慢的网络情况或运行缓慢的设备。无需等待所有的 JavaScript 都完成下载并执行，才显示服务器渲染的标记，用户将会更快速地看到完整渲染的页面，通常可以产生更好的用户体验。</li>
+</ul>
+<p>一些需要考虑的点</p>
+<ul>
+<li>开发条件所限。浏览器特定的代码，只能在某些生命周期钩子函数 (lifecycle hook) 中使用；一些外部扩展库 (external library) 可能需要特殊处理，才能在服务器渲染应用程序中运行。</li>
+<li>涉及构建设置和部署的更多要求。服务器渲染应用程序，需要处于 Node.js server 运行环境。</li>
+<li>更多的服务器端负载。在 Node.js 中渲染完整的应用程序，显然会比仅仅提供静态文件的 server 更加大量占用 CPU 资源 (CPU-intensive - CPU 密集)</li>
+</ul>
+<p>大致流程</p>
+<ol>
+<li>创建一个 vue 实例</li>
+<li>配置路由，以及相应的视图组件</li>
+<li>使用 vuex 管理数据</li>
+<li>创建服务端入口文件</li>
+<li>创建客户端入口文件</li>
+<li>配置 webpack，分服务端打包配置和客户端打包配置</li>
+<li>创建服务器端的渲染器，将vue实例渲染成html</li>
+</ol>
+<ul>
+<li><a href="https://ssr.vuejs.org/zh/guide/" target="_blank" rel="noopener">官网</a></li>
+<li><a href="https://juejin.im/post/5b72d3d7518825613c02abd6" target="_blank" rel="noopener">博客</a></li>
+</ul>
+<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？-1"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？-1" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
+<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
+<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
+<li>vue cli 2.0系列 再往前是2.0版本</li>
+</ul>
+<h2 id="vuex中mutation与action的区别？"><a href="#vuex中mutation与action的区别？" class="headerlink" title="vuex中mutation与action的区别？"></a>vuex中mutation与action的区别？</h2><ul>
+<li><p>首先，更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。</p>
+<ul>
+<li><p>每个 mutation 都有一个字符串的 事件类型 (type) 和 一个 回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    increment (state) &#123;</span><br><span class="line">      <span class="comment">// 变更状态</span></span><br><span class="line">      state.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不能直接调用一个 mutation handler。要唤醒一个 mutation handler，需要以相应的 type 调用 store.commit 方法： <code>store.commit(&#39;increment&#39;)</code> 。</p>
+</li>
+<li><p>可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）</p>
+</li>
+</ul>
+</li>
+<li><p>Mutation 必须是同步函数，在 Vuex 中，mutation 都是同步事务。</p>
+</li>
+<li><p>Action类似于mutation，区别在于：</p>
+<ul>
+<li>Action 提交的是 mutation，而不是直接变更状态。</li>
+<li>Action 可以包含任意异步操作。</li>
+</ul>
+</li>
+<li><p>Action需要用context.commit()提交一个mutation。</p>
+</li>
+<li><p>Action 通过 store.dispatch 方法分发。</p>
+</li>
+</ul>
+<h2 id="vue引入组件时import与require区别？"><a href="#vue引入组件时import与require区别？" class="headerlink" title="vue引入组件时import与require区别？"></a>vue引入组件时import与require区别？</h2><ul>
+<li>require是运行时加载，import是编译时加载；</li>
+<li>require可以写在代码的任意位置，import只能写在文件的最顶端且不可在条件语句或函数作用域中使用；</li>
+<li>require通过module.exports导出的值就不能再变化，import可以改变；</li>
+<li>require运行时才引入模块的属性所以性能相对较低，import编译时引入模块的属性所所以性能稍高。</li>
+</ul>
+<h2 id="vue管理系统权限分配如何实现的？"><a href="#vue管理系统权限分配如何实现的？" class="headerlink" title="vue管理系统权限分配如何实现的？"></a>vue管理系统权限分配如何实现的？</h2><p>本质是通过增删权限id，发送给后台，这里是一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 显示分配权限对话框</span></span><br><span class="line">  <span class="keyword">async</span> showAssignRights (row) &#123;</span><br><span class="line">    <span class="comment">// 存roleId，显示对话框</span></span><br><span class="line">    <span class="keyword">this</span>.roleId = row.id</span><br><span class="line">    <span class="keyword">this</span>.assignRightsVisible = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">const</span> &#123; meta, data &#125; = <span class="keyword">await</span> <span class="keyword">this</span>.$axios.get(<span class="string">'rights/tree'</span>)</span><br><span class="line">    <span class="keyword">if</span> (meta.status === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="comment">// console.log(data)</span></span><br><span class="line">      <span class="keyword">this</span>.data = data</span><br><span class="line">      <span class="comment">// 设置选中权限的回显</span></span><br><span class="line">      <span class="keyword">const</span> selectedIds = []</span><br><span class="line">      row.children.forEach(<span class="function"><span class="params">c1</span> =&gt;</span> &#123;</span><br><span class="line">        c1.children.forEach(<span class="function"><span class="params">c2</span> =&gt;</span> &#123;</span><br><span class="line">          c2.children.forEach(<span class="function"><span class="params">c3</span> =&gt;</span> &#123;</span><br><span class="line">            selectedIds.push(c3.id)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">// 通过 keys 设置目前勾选的节点，使用此方法必须设置 node-key 属性</span></span><br><span class="line">      <span class="keyword">this</span>.$refs.tree.setCheckedKeys(selectedIds)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.error(meta.msg)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 分配权限</span></span><br><span class="line">  <span class="keyword">async</span> assignRights () &#123;</span><br><span class="line">    <span class="comment">// 若节点可被选择（即 show-checkbox 为 true），则返回目前被选中的节点的 key 所组成的数组</span></span><br><span class="line">    <span class="keyword">const</span> allSelected = <span class="keyword">this</span>.$refs.tree.getCheckedKeys()</span><br><span class="line">    <span class="comment">// 返回目前半选中的节点的 key 所组成的数组</span></span><br><span class="line">    <span class="keyword">const</span> halfSelected = <span class="keyword">this</span>.$refs.tree.getHalfCheckedKeys()</span><br><span class="line">    <span class="comment">// 后台需要以','分割的权限 ID 列表，展开，拼接</span></span><br><span class="line">    <span class="keyword">const</span> allIds = [...allSelected, ...halfSelected].join(<span class="string">','</span>)</span><br><span class="line">    <span class="comment">// ！！！发送参数时后台要求参数名为rids</span></span><br><span class="line">    <span class="keyword">const</span> &#123; meta &#125; = <span class="keyword">await</span> <span class="keyword">this</span>.$axios.post( <span class="string">`roles/<span class="subst">$&#123;<span class="keyword">this</span>.roleId&#125;</span>/rights`</span> , &#123; <span class="attr">rids</span>: allIds &#125;)</span><br><span class="line">    <span class="keyword">if</span> (meta.status === <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.success(meta.msg)</span><br><span class="line">      <span class="comment">// 重新渲染并隐藏对话框</span></span><br><span class="line">      <span class="keyword">this</span>.getRoleList()</span><br><span class="line">      <span class="keyword">this</span>.assignRightsVisible = <span class="literal">false</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.$message.error(meta.msg)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="在vue中使用echarts"><a href="#在vue中使用echarts" class="headerlink" title="在vue中使用echarts"></a>在vue中使用echarts</h2><ol>
+<li>安装echarts依赖 yarn add echarts 或 npm i echarts -S</li>
+<li>在main.js全局引入</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> echarts <span class="keyword">from</span> <span class="string">'echarts'</span></span><br><span class="line">Vue.prototype.$echarts = echarts</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在所需组件中创建图表，一般在mounted生命周期函数中实例化echarts对象，因为此时DOM已经挂载到页面。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myChart"</span> <span class="attr">:style</span>=<span class="string">"&#123;width: '300px', height: '300px'&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">'hello'</span>,</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            msg: <span class="string">'Welcome to Your Vue.js App'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted() &#123;</span><br><span class="line">        <span class="keyword">this</span>.drawLine();</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        drawLine() &#123;</span><br><span class="line">            <span class="comment">// 基于准备好的dom，初始化echarts实例</span></span><br><span class="line">            <span class="keyword">let</span> myChart = <span class="keyword">this</span>.$echarts.init(<span class="built_in">document</span>.getElementById(<span class="string">'myChart'</span>))</span><br><span class="line">             <span class="comment">// 绘制图表</span></span><br><span class="line">             myChart.setOption(&#123;</span><br><span class="line">                 ......</span><br><span class="line">             &#125;);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+</search>
