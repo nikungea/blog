@@ -14,7 +14,7 @@
 <meta property="og:description" content="目前，绝大多数 JavaScript&#x2F;DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-12T14:51:27.000Z">
-<meta property="article:modified_time" content="2020-05-29T00:13:00.709Z">
+<meta property="article:modified_time" content="2020-06-08T08:27:16.005Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="基础知识">
 <meta name="twitter:card" content="summary">
@@ -152,7 +152,7 @@
   <div class="content" itemprop="articleBody">
     <p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
 <a id="more"></a>
-<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
 <h2 id="什么是-Promise"><a href="#什么是-Promise" class="headerlink" title="什么是 Promise"></a>什么是 Promise</h2><p>简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。 Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。</p>
 <p>对一个 Promise 调用 then(..) 的时候，即使这个 Promise 已经决议，提供给 then(..) 的回调也总会被异步调用。 </p>
 <p>没有任何东西(甚至 JavaScript 错误)能阻止 Promise 向你通知它的决议(如果它决议了的话)。如果你对一个 Promise 注册了一个完成回调和一个拒绝回调，那么 Promise 在决议时总是会调用其中的一个。</p>
