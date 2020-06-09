@@ -1129,7 +1129,7 @@
       </tags>
   </entry>
   <entry>
-    <title>sessionStorage与localStorage</title>
+    <title>浏览器存储之sessionStorage与localStorage</title>
     <url>/blog/2020/06/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AD%98%E5%82%A8%E4%B9%8BsessionStorage%E4%B8%8ElocalStorage/</url>
     <content><![CDATA[<p>工作中遇到一些场景，比较典型的一个就是混合app页面中调用原生的键盘，但又不是系统自带的那种，比如转账汇款输入金额、密码等等。前端会通过JSBridge与原生交互，将输入键盘的值实时取出来，但是又不能直接return出去，否则方法会断掉。这时想到两种解决思路，一种是前端传入回调，挂载到window上，原生去调用，并把值也传到window上，双方实时的在window这个公用对象上去交互，实现实时返回输入值的需求。这种是我们实际采用的方法，因为虽然对前端能力要求提高了，但是实现比较优雅，后期方便维护。</p>
 <p>在构思时，也想过另一种操作，就是把值实时存到缓存里，页面中再去取出来，当时写出来这种自己都觉得实现的太丑漏了。不过也算是复习了一下localStorage与sessionStorage。</p>
