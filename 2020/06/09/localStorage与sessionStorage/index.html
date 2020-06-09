@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="localStorage与sessionStorage存储在 localStorage 的数据可以长期保留； 而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。 另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型). Tips从ios">
+    <meta name="description" content="工作中遇到一些场景，比较典型的一个就是混合app页面中调用原生的键盘，但又不是系统自带的那种，比如转账汇款输入金额、密码等等。前端会通过JSBridge与原生交互，将输入键盘的值实时取出来，但是又不能直接return出去，否则方法会断掉。这时想到两种解决思路，一种是前端传入回调，挂载到window上，原生去调用，并把值也传到window上，双方实时的在window这个公用对象上去交互，实现实时返回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="localStorage与sessionStorage">
+<meta property="og:title" content="浏览器存储之sessionStorage与localStorage">
 <meta property="og:url" content="https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/index.html">
 <meta property="og:site_name" content="LeBlog">
-<meta property="og:description" content="localStorage与sessionStorage存储在 localStorage 的数据可以长期保留； 而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。 另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型). Tips从ios">
+<meta property="og:description" content="工作中遇到一些场景，比较典型的一个就是混合app页面中调用原生的键盘，但又不是系统自带的那种，比如转账汇款输入金额、密码等等。前端会通过JSBridge与原生交互，将输入键盘的值实时取出来，但是又不能直接return出去，否则方法会断掉。这时想到两种解决思路，一种是前端传入回调，挂载到window上，原生去调用，并把值也传到window上，双方实时的在window这个公用对象上去交互，实现实时返回">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-06-09T01:35:26.000Z">
-<meta property="article:modified_time" content="2020-06-09T10:20:15.892Z">
+<meta property="article:modified_time" content="2020-06-09T23:53:03.086Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="基础知识">
 <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@
         
     
     <!-- title -->
-    <title>localStorage与sessionStorage</title>
+    <title>浏览器存储之sessionStorage与localStorage</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/blog/css/style.css">
@@ -90,16 +90,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=localStorage与sessionStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=localStorage与sessionStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=浏览器存储之sessionStorage与localStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=浏览器存储之sessionStorage与localStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -116,7 +116,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        localStorage与sessionStorage
+        浏览器存储之sessionStorage与localStorage
     </h1>
 
 
@@ -148,7 +148,9 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="localStorage与sessionStorage"><a href="#localStorage与sessionStorage" class="headerlink" title="localStorage与sessionStorage"></a>localStorage与sessionStorage</h2><p>存储在 localStorage 的数据可以长期保留；</p>
+    <p>工作中遇到一些场景，比较典型的一个就是混合app页面中调用原生的键盘，但又不是系统自带的那种，比如转账汇款输入金额、密码等等。前端会通过JSBridge与原生交互，将输入键盘的值实时取出来，但是又不能直接return出去，否则方法会断掉。这时想到两种解决思路，一种是前端传入回调，挂载到window上，原生去调用，并把值也传到window上，双方实时的在window这个公用对象上去交互，实现实时返回输入值的需求。这种是我们实际采用的方法，因为虽然对前端能力要求提高了，但是实现比较优雅，后期方便维护。</p>
+<p>在构思时，也想过另一种操作，就是把值实时存到缓存里，页面中再去取出来，当时写出来这种自己都觉得实现的太丑漏了。不过也算是复习了一下localStorage与sessionStorage。</p>
+<h2 id="localStorage与sessionStorage"><a href="#localStorage与sessionStorage" class="headerlink" title="localStorage与sessionStorage"></a>localStorage与sessionStorage</h2><p>存储在 localStorage 的数据可以长期保留；</p>
 <p>而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。</p>
 <p>另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型).</p>
 <h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>从ios 5.1后，Safari移动存储本地存储的数据在缓存文件夹，这样在系统空间不足的情况下，方便系统自动清理。因此，在极端情况下，可能会导致值丢失，需谨慎。</p>
@@ -212,16 +214,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=localStorage与sessionStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=localStorage与sessionStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=浏览器存储之sessionStorage与localStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=浏览器存储之sessionStorage与localStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=浏览器存储之sessionStorage与localStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
