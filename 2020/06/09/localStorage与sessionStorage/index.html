@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="localStorage与sessionStorage存储在 localStorage 的数据可以长期保留； 而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。 另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型). Tips从ios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="localStorage与sessionStorage">
+<meta property="og:url" content="https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="localStorage与sessionStorage存储在 localStorage 的数据可以长期保留； 而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。 另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型). Tips从ios">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-09T01:35:26.000Z">
+<meta property="article:modified_time" content="2020-06-09T10:20:15.892Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>localStorage与sessionStorage</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/blog/2020/06/02/%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E7%9B%AE%E6%A0%87%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E5%9C%A8%E8%A7%86%E7%AA%97%E4%B9%8B%E5%86%85/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=localStorage与sessionStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=localStorage与sessionStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#localStorage与sessionStorage"><span class="toc-number">1.</span> <span class="toc-text">localStorage与sessionStorage</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tips"><span class="toc-number">1.0.1.</span> <span class="toc-text">Tips</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sessionStorage的注意点"><span class="toc-number">1.1.</span> <span class="toc-text">sessionStorage的注意点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setItem"><span class="toc-number">1.2.</span> <span class="toc-text">setItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getItem"><span class="toc-number">1.3.</span> <span class="toc-text">getItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeItem"><span class="toc-number">1.4.</span> <span class="toc-text">removeItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clear"><span class="toc-number">1.5.</span> <span class="toc-text">clear()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#key"><span class="toc-number">1.6.</span> <span class="toc-text">key()</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        localStorage与sessionStorage
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-09T01:35:26.000Z" itemprop="datePublished">2020-06-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="localStorage与sessionStorage"><a href="#localStorage与sessionStorage" class="headerlink" title="localStorage与sessionStorage"></a>localStorage与sessionStorage</h2><p>存储在 localStorage 的数据可以长期保留；</p>
+<p>而当页面会话结束——也就是说，当页面被关闭时，存储在 sessionStorage 的数据会被清除 。</p>
+<p>另外，localStorage 中的键值对总是以字符串的形式存储。 (需要注意, 和js对象相比, 键值对总是以字符串的形式存储意味着数值类型会自动转化为字符串类型).</p>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>从ios 5.1后，Safari移动存储本地存储的数据在缓存文件夹，这样在系统空间不足的情况下，方便系统自动清理。因此，在极端情况下，可能会导致值丢失，需谨慎。</p>
+<h3 id="sessionStorage的注意点"><a href="#sessionStorage的注意点" class="headerlink" title="sessionStorage的注意点"></a>sessionStorage的注意点</h3><ul>
+<li>页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。</li>
+<li>在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文，这点和 session cookies 的运行方式不同。</li>
+<li>打开多个相同的URL的Tabs页面，会创建各自的sessionStorage。</li>
+<li>关闭对应浏览器tab，会清除对应的sessionStorage。</li>
+</ul>
+<h3 id="setItem"><a href="#setItem" class="headerlink" title="setItem()"></a>setItem()</h3><p>接受一个键名和值作为参数，将会把键名添加到存储中，如果键名已存在，则更新其对应的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">storage.setItem(keyName, keyValue);</span><br></pre></td></tr></table></figure>
+<p>这几种方式其实都是一样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">localStorage.colorSetting = <span class="string">'#a4509b'</span>;</span><br><span class="line">localStorage[<span class="string">'colorSetting'</span>] = <span class="string">'#a4509b'</span>;</span><br><span class="line">localStorage.setItem(<span class="string">'colorSetting'</span>, <span class="string">'#a4509b'</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="getItem"><a href="#getItem" class="headerlink" title="getItem()"></a>getItem()</h3><p>接受一个键名（key name）作为参数，并返回对应键名的值（key’s value）。</p>
+<p>语法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> aValue = storage.getItem(keyName);</span><br></pre></td></tr></table></figure>
+
+<p>返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个 DOMString，键名对应的值。如果键名不存在于存储中，则返回 <span class="literal">null</span>。</span><br></pre></td></tr></table></figure>
+
+<h3 id="removeItem"><a href="#removeItem" class="headerlink" title="removeItem()"></a>removeItem()</h3><p>接受一个键名作为参数，会从给定的Storage对象中删除该键名（如果存在）。 如果没有与该给定键名匹配的项，则此方法将不执行任何操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">storage.removeItem(keyName);</span><br></pre></td></tr></table></figure>
+<p>无返回值。</p>
+<h3 id="clear"><a href="#clear" class="headerlink" title="clear()"></a>clear()</h3><p>可以清空存储对象里所有的键值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">storage.clear();</span><br></pre></td></tr></table></figure>
+<p>无返回值。</p>
+<h3 id="key"><a href="#key" class="headerlink" title="key()"></a>key()</h3><p><code>不推荐使用</code><br>key() 作为 Storage 接口的方法，接受一个数值 n 作为参数，返回存储对象第 n 个数据项的键名。键的存储顺序是由用户代理定义的，所以尽可能不要依赖这个方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> aKeyName = storage.key(key);</span><br></pre></td></tr></table></figure>
+<p>入参：一个整数，表示要获取的键名索引。<br>返回值：键名。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#localStorage与sessionStorage"><span class="toc-number">1.</span> <span class="toc-text">localStorage与sessionStorage</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tips"><span class="toc-number">1.0.1.</span> <span class="toc-text">Tips</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sessionStorage的注意点"><span class="toc-number">1.1.</span> <span class="toc-text">sessionStorage的注意点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setItem"><span class="toc-number">1.2.</span> <span class="toc-text">setItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getItem"><span class="toc-number">1.3.</span> <span class="toc-text">getItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeItem"><span class="toc-number">1.4.</span> <span class="toc-text">removeItem()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clear"><span class="toc-number">1.5.</span> <span class="toc-text">clear()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#key"><span class="toc-number">1.6.</span> <span class="toc-text">key()</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&text=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&is_video=false&description=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=localStorage与sessionStorage&body=Check out this article: https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&title=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&name=localStorage与sessionStorage&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/06/09/localStorage%E4%B8%8EsessionStorage/&t=localStorage与sessionStorage" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
