@@ -78,7 +78,7 @@
   </entry>
   <entry>
     <title>JSON的两个常用方法</title>
-    <url>/blog/2019/02/23/JSON/</url>
+    <url>/blog/2018/12/23/JSON/</url>
     <content><![CDATA[<p>JSON对象包含两个方法: 用于解析 JavaScript Object Notation  (JSON) 的 parse() 方法，以及将对象/值转换为 JSON字符串的 stringify() 方法。除了这两个方法, JSON这个对象本身并没有其他作用，也不能被调用或者作为构造函数调用。</p>
 <h4 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h4><p>JSON 是一种语法，用来序列化对象、数组、数值、字符串、布尔值和 null 。它基于 JavaScript 语法，但与之不同：JavaScript不是JSON，JSON也不是JavaScript。</p>
 <table>
