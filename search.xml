@@ -3,13 +3,7 @@
   <entry>
     <title>JSBridge原理简介</title>
     <url>/blog/2020/04/26/JSBridge%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>主要是给 JavaScript 提供调用 Native 功能的接口，让混合开发中的『前端部分』可以方便地使用地址位置、摄像头甚至支付等 Native 功能。<br>核心是 构建 Native 和非 Native 间消息通信的通道，而且是 双向通信的通道。</p>
-<ul>
-<li>JS 向 Native 发送消息 : 调用相关功能、通知 Native 当前 JS 的相关状态等。</li>
-<li>Native 向 JS 发送消息 : 回溯调用结果、消息推送、通知 JS 当前 Native 的状态等。<a id="more"></a>
-<h2 id="为什么是-JSBridge-？"><a href="#为什么是-JSBridge-？" class="headerlink" title="为什么是 JSBridge ？"></a>为什么是 JSBridge ？</h2></li>
-</ul>
-<p>JavaScript 主要载体 Web 是当前世界上的 最易编写 、 最易维护 、最易部署 的 UI 构建方式。工程师可以用很简单的 HTML 标签和 CSS 样式快速的构建出一个页面，并且在服务端部署后，用户不需要主动更新，就能看到最新的 UI 展现。<br>简而言之，开发维护成本和更新成本较低。</p>
+    <content><![CDATA[<h2 id="为什么是-JSBridge-？"><a href="#为什么是-JSBridge-？" class="headerlink" title="为什么是 JSBridge ？"></a>为什么是 JSBridge ？</h2><p>JavaScript 主要载体 Web 是当前世界上的 最易编写 、 最易维护 、最易部署 的 UI 构建方式。工程师可以用很简单的 HTML 标签和 CSS 样式快速的构建出一个页面，并且在服务端部署后，用户不需要主动更新，就能看到最新的 UI 展现。<br>简而言之，开发维护成本和更新成本较低。</p>
 <h2 id="主要技术方案"><a href="#主要技术方案" class="headerlink" title="主要技术方案"></a>主要技术方案</h2><p>基于 Web 的 Hybrid 解决方案：例如微信浏览器、各公司的 Hybrid 方案。<br>非基于 Web UI 但业务逻辑基于 JavaScript 的解决方案：例如 React-Native。</p>
 <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>主要是给 JavaScript 提供调用 Native 功能的接口，让混合开发中的『前端部分』可以方便地使用地址位置、摄像头甚至支付等 Native 功能。<br>核心是 构建 Native 和非 Native 间消息通信的通道，而且是 双向通信的通道。</p>
 <ul>
@@ -161,9 +155,7 @@
   <entry>
     <title>JS监听触摸事件的简单实现</title>
     <url>/blog/2020/05/19/JS%E7%9B%91%E5%90%AC%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<p>工作中遇到一个场景，在混合开发过程中，需要在APP某个页面进行一个版本切换，条件很简单，双指放大时，切换到老年版页面，双指缩小时，切换到正常版页面。虽然原生性能比较好，但用原生去写比较耗时，为了快速上线，决定由前端实现一个简单的版本，后续再进行优化。</p>
-<a id="more"></a>
-<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>工作中遇到一个场景，在混合开发过程中，需要在APP某个页面进行一个版本切换，条件很简单，双指放大时，切换到老年版页面，双指缩小时，切换到正常版页面。虽然原生性能比较好，但用原生去写比较耗时，为了快速上线，决定由前端实现一个简单的版本，后续再进行优化。</p>
+    <content><![CDATA[<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><p>工作中遇到一个场景，在混合开发过程中，需要在APP某个页面进行一个版本切换，条件很简单，双指放大时，切换到老年版页面，双指缩小时，切换到正常版页面。虽然原生性能比较好，但用原生去写比较耗时，为了快速上线，决定由前端实现一个简单的版本，后续再进行优化。</p>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>十二点半了，先写下思路，明天再实现</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取到当前页面元素，document</span></span><br><span class="line"><span class="comment"> * 监听touch事件</span></span><br><span class="line"><span class="comment"> * 判断为双指放大时，触发事件，然后切换为老年版，停止响应放大事件</span></span><br><span class="line"><span class="comment"> * 在老年版双指缩小时，触发事件，切换为正常版，继续监听touch事件</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
@@ -199,9 +191,7 @@
   <entry>
     <title>Promise</title>
     <url>/blog/2019/08/12/Promise/</url>
-    <content><![CDATA[<p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，最多做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
-<a id="more"></a>
-<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
+    <content><![CDATA[<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>目前，绝大多数 JavaScript/DOM 平台新增的异步API都是基于 Promise 构建的，现代的框架以及库中也大量使用了Promise的思想，了解 Promise 的工作原理是很有必要的，不然，我们只能停留在使用api，做一下简单的封装，却不知道这一切是为什么的阶段。了解了原理之后，不但知其然，更加知其所以然，可以更快的抓住重点，定位问题，写出更高质量的代码。</p>
 <h2 id="什么是-Promise"><a href="#什么是-Promise" class="headerlink" title="什么是 Promise"></a>什么是 Promise</h2><p>简单说就是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。 Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。</p>
 <p>对一个 Promise 调用 then(..) 的时候，即使这个 Promise 已经决议，提供给 then(..) 的回调也总会被异步调用。 </p>
 <p>没有任何东西(甚至 JavaScript 错误)能阻止 Promise 向你通知它的决议(如果它决议了的话)。如果你对一个 Promise 注册了一个完成回调和一个拒绝回调，那么 Promise 在决议时总是会调用其中的一个。</p>
@@ -264,23 +254,10 @@
     <title>vue脚手架介绍（基础）</title>
     <url>/blog/2019/11/05/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h2 id="脚手架的意义"><a href="#脚手架的意义" class="headerlink" title="脚手架的意义"></a>脚手架的意义</h2><ul>
-<li><p>是开发现代web应用的必备</p>
-</li>
-<li><p>充分利用webpack，babel，eslint等工具辅助项目开发</p>
-</li>
-<li><p>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</p>
-</li>
-<li><p>提供了配套的图形管理界面，用于创建，开发和管理你的项目</p>
-<a id="more"></a>
-<h2 id="脚手架的意义-1"><a href="#脚手架的意义-1" class="headerlink" title="脚手架的意义"></a>脚手架的意义</h2></li>
-<li><p>是开发现代web应用的必备</p>
-</li>
-<li><p>充分利用webpack，babel，eslint等工具辅助项目开发</p>
-</li>
-<li><p>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</p>
-</li>
-<li><p>提供了配套的图形管理界面，用于创建，开发和管理你的项目</p>
-</li>
+<li>是开发现代web应用的必备</li>
+<li>充分利用webpack，babel，eslint等工具辅助项目开发</li>
+<li>开箱即用，零配置，无需手动配置繁琐的工具即可使用，专注在撰写应用上，而不必花好几天去纠结配置的问题。</li>
+<li>提供了配套的图形管理界面，用于创建，开发和管理你的项目</li>
 </ul>
 <h2 id="版本记录"><a href="#版本记录" class="headerlink" title="版本记录"></a>版本记录</h2><ul>
 <li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
@@ -372,9 +349,7 @@
   <entry>
     <title>vue脚手架介绍（插件和Preset）</title>
     <url>/blog/2019/11/13/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-Preset/</url>
-    <content><![CDATA[<h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>Vue CLI 使用了一套基于插件的架构。如果你查阅一个新创建项目的 package.json，就会发现依赖都是以 @vue/cli-plugin- 开头的。插件可以修改 webpack 的内部配置，也可以向 vue-cli-service 注入命令。在项目创建的过程中，绝大部分列出的特性都是通过插件来实现的。</p>
-<a id="more"></a>
-<h3 id="插件和preset"><a href="#插件和preset" class="headerlink" title="插件和preset"></a>插件和preset</h3><h4 id="插件-1"><a href="#插件-1" class="headerlink" title="插件"></a>插件</h4><p>Vue CLI 使用了一套基于插件的架构。如果你查阅一个新创建项目的 package.json，就会发现依赖都是以 @vue/cli-plugin- 开头的。插件可以修改 webpack 的内部配置，也可以向 vue-cli-service 注入命令。在项目创建的过程中，绝大部分列出的特性都是通过插件来实现的。</p>
+    <content><![CDATA[<h3 id="插件和preset"><a href="#插件和preset" class="headerlink" title="插件和preset"></a>插件和preset</h3><h4 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h4><p>Vue CLI 使用了一套基于插件的架构。如果你查阅一个新创建项目的 package.json，就会发现依赖都是以 @vue/cli-plugin- 开头的。插件可以修改 webpack 的内部配置，也可以向 vue-cli-service 注入命令。在项目创建的过程中，绝大部分列出的特性都是通过插件来实现的。</p>
 <h5 id="在现有的项目中安装插件"><a href="#在现有的项目中安装插件" class="headerlink" title="在现有的项目中安装插件"></a>在现有的项目中安装插件</h5><p>每个 CLI 插件都会包含一个 (用来创建文件的) 生成器和一个 (用来调整 webpack 核心配置和注入命令的) 运行时插件。<br>如果你想在一个已经被创建好的项目中安装一个插件，可以使用 vue add 命令，比如：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vue add eslint</span><br></pre></td></tr></table></figure>
 
@@ -422,9 +397,6 @@
     <url>/blog/2019/11/16/vue%E8%84%9A%E6%89%8B%E6%9E%B6%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D-%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="通用指南"><a href="#通用指南" class="headerlink" title="通用指南"></a>通用指南</h2><p>如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。</p>
 <p>如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。</p>
-<a id="more"></a>
-<h2 id="通用指南-1"><a href="#通用指南-1" class="headerlink" title="通用指南"></a>通用指南</h2><p>如果你用 Vue CLI 处理静态资源并和后端框架一起作为部署的一部分，那么你需要的仅仅是确保 Vue CLI 生成的构建文件在正确的位置，并遵循后端框架的发布方式即可。</p>
-<p>如果你独立于后端部署前端应用——也就是说后端暴露一个前端可访问的 API，然后前端实际上是纯静态应用。那么你可以将 dist 目录里构建的内容部署到任何静态文件服务器中，但要确保正确的 publicPath。</p>
 <h2 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h2><p>dist 目录需要启动一个 HTTP 服务器来访问。<br>在本地预览生产环境构建最简单的方式就是使用一个 Node.js 静态文件服务器，例如 serve:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g serve</span><br><span class="line">serve -s dist</span><br></pre></td></tr></table></figure>
 
@@ -442,10 +414,7 @@
   <entry>
     <title>webpack入门配置</title>
     <url>/blog/2020/01/07/webpack/</url>
-    <content><![CDATA[<p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
-<p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
-<a id="more"></a>
-<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
 <p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
 <p>这篇文章基本是官网的一个摘抄整理，众所周知，webpack文档写的有点乱，而且有不少过时或不准确的地方，这里修正了错误，理顺了逻辑。</p>
 <h2 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口(entry)"></a>入口(entry)</h2><p>入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。</p>
@@ -623,16 +592,7 @@
   <entry>
     <title>前端部署的常见问题</title>
     <url>/blog/2020/05/08/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>CI，Continuous Integration，持续集成</p>
-<ul>
-<li>代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.</li>
-</ul>
-<p>CD，Continuous Delivery，持续交付</p>
-<ul>
-<li>将构建好的程序发布到各种环境，如预发布环境，正式环境．<a id="more"></a>
-<h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI / CD"></a>CI / CD</h3></li>
-</ul>
-<p>一些基本概念：</p>
+    <content><![CDATA[<h3 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI / CD"></a>CI / CD</h3><p>一些基本概念：</p>
 <p>CI，Continuous Integration，持续集成</p>
 <ul>
 <li>代码提交后触发自动化的单元测试，代码预编译，构建镜像，上传镜像等.</li>
@@ -760,12 +720,7 @@
   <entry>
     <title>打包资源优化</title>
     <url>/blog/2020/03/15/%E6%89%93%E5%8C%85%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><ol>
-<li>减小打包的整体体积</li>
-<li>Code Splitting : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
-<li>Bundle Splitting ：分包，根据模块更改频率分层次打包，充分利用缓存。<a id="more"></a>
-一些常见问题：</li>
-</ol>
+    <content><![CDATA[<p>一些常见问题：</p>
 <ul>
 <li>lodash 和 react gzip 后的体积是多少 (定性，可以给出范围)</li>
 <li>打包 moment 时会有什么问题</li>
@@ -776,7 +731,7 @@
 <li>更小的体积对于用户体验来说意味着更快的加载速度以及更好的用户体验，利于企业利润。</li>
 <li>更小的体积对于服务器来说也意味更小的带宽以及更少的服务器费用。</li>
 </ol>
-<h3 id="原则-1"><a href="#原则-1" class="headerlink" title="原则"></a>原则</h3><ol>
+<h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><ol>
 <li>减小打包的整体体积</li>
 <li>Code Splitting : 按需加载，优化页面首次加载体积。如根据路由按需加载，根据是否可见按需加载。</li>
 <li>Bundle Splitting ：分包，根据模块更改频率分层次打包，充分利用缓存。</li>
@@ -908,13 +863,7 @@
   <entry>
     <title>面试总结(Vue)</title>
     <url>/blog/2020/02/09/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93(Vue)/</url>
-    <content><![CDATA[<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
-<li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
-<li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
-<li>vue cli 2.0系列 再往前是2.0版本<a id="more"></a>
-<h2 id="vue中的MVVM模式是什么"><a href="#vue中的MVVM模式是什么" class="headerlink" title="vue中的MVVM模式是什么"></a>vue中的MVVM模式是什么</h2></li>
-</ul>
-<ul>
+    <content><![CDATA[<h2 id="vue中的MVVM模式是什么"><a href="#vue中的MVVM模式是什么" class="headerlink" title="vue中的MVVM模式是什么"></a>vue中的MVVM模式是什么</h2><ul>
 <li>即 Model-View-ViewModel。</li>
 <li>Model 代表数据模型，也可以在 model 中定义数据修改和操作业务逻辑    View 代表UI组件，它负责将数据模型转化成UI展现出来。</li>
 <li>ViewModel 监听模型数据的改变和控制视图行为、处理用户交互，简单理解就是一个同步 View 和 Model 的对象，连接 Model 和 View。</li>
@@ -1073,7 +1022,7 @@
 <li><a href="https://ssr.vuejs.org/zh/guide/" target="_blank" rel="noopener">官网</a></li>
 <li><a href="https://juejin.im/post/5b72d3d7518825613c02abd6" target="_blank" rel="noopener">博客</a></li>
 </ul>
-<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？-1"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？-1" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
+<h2 id="你刚开始用的vue-cli什么版本，现在用的哪个版本？"><a href="#你刚开始用的vue-cli什么版本，现在用的哪个版本？" class="headerlink" title="你刚开始用的vue-cli什么版本，现在用的哪个版本？"></a>你刚开始用的vue-cli什么版本，现在用的哪个版本？</h2><ul>
 <li>vue cli 4.0系列 正式版发布时间，2019-10-16</li>
 <li>vue cli 3.0系列 正式版发布时间，2018-08-10</li>
 <li>vue cli 2.0系列 再往前是2.0版本</li>

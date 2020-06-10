@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。 目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来">
+    <meta name="description" content="概念webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。 目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webpack入门配置">
 <meta property="og:url" content="https://nikungea.github.io/blog/2020/01/07/webpack/index.html">
 <meta property="og:site_name" content="LeBlog">
-<meta property="og:description" content="webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。 目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来">
+<meta property="og:description" content="概念webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。 目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-07T14:19:57.000Z">
-<meta property="article:modified_time" content="2020-05-30T14:54:55.734Z">
+<meta property="article:modified_time" content="2020-06-10T00:10:51.862Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="生产问题">
 <meta name="twitter:card" content="summary">
@@ -100,8 +100,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/01/07/webpack/&name=webpack入门配置&description=&lt;p&gt;webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。&lt;/p&gt;
-&lt;p&gt;目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/01/07/webpack/&name=webpack入门配置&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/01/07/webpack/&t=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
@@ -151,10 +150,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
-<p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
-<a id="more"></a>
-<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
+    <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
 <p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
 <p>这篇文章基本是官网的一个摘抄整理，众所周知，webpack文档写的有点乱，而且有不少过时或不准确的地方，这里修正了错误，理顺了逻辑。</p>
 <h2 id="入口-entry"><a href="#入口-entry" class="headerlink" title="入口(entry)"></a>入口(entry)</h2><p>入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部 依赖图(dependency graph) 的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。</p>
@@ -293,8 +289,7 @@
   <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2020/01/07/webpack/&title=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/01/07/webpack/&name=webpack入门配置&description=&lt;p&gt;webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。&lt;/p&gt;
-&lt;p&gt;目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2020/01/07/webpack/&name=webpack入门配置&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2020/01/07/webpack/&t=webpack入门配置" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
