@@ -4,6 +4,8 @@
     <title>JSBridge原理简介</title>
     <url>/blog/2020/04/26/JSBridge%E5%8E%9F%E7%90%86%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<h2 id="为什么是-JSBridge-？"><a href="#为什么是-JSBridge-？" class="headerlink" title="为什么是 JSBridge ？"></a>为什么是 JSBridge ？</h2><p>JavaScript 主要载体 Web 是当前世界上的 最易编写 、 最易维护 、最易部署 的 UI 构建方式。工程师可以用很简单的 HTML 标签和 CSS 样式快速的构建出一个页面，并且在服务端部署后，用户不需要主动更新，就能看到最新的 UI 展现。<br>简而言之，开发维护成本和更新成本较低。</p>
+<h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><p>通过注入回调实现实时的通信。</p>
+<p>打个比方来说，就像一座桥梁隔绝的两个国度，双方互不往来，但是这座桥可以。涉及到交互的事情，都到这个桥梁上来做。</p>
 <h2 id="主要技术方案"><a href="#主要技术方案" class="headerlink" title="主要技术方案"></a>主要技术方案</h2><p>基于 Web 的 Hybrid 解决方案：例如微信浏览器、各公司的 Hybrid 方案。<br>非基于 Web UI 但业务逻辑基于 JavaScript 的解决方案：例如 React-Native。</p>
 <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>主要是给 JavaScript 提供调用 Native 功能的接口，让混合开发中的『前端部分』可以方便地使用地址位置、摄像头甚至支付等 Native 功能。<br>核心是 构建 Native 和非 Native 间消息通信的通道，而且是 双向通信的通道。</p>
 <ul>
