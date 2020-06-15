@@ -415,7 +415,7 @@
   </entry>
   <entry>
     <title>webpack入门配置</title>
-    <url>/blog/2020/01/07/webpack/</url>
+    <url>/blog/2019/06/07/webpack/</url>
     <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。</p>
 <p>目前，大多数项目中都会用到webpack，而且在实际开发中，并不是按照一个万能模板就可以一劳永逸的，要经常根据实际情况去调整配置，这时，如果只是按照谷歌来别人的配置不一定好用，不理解原理时，也不知道如何去优化调整，因此，了解一点webpack的是很有必要的。</p>
 <p>这篇文章基本是官网的一个摘抄整理，众所周知，webpack文档写的有点乱，而且有不少过时或不准确的地方，这里修正了错误，理顺了逻辑。</p>
