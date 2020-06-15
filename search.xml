@@ -175,22 +175,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MacBook查看ip的几个方法</title>
-    <url>/blog/2019/03/02/MacBook%E6%9F%A5%E7%9C%8Bip%E7%9A%84%E5%87%A0%E4%B8%AA%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h2><p>打开终端</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure>
-
-<p>会得到一长串的信息，肉眼寻找即可，大致在en0这个位置</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">en0: flags=8863&lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&gt; mtu 1500</span><br><span class="line">	options=400&lt;CHANNEL_IO&gt;</span><br><span class="line">	ether </span><br><span class="line">	inet6 %en0 prefixlen 64 secured scopeid 0x6 </span><br><span class="line">	inet 192.168.x.x netmask 0xffffff00 broadcast 192.168.x.xxx</span><br><span class="line">	nd6 options=201&lt;PERFORMNUD,DAD&gt;</span><br><span class="line">	media: autoselect</span><br><span class="line">	status: active</span><br></pre></td></tr></table></figure>
-
-<h2 id="option快捷键"><a href="#option快捷键" class="headerlink" title="option快捷键"></a>option快捷键</h2><p>如果只是想单纯的获取到ip地址，更推荐使用快捷键方式。</p>
-<p>按住option键，鼠标左键点击wifi标志，弹出的窗口不再是之前选择一系列WiFi的简单列表，而是列出了当前连接网络的详细信息，比如，ip地址 ，频段，速率，噪音等等。</p>
-]]></content>
-      <tags>
-        <tag>Common Sense</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Polyfill</title>
     <url>/blog/2019/05/18/Polyfill/</url>
     <content><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Polyfill 是一块代码（通常是 Web 上的 JavaScript），用来为旧浏览器提供它没有原生支持的较新的功能。</p>
@@ -1132,6 +1116,24 @@
 ]]></content>
       <tags>
         <tag>编程之外</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacBook小技巧</title>
+    <url>/blog/2019/03/02/MacBook%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h2><p>打开终端</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>会得到一长串的信息，肉眼寻找即可，大致在en0这个位置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">en0: flags=8863&lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&gt; mtu 1500</span><br><span class="line">	options=400&lt;CHANNEL_IO&gt;</span><br><span class="line">	ether </span><br><span class="line">	inet6 %en0 prefixlen 64 secured scopeid 0x6 </span><br><span class="line">	inet 192.168.x.x netmask 0xffffff00 broadcast 192.168.x.xxx</span><br><span class="line">	nd6 options=201&lt;PERFORMNUD,DAD&gt;</span><br><span class="line">	media: autoselect</span><br><span class="line">	status: active</span><br></pre></td></tr></table></figure>
+
+<h2 id="option快捷键"><a href="#option快捷键" class="headerlink" title="option快捷键"></a>option快捷键</h2><p>如果只是想单纯的获取到ip地址，更推荐使用快捷键方式。</p>
+<p>按住option键，鼠标左键点击wifi标志，弹出的窗口不再是之前选择一系列WiFi的简单列表，而是列出了当前连接网络的详细信息，比如，ip地址 ，频段，速率，噪音等等。</p>
+<h2 id="显示隐藏文件夹"><a href="#显示隐藏文件夹" class="headerlink" title="显示隐藏文件夹"></a>显示隐藏文件夹</h2><p>shift + command + G</p>
+<h2 id="剪切粘贴"><a href="#剪切粘贴" class="headerlink" title="剪切粘贴"></a>剪切粘贴</h2><p>command + c =&gt; command + option + v</p>
+]]></content>
+      <tags>
+        <tag>Common Sense</tag>
       </tags>
   </entry>
 </search>
