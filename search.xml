@@ -1124,4 +1124,14 @@
         <tag>Vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>编程之外的思考</title>
+    <url>/blog/2020/06/14/%E7%BC%96%E7%A8%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>这几个月一直在跟原生JS打交道，深感博大精深，而且原生JS是目前市面上大部分前端框架的基础。研究好JS，可以加深对常用库和框架的理解，无论Vue / React / Angular还是各种第三方库，用起来会更加得心应手。</p>
+<p>但仅仅<code>掌握</code>JS这门语言最多只能让开发者走到中级前端的巅峰，虽然已经强过了大量的只会使用框架cv项目的初中级工程师，想要更进一步，还需要在另外两个方面有所提升：工程化思想（项目构建、技术选型、自动化等）和计算机基本原理（算法、数据结构、操作系统、数据库等）。</p>
+]]></content>
+      <tags>
+        <tag>编程之外</tag>
+      </tags>
+  </entry>
 </search>
