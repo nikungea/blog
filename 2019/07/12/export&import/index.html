@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。 无论是否声明，导出的模块都处于严格模式。 export语句不能用">
+    <meta name="description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新，即通过该接口，可以取到模块内部实时的值。 无论是否声明，导出的模块">
 <meta property="og:type" content="article">
 <meta property="og:title" content="export &amp; import">
 <meta property="og:url" content="https://nikungea.github.io/blog/2019/07/12/export&import/index.html">
 <meta property="og:site_name" content="LeBlog">
-<meta property="og:description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。 无论是否声明，导出的模块都处于严格模式。 export语句不能用">
+<meta property="og:description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新，即通过该接口，可以取到模块内部实时的值。 无论是否声明，导出的模块">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-07-12T09:17:45.000Z">
-<meta property="article:modified_time" content="2020-07-12T10:44:51.916Z">
+<meta property="article:modified_time" content="2020-07-12T14:31:22.903Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="基础知识">
 <meta name="twitter:card" content="summary">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#仅为副作用而导入一个模块"><span class="toc-number">2.1.3.</span> <span class="toc-text">仅为副作用而导入一个模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态导入"><span class="toc-number">2.1.4.</span> <span class="toc-text">动态导入</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -150,7 +150,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><p>在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。</p>
+    <h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><p>在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新，即通过该接口，可以取到模块内部实时的值。</p>
 <p>无论是否声明，导出的模块都处于严格模式。 export语句不能用在嵌入式脚本中。</p>
 <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>存在两种 exports 导出方式：</p>
 <ol>
@@ -168,6 +168,15 @@
 <h3 id="模块重定向"><a href="#模块重定向" class="headerlink" title="模块重定向"></a>模块重定向</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module "redirect-module.js"</span></span><br><span class="line"><span class="keyword">export</span> &#123;<span class="keyword">default</span>&#125; <span class="keyword">from</span> <span class="string">'./other-module'</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">'./other-module'</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p>静态的import 语句用于导入由另一个模块导出的绑定。无论是否声明了 strict mode ，导入的模块都运行在严格模式下。在浏览器中，import 语句只能在声明了 type=”module” 的 script 的标签中使用。 此外，还有一个类似函数的动态 import()，它不需要依赖 type=”module” 的script标签。</p>
+<p>import命令接受一对大括号，里面指定要从其他模块导入的变量名。大括号里面的变量名，必须与被导入模块（profile.js）对外接口的名称相同。</p>
+<p>如果想为输入的变量重新取一个名字，import命令要使用as关键字，将输入的变量重命名。</p>
+<p>import后面的from指定模块文件的位置，可以是相对路径，也可以是绝对路径，.js后缀可以省略。如果只是模块名，不带有路径，那么必须有配置文件，告诉 JavaScript 引擎该模块的位置。</p>
+<p>import命令具有提升效果，会提升到整个模块的头部，首先执行。本质是，import命令是编译阶段执行的，在代码运行之前。</p>
+<p>import语句会执行所加载的模块，因此可以有下面的写法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'lodash'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果多次重复执行同一句import语句，那么只会执行一次，而不会执行多次。</p>
+<p>目前阶段，通过 Babel 转码，CommonJS 模块的require命令和 ES6 模块的import命令，可以写在同一个模块里面，但是最好不要这样做。因为import在静态解析阶段执行，所以它是一个模块之中最早执行的。</p>
 <blockquote>
 <p>在 script 标签中使用 nomodule 属性，可以确保向后兼容。</p>
 </blockquote>
@@ -197,6 +206,13 @@
 <h4 id="导入带有别名的接口"><a href="#导入带有别名的接口" class="headerlink" title="导入带有别名的接口"></a>导入带有别名的接口</h4><p>可以在导入时重命名接口：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单个</span></span><br><span class="line"><span class="keyword">import</span> &#123;reallyReallyLongModuleExportName <span class="keyword">as</span> shortName&#125;</span><br><span class="line">  <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  reallyReallyLongModuleMemberName <span class="keyword">as</span> shortName, </span><br><span class="line">  anotherLongModuleName <span class="keyword">as</span> short</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br></pre></td></tr></table></figure>
 
+<h4 id="仅为副作用而导入一个模块"><a href="#仅为副作用而导入一个模块" class="headerlink" title="仅为副作用而导入一个模块"></a>仅为副作用而导入一个模块</h4><p>整个模块仅为副作用而导入，而不导入模块中的任何内容（接口）。 <code>这将运行模块中的全局代码, 但实际上不导入任何值。</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'/modules/my-module.js'</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h4><p>关键字import可以像调用函数一样来动态的导入模块。以这种方式调用，将返回一个 promise。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(<span class="string">'/modules/my-module.js'</span>)</span><br><span class="line">  .then(<span class="function">(<span class="params"><span class="built_in">module</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Do something with the module.</span></span><br><span class="line">  &#125;);</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">'/modules/my-module.js'</span>);</span><br></pre></td></tr></table></figure>
+
+
 
 
   </div>
@@ -221,7 +237,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#仅为副作用而导入一个模块"><span class="toc-number">2.1.3.</span> <span class="toc-text">仅为副作用而导入一个模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态导入"><span class="toc-number">2.1.4.</span> <span class="toc-text">动态导入</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
