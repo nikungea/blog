@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。 无论是否声明，导出的模块都处于严格模式。 export语句不能用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="export &amp; import">
+<meta property="og:url" content="https://nikungea.github.io/blog/2019/07/12/export&import/index.html">
+<meta property="og:site_name" content="LeBlog">
+<meta property="og:description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。 无论是否声明，导出的模块都处于严格模式。 export语句不能用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-12T09:17:45.000Z">
+<meta property="article:modified_time" content="2020-07-12T10:44:51.916Z">
+<meta property="article:author" content="Le">
+<meta property="article:tag" content="基础知识">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>export &amp; import</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/08/12/Promise/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/06/07/webpack/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/07/12/export&amp;import/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&text=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&is_video=false&description=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=export &amp; import&body=Check out this article: https://nikungea.github.io/blog/2019/07/12/export&amp;import/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&name=export &amp; import&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&t=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        export &amp; import
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">LeBlog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-12T09:17:45.000Z" itemprop="datePublished">2019-07-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">基础知识</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><p>在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新。</p>
+<p>无论是否声明，导出的模块都处于严格模式。 export语句不能用在嵌入式脚本中。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>存在两种 exports 导出方式：</p>
+<ol>
+<li>命名导出（每个模块包含任意数量）</li>
+<li>默认导出（每个模块包含一个）</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导出列表</span></span><br><span class="line"><span class="keyword">export</span> &#123; name1, name2, …, nameN &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出早前定义的函数</span></span><br><span class="line"><span class="keyword">export</span> &#123; myFunction，myVariable &#125;; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 重命名导出</span></span><br><span class="line"><span class="keyword">export</span> &#123; variable1 <span class="keyword">as</span> name1, variable2 <span class="keyword">as</span> name2, …, nameN &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解构导出并重命名</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; name1, <span class="attr">name2</span>: bar &#125; = o;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> expression;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">…</span>) </span>&#123; … &#125; <span class="comment">// also class, function*</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">name1</span>(<span class="params">…</span>) </span>&#123; … &#125; <span class="comment">// also class, function*</span></span><br></pre></td></tr></table></figure>
+<p>区别在于：</p>
+<ul>
+<li>在导出多个值时，命名导出非常有用。在导入期间，必须使用相应对象的相同名称。</li>
+<li>可以使用任何名称导入默认导出。如果我们想要在当前模块中，导出指定导入模块的默认导出（等于是创建了一个“重定向”），因为默认导出导出的其实是匿名导出，所以导入的时候可以使用任意名字导入，并且无需使用{}包裹；<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> k; <span class="keyword">export</span> <span class="keyword">default</span> k = <span class="number">12</span>; <span class="comment">// 在 test.js文件中定义导出</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> m <span class="keyword">from</span> <span class="string">'./test'</span> <span class="comment">// 由于k 是默认导出，所以可以自由使用import m 替代import k</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(m);        <span class="comment">// 输出为 12</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="模块重定向"><a href="#模块重定向" class="headerlink" title="模块重定向"></a>模块重定向</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module "redirect-module.js"</span></span><br><span class="line"><span class="keyword">export</span> &#123;<span class="keyword">default</span>&#125; <span class="keyword">from</span> <span class="string">'./other-module'</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">'./other-module'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p>静态的import 语句用于导入由另一个模块导出的绑定。无论是否声明了 strict mode ，导入的模块都运行在严格模式下。在浏览器中，import 语句只能在声明了 type=”module” 的 script 的标签中使用。 此外，还有一个类似函数的动态 import()，它不需要依赖 type=”module” 的script标签。</p>
+<blockquote>
+<p>在 script 标签中使用 nomodule 属性，可以确保向后兼容。</p>
+</blockquote>
+<p>在按需加载模块的时候，动态import() 是非常有用的。而静态型的 import 是初始化加载依赖项的最优选择，使用静态 import 更容易从代码静态分析工具和 tree shaking 中受益。</p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">"module-name"</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> name <span class="keyword">from</span> <span class="string">"module-name"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">export</span> &#125; <span class="keyword">from</span> <span class="string">"module-name"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">export</span> <span class="keyword">as</span> alias &#125; <span class="keyword">from</span> <span class="string">"module-name"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1 , export2 &#125; <span class="keyword">from</span> <span class="string">"module-name"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; foo , bar &#125; <span class="keyword">from</span> <span class="string">"module-name/path/to/specific/un-exported/file"</span>;</span><br></pre></td></tr></table></figure>
+<p>defaultExport</p>
+<ul>
+<li>导入模块的默认导出接口的引用名。</li>
+</ul>
+<p>module-name</p>
+<ul>
+<li>要导入的模块。通常是包含目标模块的.js文件的相对或绝对路径名，可以不包括.js扩展名。某些特定的打包工具可能允许或需要使用扩展或依赖文件，它会检查比对你的运行环境。只允许单引号和双引号的字符串。</li>
+</ul>
+<p>name</p>
+<ul>
+<li>导入模块对象整体的别名，在引用导入模块时，它将作为一个命名空间来使用。</li>
+</ul>
+<p>export, exportN</p>
+<ul>
+<li>被导入模块的导出接口的名称。</li>
+</ul>
+<p>alias, aliasN</p>
+<ul>
+<li>将引用指定的导入的名称。</li>
+</ul>
+<h4 id="导入整个模块的内容"><a href="#导入整个模块的内容" class="headerlink" title="导入整个模块的内容"></a>导入整个模块的内容</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> api <span class="keyword">from</span> <span class="string">'myModule'</span>;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"></span><br><span class="line">api.test();</span><br></pre></td></tr></table></figure>
+<h4 id="导入带有别名的接口"><a href="#导入带有别名的接口" class="headerlink" title="导入带有别名的接口"></a>导入带有别名的接口</h4><p>可以在导入时重命名接口：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单个</span></span><br><span class="line"><span class="keyword">import</span> &#123;reallyReallyLongModuleExportName <span class="keyword">as</span> shortName&#125;</span><br><span class="line">  <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  reallyReallyLongModuleMemberName <span class="keyword">as</span> shortName, </span><br><span class="line">  anotherLongModuleName <span class="keyword">as</span> short</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#export"><span class="toc-number">1.</span> <span class="toc-text">export</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块重定向"><span class="toc-number">1.2.</span> <span class="toc-text">模块重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">2.</span> <span class="toc-text">import</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法-1"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入整个模块的内容"><span class="toc-number">2.1.1.</span> <span class="toc-text">导入整个模块的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入带有别名的接口"><span class="toc-number">2.1.2.</span> <span class="toc-text">导入带有别名的接口</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://nikungea.github.io/blog/2019/07/12/export&amp;import/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&text=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&is_video=false&description=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=export &amp; import&body=Check out this article: https://nikungea.github.io/blog/2019/07/12/export&amp;import/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&title=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&name=export &amp; import&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://nikungea.github.io/blog/2019/07/12/export&amp;import/&t=export &amp; import" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2018-2020
+    Le
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">首页</a></li>
+         
+          <li><a href="/blog/about/">关于</a></li>
+         
+          <li><a href="/blog/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
