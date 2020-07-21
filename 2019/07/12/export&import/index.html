@@ -14,7 +14,7 @@
 <meta property="og:description" content="export在创建JavaScript模块时，export 语句用于从模块中导出实时绑定的函数、对象或原始值，以便其他程序可以通过 import 语句使用它们。被导出的绑定值依然可以在本地进行修改。在使用import进行导入时，这些绑定值只能被导入模块所读取，但在export导出模块中对这些绑定值进行修改，所修改的值也会实时地更新，即通过该接口，可以取到模块内部实时的值。 无论是否声明，导出的模块">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-07-12T09:17:45.000Z">
-<meta property="article:modified_time" content="2020-07-12T14:31:22.903Z">
+<meta property="article:modified_time" content="2020-07-12T14:33:35.248Z">
 <meta property="article:author" content="Le">
 <meta property="article:tag" content="基础知识">
 <meta name="twitter:card" content="summary">
@@ -202,7 +202,8 @@
 <ul>
 <li>将引用指定的导入的名称。</li>
 </ul>
-<h4 id="导入整个模块的内容"><a href="#导入整个模块的内容" class="headerlink" title="导入整个模块的内容"></a>导入整个模块的内容</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> api <span class="keyword">from</span> <span class="string">'myModule'</span>;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"></span><br><span class="line">api.test();</span><br></pre></td></tr></table></figure>
+<h4 id="导入整个模块的内容"><a href="#导入整个模块的内容" class="headerlink" title="导入整个模块的内容"></a>导入整个模块的内容</h4><p>即用星号（*）指定一个对象，所有输出值都加载在这个对象上面。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> api <span class="keyword">from</span> <span class="string">'myModule'</span>;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"></span><br><span class="line">api.test();</span><br></pre></td></tr></table></figure>
 <h4 id="导入带有别名的接口"><a href="#导入带有别名的接口" class="headerlink" title="导入带有别名的接口"></a>导入带有别名的接口</h4><p>可以在导入时重命名接口：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单个</span></span><br><span class="line"><span class="keyword">import</span> &#123;reallyReallyLongModuleExportName <span class="keyword">as</span> shortName&#125;</span><br><span class="line">  <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  reallyReallyLongModuleMemberName <span class="keyword">as</span> shortName, </span><br><span class="line">  anotherLongModuleName <span class="keyword">as</span> short</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">'/modules/my-module.js'</span>;</span><br></pre></td></tr></table></figure>
 
